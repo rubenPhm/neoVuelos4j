@@ -4,11 +4,9 @@ import Dominio.Asiento;
 import Dominio.Usuario;
 import Dominio.Vuelo;
 import java.util.List;
-import java.util.function.Consumer;
 import org.eclipse.xtend.lib.annotations.Accessors;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
-import org.eclipse.xtext.xbase.lib.IntegerRange;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.Pure;
 import org.uqbar.commons.utils.Observable;
@@ -27,29 +25,10 @@ public class ReservaAsientoAppModel {
   
   public static int MAX_ASIENTO = 10;
   
-  public ReservaAsientoAppModel(final Usuario usr, final Vuelo vuelo) {
+  public ReservaAsientoAppModel(final Usuario usr, final Vuelo vuelo, final List<Asiento> asientosDisponibles) {
     this.unUsuario = usr;
     this.unVuelo = vuelo;
-    this.initAsientos();
-  }
-  
-  public ReservaAsientoAppModel() {
-    this.initAsientos();
-  }
-  
-  public void initAsientos() {
-    IntegerRange _upTo = new IntegerRange(1, ReservaAsientoAppModel.MAX_ASIENTO);
-    final Consumer<Integer> _function = new Consumer<Integer>() {
-      public void accept(final Integer i) {
-        Asiento _asiento = new Asiento((i).intValue(), "Pasillo");
-        ReservaAsientoAppModel.this.asientos.add(_asiento);
-        Asiento _asiento_1 = new Asiento((i).intValue(), "Centro");
-        ReservaAsientoAppModel.this.asientos.add(_asiento_1);
-        Asiento _asiento_2 = new Asiento((i).intValue(), "Ventanilla");
-        ReservaAsientoAppModel.this.asientos.add(_asiento_2);
-      }
-    };
-    _upTo.forEach(_function);
+    this.asientos = asientosDisponibles;
   }
   
   public Iterable<Asiento> asientosDeFila(final int filaPedida) {
@@ -62,8 +41,14 @@ public class ReservaAsientoAppModel {
     return IterableExtensions.<Asiento>filter(this.asientos, _function);
   }
   
-  public Object reservarAsiento() {
-    return null;
+  public boolean reservarAsiento() {
+    boolean _xblockexpression = false;
+    {
+      this.asientoSeleccionado.setDuenio(this.unUsuario);
+      List<Asiento> _asientosReservados = this.unUsuario.getAsientosReservados();
+      _xblockexpression = _asientosReservados.add(this.asientoSeleccionado);
+    }
+    return _xblockexpression;
   }
   
   @Pure

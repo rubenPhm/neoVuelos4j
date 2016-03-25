@@ -18,31 +18,22 @@ class ReservaAsientoAppModel {
 	
 	public static int MAX_ASIENTO = 10
 
-	new (Usuario usr, Vuelo vuelo){
+	new (Usuario usr, Vuelo vuelo, List<Asiento> asientosDisponibles){
 
       unUsuario = usr
       unVuelo = vuelo
-      this.initAsientos()
-}
+      asientos = asientosDisponibles
+	}
 	
-	new() {
-		this.initAsientos()
-	}
 
-	def void initAsientos() {
-		(1..MAX_ASIENTO).forEach [ i |
-			asientos.add(new Asiento(i, "Pasillo"))
-			asientos.add(new Asiento(i, "Centro"))
-			asientos.add(new Asiento(i, "Ventanilla"))
-		]
-	}
 	
 	def asientosDeFila(int filaPedida) {
 		asientos.filter [ it.fila == filaPedida ]
 	}
 	
 	def reservarAsiento (){
-		
+		asientoSeleccionado.duenio = unUsuario
+		unUsuario.asientosReservados.add(asientoSeleccionado)
 	}
 	
 }
