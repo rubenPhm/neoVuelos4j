@@ -8,7 +8,8 @@ import java.util.ArrayList
 @Observable
 @Accessors
 class Usuario {
-
+	
+	String nombre
 	String contrasenia;
 	String nick;
 	List <Asiento> asientosReservados

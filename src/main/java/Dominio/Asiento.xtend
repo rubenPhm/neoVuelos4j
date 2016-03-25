@@ -3,6 +3,7 @@ package Dominio
 import java.util.Date
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.uqbar.commons.utils.Observable
+import AppModel.ReservaAsientoAppModel
 
 @Accessors
 @Observable	
@@ -14,6 +15,20 @@ class Asiento {
 	Usuario duenio
 	Tarifa tarifa
 	Vuelo vuelo
+	
+	
+	new(int fila, String ubicacion) {
+		this.fila = fila
+		this.ubicacion = ubicacion
+	}
+	
+		override toString() {
+		" " + fila + ubicacion.substring(0,1) + " "
+	}
+	
+	def getDisponible() {
+		fila < ReservaAsientoAppModel.MAX_ASIENTO / 2
+	}
 	
 	
 }

@@ -5,6 +5,9 @@ import Vista.BusquedaVuelo
 import org.uqbar.arena.Application
 import org.uqbar.arena.windows.Window
 import AppModel.BusquedaVueloAppModel
+import Dominio.Vuelo
+import AppModel.ReservaAsientoAppModel
+import Vista.ReservaAsiento
 
 class RunAplication extends Application {
 
@@ -16,7 +19,10 @@ class RunAplication extends Application {
 		
 		//return new Login(this)
 		var Usuario usr = new Usuario("adrian","adrian")
-      return new BusquedaVuelo(this, new BusquedaVueloAppModel(usr))
+		var Vuelo vuelo = new Vuelo()
+      //return new BusquedaVuelo(this, new BusquedaVueloAppModel(usr))
+      return new ReservaAsiento(this, new ReservaAsientoAppModel(usr, vuelo))
+      
 	}
 
 }
