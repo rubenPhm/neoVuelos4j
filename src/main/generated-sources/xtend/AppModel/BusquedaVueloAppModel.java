@@ -2,7 +2,6 @@ package AppModel;
 
 import Dominio.Aeropuerto;
 import Dominio.Asiento;
-import Dominio.Busqueda;
 import Dominio.Usuario;
 import Dominio.Vuelo;
 import Repositorios.AeropuertosRepositorio;
@@ -10,8 +9,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import org.eclipse.xtend.lib.annotations.Accessors;
-import org.eclipse.xtext.xbase.lib.Functions.Function1;
-import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.Pure;
 import org.uqbar.commons.utils.Observable;
 
@@ -19,9 +16,9 @@ import org.uqbar.commons.utils.Observable;
 @Observable
 @SuppressWarnings("all")
 public class BusquedaVueloAppModel {
-  private Aeropuerto origen;
+  private String origen;
   
-  private Aeropuerto destino;
+  private String destino;
   
   private Date fechaDesde;
   
@@ -35,55 +32,38 @@ public class BusquedaVueloAppModel {
   
   private Usuario usr;
   
-  private List<Aeropuerto> todosLosAeropuertos;
+  private List<String> todosLosAeropuertos;
   
   private Map<Vuelo, List<Asiento>> asientosPorVuelo;
   
   public BusquedaVueloAppModel(final Usuario unUsr) {
     this.usr = unUsr;
     AeropuertosRepositorio _instance = AeropuertosRepositorio.getInstance();
-    this.todosLosAeropuertos = _instance.todosLosAeropuertos;
+    List<String> _nombreDeTodosLosAeropuertos = _instance.nombreDeTodosLosAeropuertos();
+    this.todosLosAeropuertos = _nombreDeTodosLosAeropuertos;
   }
   
   public void buscar() {
-    Vuelo vuelo = new Vuelo();
-    vuelo.setOrigen(this.origen);
-    vuelo.setDestino(this.destino);
-    vuelo.setFechaLlegada(this.fechaHasta);
-    vuelo.setFechaSalida(this.fechaDesde);
-    final Busqueda busqueda = new Busqueda();
-    busqueda.buscarVuelo(vuelo, this.usr);
-    this.resultados = busqueda.resultados;
-    final Function1<Vuelo, Boolean> _function = new Function1<Vuelo, Boolean>() {
-      public Boolean apply(final Vuelo unVuelo) {
-        List<Asiento> _obtenerAsientosQueValganMenosQue = unVuelo.obtenerAsientosQueValganMenosQue(BusquedaVueloAppModel.this.tarifaMax);
-        int _size = _obtenerAsientosQueValganMenosQue.size();
-        return Boolean.valueOf((_size > 0));
-      }
-    };
-    Iterable<Vuelo> _filter = IterableExtensions.<Vuelo>filter(this.resultados, _function);
-    IterableExtensions.<Vuelo>toList(_filter);
-    for (final Vuelo unVuelo : this.resultados) {
-      List<Asiento> _obtenerAsientosQueValganMenosQue = vuelo.obtenerAsientosQueValganMenosQue(this.tarifaMax);
-      this.asientosPorVuelo.put(vuelo, _obtenerAsientosQueValganMenosQue);
-    }
+    throw new Error("Unresolved compilation problems:"
+      + "\nType mismatch: cannot convert from String to Aeropuerto"
+      + "\nType mismatch: cannot convert from String to Aeropuerto");
   }
   
   @Pure
-  public Aeropuerto getOrigen() {
+  public String getOrigen() {
     return this.origen;
   }
   
-  public void setOrigen(final Aeropuerto origen) {
+  public void setOrigen(final String origen) {
     this.origen = origen;
   }
   
   @Pure
-  public Aeropuerto getDestino() {
+  public String getDestino() {
     return this.destino;
   }
   
-  public void setDestino(final Aeropuerto destino) {
+  public void setDestino(final String destino) {
     this.destino = destino;
   }
   
@@ -142,11 +122,11 @@ public class BusquedaVueloAppModel {
   }
   
   @Pure
-  public List<Aeropuerto> getTodosLosAeropuertos() {
+  public List<String> getTodosLosAeropuertos() {
     return this.todosLosAeropuertos;
   }
   
-  public void setTodosLosAeropuertos(final List<Aeropuerto> todosLosAeropuertos) {
+  public void setTodosLosAeropuertos(final List<String> todosLosAeropuertos) {
     this.todosLosAeropuertos = todosLosAeropuertos;
   }
   

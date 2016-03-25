@@ -10,7 +10,7 @@ class AeropuertosRepositorio {
 	public List<Aeropuerto> todosLosAeropuertos = new ArrayList<Aeropuerto>
 
 	public new() {
-		//seteo de usuario para testing
+		todosLosAeropuertos.add(new Aeropuerto("Buenos Aires"))
 	}
 
 	static public def AeropuertosRepositorio getInstance() {
@@ -19,4 +19,9 @@ class AeropuertosRepositorio {
 		}
       repositorio;
 	}
+	
+	def nombreDeTodosLosAeropuertos() {
+		todosLosAeropuertos.map[ aeropuerto | aeropuerto.nombre ].toList
+	}
+	
 }

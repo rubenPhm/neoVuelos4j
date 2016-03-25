@@ -16,21 +16,21 @@ import org.uqbar.commons.utils.Observable
 @Observable	
 class BusquedaVueloAppModel {
 	
-	Aeropuerto origen
-	Aeropuerto destino
+	String origen
+	String destino
 	Date fechaDesde
 	Date fechaHasta
 	int tarifaMax
 	Aeropuerto vueloSeleccionado
 	List <Vuelo> resultados
 	Usuario usr	
-	List <Aeropuerto> todosLosAeropuertos
+	List <String> todosLosAeropuertos
 	Map <Vuelo, List<Asiento> > asientosPorVuelo
 	
 	 
 	new (Usuario unUsr){
 		usr = unUsr
-		todosLosAeropuertos = AeropuertosRepositorio.getInstance.todosLosAeropuertos
+		todosLosAeropuertos = AeropuertosRepositorio.getInstance.nombreDeTodosLosAeropuertos
 	}
 	
 	def buscar() {
@@ -48,6 +48,7 @@ class BusquedaVueloAppModel {
 		
 		for(Vuelo unVuelo: resultados){
 			asientosPorVuelo.put(vuelo, vuelo.obtenerAsientosQueValganMenosQue(tarifaMax)) 
+			
 		}
 		
 	}
