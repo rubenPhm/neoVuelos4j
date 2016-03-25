@@ -10,7 +10,8 @@ class Aeropuerto {
 	String nombre
 	String pais
 	
-	new (String unNombre){
+	new (String unNombre, String unPais){
 		nombre = unNombre
+		pais = unPais
 	} 
 }

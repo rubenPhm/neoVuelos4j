@@ -15,8 +15,8 @@ public class AeropuertosRepositorio {
   public List<Aeropuerto> todosLosAeropuertos = new ArrayList<Aeropuerto>();
   
   public AeropuertosRepositorio() {
-    Aeropuerto _aeropuerto = new Aeropuerto("Buenos Aires");
-    this.todosLosAeropuertos.add(_aeropuerto);
+    throw new Error("Unresolved compilation problems:"
+      + "\nInvalid number of arguments. The constructor Aeropuerto(String, String) is not applicable for the arguments (String)");
   }
   
   public static AeropuertosRepositorio getInstance() {
