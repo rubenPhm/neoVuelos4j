@@ -56,14 +56,14 @@ public class ReservaAsiento extends TransactionalDialog<ReservaAsientoAppModel> 
     Panel _panel_3 = new Panel(linea2);
     VerticalLayout _verticalLayout_1 = new VerticalLayout();
     final Panel columna2 = _panel_3.setLayout(_verticalLayout_1);
-    Label _label_2 = new Label(linea2);
+    Label _label_2 = new Label(columna2);
     final Procedure1<Label> _function_1 = new Procedure1<Label>() {
       public void apply(final Label it) {
         it.setText("Tramos");
       }
     };
     ObjectExtensions.<Label>operator_doubleArrow(_label_2, _function_1);
-    Panel _panel_4 = new Panel(linea2);
+    Panel _panel_4 = new Panel(columna2);
     final Procedure1<Panel> _function_2 = new Procedure1<Panel>() {
       public void apply(final Panel it) {
         HorizontalLayout _horizontalLayout = new HorizontalLayout();

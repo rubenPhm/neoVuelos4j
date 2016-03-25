@@ -37,10 +37,10 @@ class ReservaAsiento extends TransactionalDialog <ReservaAsientoAppModel> {
 	val linea2 = new Panel(mainPanel).layout = new HorizontalLayout
 		val columna2 = new Panel(linea2).layout = new VerticalLayout
 	
-	new Label(linea2) => [
+	new Label(columna2) => [
 			text = "Tramos"]	
 		
-	new Panel(linea2) => [layout = new HorizontalLayout
+	new Panel(columna2) => [layout = new HorizontalLayout
 			new List(it) => [
 				var propiedadCondimentos = bindItemsToProperty("unVuelo.escalas")
 				//propiedadCondimentos.adapter = new PropertyAdapter(typeof(Escala), "destinoX")
