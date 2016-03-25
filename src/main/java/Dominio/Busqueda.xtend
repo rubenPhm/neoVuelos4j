@@ -10,7 +10,7 @@ class Busqueda {
 	
 	Date fechaEnLaQueSeRealizoLaBusqueda
 	Usuario usuarioQueRealizaLaBusqueda
-	List <Vuelo> resultados
+	public List <Vuelo> resultados
 	
 	new(){
 		resultados = new ArrayList	
