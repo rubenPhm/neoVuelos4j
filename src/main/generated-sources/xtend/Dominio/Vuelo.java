@@ -3,6 +3,7 @@ package Dominio;
 import Dominio.Aeropuerto;
 import Dominio.Asiento;
 import Dominio.Escala;
+import Dominio.Tarifa;
 import Dominio.Usuario;
 import com.google.common.base.Objects;
 import java.util.Date;
@@ -41,6 +42,18 @@ public class Vuelo {
     Iterable<Asiento> _filter = IterableExtensions.<Asiento>filter(this.asientos, _function);
     List<Asiento> _list = IterableExtensions.<Asiento>toList(_filter);
     return _list.size();
+  }
+  
+  public List<Asiento> obtenerAsientosQueValganMenosQue(final int precio) {
+    final Function1<Asiento, Boolean> _function = new Function1<Asiento, Boolean>() {
+      public Boolean apply(final Asiento asiento) {
+        Tarifa _tarifa = asiento.getTarifa();
+        int _precio = _tarifa.getPrecio();
+        return Boolean.valueOf((_precio < precio));
+      }
+    };
+    Iterable<Asiento> _filter = IterableExtensions.<Asiento>filter(this.asientos, _function);
+    return IterableExtensions.<Asiento>toList(_filter);
   }
   
   @Pure

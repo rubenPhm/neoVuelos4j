@@ -6,6 +6,7 @@ import org.eclipse.xtext.xbase.lib.ObjectExtensions;
 import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 import org.uqbar.arena.bindings.ObservableProperty;
 import org.uqbar.arena.layout.HorizontalLayout;
+import org.uqbar.arena.widgets.Button;
 import org.uqbar.arena.widgets.Label;
 import org.uqbar.arena.widgets.Panel;
 import org.uqbar.arena.widgets.Selector;
@@ -14,6 +15,7 @@ import org.uqbar.arena.widgets.tables.Column;
 import org.uqbar.arena.widgets.tables.Table;
 import org.uqbar.arena.windows.SimpleWindow;
 import org.uqbar.arena.windows.WindowOwner;
+import org.uqbar.lacar.ui.model.Action;
 import org.uqbar.lacar.ui.model.ControlBuilder;
 
 @SuppressWarnings("all")
@@ -24,6 +26,7 @@ public class BusquedaVuelo extends SimpleWindow<BusquedaVueloAppModel> {
   }
   
   protected void addActions(final Panel actionsPanel) {
+    this.botonera(actionsPanel);
   }
   
   protected void createFormPanel(final Panel mainPanel) {
@@ -165,6 +168,31 @@ public class BusquedaVuelo extends SimpleWindow<BusquedaVueloAppModel> {
         }
       };
       _xblockexpression = ObjectExtensions.<Column<Vuelo>>operator_doubleArrow(_column_5, _function_6);
+    }
+    return _xblockexpression;
+  }
+  
+  public Button botonera(final Panel mainPanel) {
+    Button _xblockexpression = null;
+    {
+      Panel _panel = new Panel(mainPanel);
+      HorizontalLayout _horizontalLayout = new HorizontalLayout();
+      final Panel panel = _panel.setLayout(_horizontalLayout);
+      Button _button = new Button(panel);
+      final Procedure1<Button> _function = new Procedure1<Button>() {
+        public void apply(final Button it) {
+          it.setCaption("Buscar");
+          final Action _function = new Action() {
+            public void execute() {
+              BusquedaVueloAppModel _modelObject = BusquedaVuelo.this.getModelObject();
+              _modelObject.buscar();
+            }
+          };
+          it.onClick(_function);
+          it.setAsDefault();
+        }
+      };
+      _xblockexpression = ObjectExtensions.<Button>operator_doubleArrow(_button, _function);
     }
     return _xblockexpression;
   }

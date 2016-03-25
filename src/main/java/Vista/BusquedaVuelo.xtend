@@ -2,9 +2,9 @@ package Vista
 
 import AppModel.BusquedaVueloAppModel
 import Dominio.Vuelo
-import Repositorios.AeropuertosRepositorio
 import org.uqbar.arena.bindings.ObservableProperty
 import org.uqbar.arena.layout.HorizontalLayout
+import org.uqbar.arena.widgets.Button
 import org.uqbar.arena.widgets.Label
 import org.uqbar.arena.widgets.Panel
 import org.uqbar.arena.widgets.Selector
@@ -22,7 +22,7 @@ class BusquedaVuelo extends SimpleWindow<BusquedaVueloAppModel> {
 	}
 
 	override protected addActions(Panel actionsPanel) {
-		
+		this.botonera(actionsPanel)
 	}
 
 	override protected createFormPanel(Panel mainPanel) {
@@ -31,6 +31,7 @@ class BusquedaVuelo extends SimpleWindow<BusquedaVueloAppModel> {
 	}
 
 	def panelDeBusqueda(Panel mainPanel) {
+		
 		val lineaTitulos = new Panel(mainPanel).layout = new HorizontalLayout
 		val lineaInputs = new Panel(mainPanel).layout = new HorizontalLayout
 
@@ -113,6 +114,18 @@ class BusquedaVuelo extends SimpleWindow<BusquedaVueloAppModel> {
 			title = "Asientos Libres"
 			fixedSize = 200
 			bindContentsToProperty("cantidadDeAsientosLibres")
+		]
+	}
+	
+		def botonera(Panel mainPanel) {
+		val panel = new Panel(mainPanel).layout = new HorizontalLayout
+
+		new Button(panel) => [
+			caption = "Buscar"
+			onClick = [|
+				modelObject.buscar
+			]
+			setAsDefault
 		]
 	}
 }
