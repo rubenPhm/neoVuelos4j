@@ -22,6 +22,7 @@ class BusquedaVuelo extends SimpleWindow<BusquedaVueloAppModel> {
 	}
 
 	override protected addActions(Panel actionsPanel) {
+		
 	}
 
 	override protected createFormPanel(Panel mainPanel) {
@@ -38,7 +39,7 @@ class BusquedaVuelo extends SimpleWindow<BusquedaVueloAppModel> {
 		new Selector<String>(lineaInputs) => [
 			allowNull = true
 			bindValueToProperty = "origen"
-			bindItems(new ObservableProperty(AeropuertosRepositorio.getInstance, "todosLosAeropuertos"))
+			bindItems(new ObservableProperty(modelObject, "todosLosAeropuertos"))
 		]
 
 		new Label(lineaTitulos).text = "Destino"
@@ -46,7 +47,7 @@ class BusquedaVuelo extends SimpleWindow<BusquedaVueloAppModel> {
 		new Selector<String>(lineaInputs) => [
 			allowNull = true
 			bindValueToProperty = "destino"
-			bindItems(new ObservableProperty(AeropuertosRepositorio.getInstance, "todosLosAeropuertos"))
+			bindItems(new ObservableProperty(modelObject, "todosLosAeropuertos"))
 		]
 
 		new Label(lineaTitulos).text = "Fecha Desde"
@@ -105,7 +106,7 @@ class BusquedaVuelo extends SimpleWindow<BusquedaVueloAppModel> {
 		new Column<Vuelo>(table) => [
 			title = "llegada"
 			fixedSize = 200
-			bindContentsToProperty("tramos.size()")
+			bindContentsToProperty("escalas.size()")
 		]
 
 		new Column<Vuelo>(table) => [

@@ -1,0 +1,5 @@
+package Dominio
+
+class Tarifa {
+	
+}

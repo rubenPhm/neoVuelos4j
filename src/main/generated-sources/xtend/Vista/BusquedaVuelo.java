@@ -2,7 +2,6 @@ package Vista;
 
 import AppModel.BusquedaVueloAppModel;
 import Dominio.Vuelo;
-import Repositorios.AeropuertosRepositorio;
 import org.eclipse.xtext.xbase.lib.ObjectExtensions;
 import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 import org.uqbar.arena.bindings.ObservableProperty;
@@ -48,8 +47,8 @@ public class BusquedaVuelo extends SimpleWindow<BusquedaVueloAppModel> {
         public void apply(final Selector<String> it) {
           it.allowNull(true);
           it.bindValueToProperty("origen");
-          AeropuertosRepositorio _instance = AeropuertosRepositorio.getInstance();
-          ObservableProperty<Object> _observableProperty = new ObservableProperty<Object>(_instance, "todosLosAeropuertos");
+          BusquedaVueloAppModel _modelObject = BusquedaVuelo.this.getModelObject();
+          ObservableProperty<Object> _observableProperty = new ObservableProperty<Object>(_modelObject, "todosLosAeropuertos");
           it.<Object>bindItems(_observableProperty);
         }
       };
@@ -61,8 +60,8 @@ public class BusquedaVuelo extends SimpleWindow<BusquedaVueloAppModel> {
         public void apply(final Selector<String> it) {
           it.allowNull(true);
           it.bindValueToProperty("destino");
-          AeropuertosRepositorio _instance = AeropuertosRepositorio.getInstance();
-          ObservableProperty<Object> _observableProperty = new ObservableProperty<Object>(_instance, "todosLosAeropuertos");
+          BusquedaVueloAppModel _modelObject = BusquedaVuelo.this.getModelObject();
+          ObservableProperty<Object> _observableProperty = new ObservableProperty<Object>(_modelObject, "todosLosAeropuertos");
           it.<Object>bindItems(_observableProperty);
         }
       };
@@ -153,7 +152,7 @@ public class BusquedaVuelo extends SimpleWindow<BusquedaVueloAppModel> {
         public void apply(final Column<Vuelo> it) {
           it.setTitle("llegada");
           it.setFixedSize(200);
-          it.bindContentsToProperty("tramos.size()");
+          it.bindContentsToProperty("escalas.size()");
         }
       };
       ObjectExtensions.<Column<Vuelo>>operator_doubleArrow(_column_4, _function_5);

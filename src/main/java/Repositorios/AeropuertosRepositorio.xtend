@@ -7,7 +7,7 @@ import java.util.List
 class AeropuertosRepositorio {
 	static AeropuertosRepositorio repositorio = null
 
-	List<Aeropuerto> todosLosAeropuertos = new ArrayList<Aeropuerto>
+	public List<Aeropuerto> todosLosAeropuertos = new ArrayList<Aeropuerto>
 
 	public new() {
 		//seteo de usuario para testing

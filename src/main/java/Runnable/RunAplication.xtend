@@ -1,8 +1,10 @@
 package Runnable
 
-import Vista.Login
+import Dominio.Usuario
+import Vista.BusquedaVuelo
 import org.uqbar.arena.Application
 import org.uqbar.arena.windows.Window
+import AppModel.BusquedaVueloAppModel
 
 class RunAplication extends Application {
 
@@ -12,7 +14,9 @@ class RunAplication extends Application {
 
 	override protected Window<?> createMainWindow() {
 		
-		return new Login(this)
+		//return new Login(this)
+		var Usuario usr = new Usuario("adrian","adrian")
+      return new BusquedaVuelo(this, new BusquedaVueloAppModel(usr))
 	}
 
 }

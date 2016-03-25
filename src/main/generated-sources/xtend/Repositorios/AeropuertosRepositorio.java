@@ -9,7 +9,7 @@ import java.util.List;
 public class AeropuertosRepositorio {
   private static AeropuertosRepositorio repositorio = null;
   
-  private List<Aeropuerto> todosLosAeropuertos = new ArrayList<Aeropuerto>();
+  public List<Aeropuerto> todosLosAeropuertos = new ArrayList<Aeropuerto>();
   
   public AeropuertosRepositorio() {
   }
