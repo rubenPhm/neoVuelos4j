@@ -27,7 +27,7 @@ class Asiento {
 	}
 	
 	def getDisponible() {
-		fila < ReservaAsientoAppModel.MAX_ASIENTO / 2
+		duenio != null
 	}
 	
 	

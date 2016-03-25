@@ -26,7 +26,6 @@ class ReservaAsientoAppModel {
 	}
 	
 
-	
 	def asientosDeFila(int filaPedida) {
 		asientos.filter [ it.fila == filaPedida ]
 	}

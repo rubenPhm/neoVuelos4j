@@ -165,7 +165,7 @@ public class ReservaAsiento extends TransactionalDialog<ReservaAsientoAppModel> 
     ObjectExtensions.<Label>operator_doubleArrow(_label_8, _function_7);
     Label _label_9 = new Label(linea4);
     ObservableValue<Control, ControlBuilder> _value_3 = _label_9.<ControlBuilder>value();
-    ArenaXtendExtensions.operator_spaceship(_value_3, "asientoSeleccionado");
+    ArenaXtendExtensions.operator_spaceship(_value_3, "asientoSeleccionado.tarifa.precio");
     Panel _panel_9 = new Panel(linea3);
     VerticalLayout _verticalLayout_5 = new VerticalLayout();
     final Panel linea5 = _panel_9.setLayout(_verticalLayout_5);

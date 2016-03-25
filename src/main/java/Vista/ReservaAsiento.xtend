@@ -89,7 +89,7 @@ class ReservaAsiento extends TransactionalDialog <ReservaAsientoAppModel> {
 			text = "Monto a Pagar"
 			foreground = Color.BLUE
 		]
-		new Label(linea4).value <=> "asientoSeleccionado"
+		new Label(linea4).value <=> "asientoSeleccionado.tarifa.precio"
 		
 		
 		val linea5 = new Panel(linea3).layout = new VerticalLayout
