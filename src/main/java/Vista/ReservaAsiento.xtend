@@ -31,8 +31,18 @@ class ReservaAsiento extends TransactionalDialog <ReservaAsientoAppModel> {
 	val columna1 = new Panel(linea1).layout = new VerticalLayout
 	new Label(columna1) => [
 			text = "Usuario"]
-			
+				
 	new Label(columna1).value <=> "unUsuario.nombre"
+	
+	val columnaX = new Panel(linea1).layout = new VerticalLayout
+				
+	new Label(columnaX).value <=> "unVuelo.origen.pais"
+	new Label(columnaX).value <=> "unVuelo.fechaSalida"
+	
+	val columnaX2 = new Panel(linea1).layout = new VerticalLayout
+				
+	new Label(columnaX2).value <=> "unVuelo.destino.pais"
+	new Label(columnaX2).value <=> "unVuelo.fechaLlegada"
 	
 	val linea2 = new Panel(mainPanel).layout = new HorizontalLayout
 		val columna2 = new Panel(linea2).layout = new VerticalLayout
