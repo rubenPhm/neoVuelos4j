@@ -27,7 +27,7 @@ class Asiento {
 	}
 	
 	def getDisponible() {
-		duenio != null
+		duenio == null
 	}
 	
 	

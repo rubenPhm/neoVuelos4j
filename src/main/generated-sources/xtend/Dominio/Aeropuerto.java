@@ -12,8 +12,9 @@ public class Aeropuerto {
   
   private String pais;
   
-  public Aeropuerto(final String unNombre) {
+  public Aeropuerto(final String unNombre, final String unPais) {
     this.nombre = unNombre;
+    this.pais = unPais;
   }
   
   @Pure
