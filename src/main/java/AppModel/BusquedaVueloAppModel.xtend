@@ -1,0 +1,5 @@
+package AppModel
+
+class BusquedaVueloAppModel {
+	
+}
