@@ -2,6 +2,7 @@ package Vista;
 
 import AppModel.ReservaAsientoAppModel;
 import Dominio.Asiento;
+import Dominio.Escala;
 import java.awt.Color;
 import java.util.function.Consumer;
 import org.eclipse.xtext.xbase.lib.IntegerRange;
@@ -14,15 +15,13 @@ import org.uqbar.arena.layout.VerticalLayout;
 import org.uqbar.arena.widgets.Button;
 import org.uqbar.arena.widgets.Control;
 import org.uqbar.arena.widgets.Label;
-import org.uqbar.arena.widgets.List;
 import org.uqbar.arena.widgets.Panel;
-import org.uqbar.arena.widgets.Selector;
+import org.uqbar.arena.widgets.tables.Column;
+import org.uqbar.arena.widgets.tables.Table;
 import org.uqbar.arena.windows.WindowOwner;
 import org.uqbar.arena.xtend.ArenaXtendExtensions;
 import org.uqbar.lacar.ui.model.Action;
 import org.uqbar.lacar.ui.model.ControlBuilder;
-import org.uqbar.lacar.ui.model.ListBuilder;
-import org.uqbar.lacar.ui.model.bindings.Binding;
 
 @SuppressWarnings("all")
 public class ReservaAsiento extends TransactionalDialog<ReservaAsientoAppModel> {
@@ -81,43 +80,53 @@ public class ReservaAsiento extends TransactionalDialog<ReservaAsientoAppModel> 
       }
     };
     ObjectExtensions.<Label>operator_doubleArrow(_label_6, _function_1);
-    Panel _panel_6 = new Panel(columna2);
-    final Procedure1<Panel> _function_2 = new Procedure1<Panel>() {
-      public void apply(final Panel it) {
-        HorizontalLayout _horizontalLayout = new HorizontalLayout();
-        it.setLayout(_horizontalLayout);
-        List<Object> _list = new List<Object>(it);
-        final Procedure1<List<Object>> _function = new Procedure1<List<Object>>() {
-          public void apply(final List<Object> it) {
-            Binding<?, Selector<Object>, ListBuilder<Object>> propiedadCondimentos = it.bindItemsToProperty("unVuelo.escalas");
-          }
-        };
-        ObjectExtensions.<List<Object>>operator_doubleArrow(_list, _function);
+    Table<Escala> _table = new Table<Escala>(columna2, Escala.class);
+    final Procedure1<Table<Escala>> _function_2 = new Procedure1<Table<Escala>>() {
+      public void apply(final Table<Escala> it) {
+        it.bindItemsToProperty("unVuelo.escalas");
       }
     };
-    ObjectExtensions.<Panel>operator_doubleArrow(_panel_6, _function_2);
-    Panel _panel_7 = new Panel(linea2);
+    final Table<Escala> table = ObjectExtensions.<Table<Escala>>operator_doubleArrow(_table, _function_2);
+    Column<Escala> _column = new Column<Escala>(table);
+    final Procedure1<Column<Escala>> _function_3 = new Procedure1<Column<Escala>>() {
+      public void apply(final Column<Escala> it) {
+        it.setTitle("Destino Intermedio");
+        it.setFixedSize(200);
+        it.bindContentsToProperty("destino.pais");
+      }
+    };
+    ObjectExtensions.<Column<Escala>>operator_doubleArrow(_column, _function_3);
+    Column<Escala> _column_1 = new Column<Escala>(table);
+    final Procedure1<Column<Escala>> _function_4 = new Procedure1<Column<Escala>>() {
+      public void apply(final Column<Escala> it) {
+        it.setTitle("Llegada");
+        it.setFixedSize(100);
+        it.bindContentsToProperty("horaLlegada");
+      }
+    };
+    ObjectExtensions.<Column<Escala>>operator_doubleArrow(_column_1, _function_4);
+    Panel _panel_6 = new Panel(linea2);
     VerticalLayout _verticalLayout_4 = new VerticalLayout();
-    final Panel columna3 = _panel_7.setLayout(_verticalLayout_4);
+    final Panel columna3 = _panel_6.setLayout(_verticalLayout_4);
     Label _label_7 = new Label(columna3);
-    final Procedure1<Label> _function_3 = new Procedure1<Label>() {
+    final Procedure1<Label> _function_5 = new Procedure1<Label>() {
       public void apply(final Label it) {
         it.setText("Aerolinea");
       }
     };
-    ObjectExtensions.<Label>operator_doubleArrow(_label_7, _function_3);
+    ObjectExtensions.<Label>operator_doubleArrow(_label_7, _function_5);
     Label _label_8 = new Label(columna3);
     ObservableValue<Control, ControlBuilder> _value_5 = _label_8.<ControlBuilder>value();
     ArenaXtendExtensions.operator_spaceship(_value_5, "unVuelo.aerolinea");
     Label _label_9 = new Label(mainPanel);
-    final Procedure1<Label> _function_4 = new Procedure1<Label>() {
+    final Procedure1<Label> _function_6 = new Procedure1<Label>() {
       public void apply(final Label it) {
         it.setText("Asientos");
       }
     };
-    ObjectExtensions.<Label>operator_doubleArrow(_label_9, _function_4);
+    ObjectExtensions.<Label>operator_doubleArrow(_label_9, _function_6);
     IntegerRange _upTo = new IntegerRange(1, ReservaAsientoAppModel.MAX_ASIENTO);
-    final Consumer<Integer> _function_5 = new Consumer<Integer>() {
+    final Consumer<Integer> _function_7 = new Consumer<Integer>() {
       public void accept(final Integer i) {
         final Panel filaPanel = new Panel(mainPanel);
         HorizontalLayout _horizontalLayout = new HorizontalLayout();
@@ -152,43 +161,43 @@ public class ReservaAsiento extends TransactionalDialog<ReservaAsientoAppModel> 
         _asientosDeFila.forEach(_function);
       }
     };
-    _upTo.forEach(_function_5);
-    Panel _panel_8 = new Panel(mainPanel);
+    _upTo.forEach(_function_7);
+    Panel _panel_7 = new Panel(mainPanel);
     HorizontalLayout _horizontalLayout_2 = new HorizontalLayout();
-    final Panel linea3 = _panel_8.setLayout(_horizontalLayout_2);
-    Panel _panel_9 = new Panel(linea3);
+    final Panel linea3 = _panel_7.setLayout(_horizontalLayout_2);
+    Panel _panel_8 = new Panel(linea3);
     VerticalLayout _verticalLayout_5 = new VerticalLayout();
-    final Panel columna4 = _panel_9.setLayout(_verticalLayout_5);
+    final Panel columna4 = _panel_8.setLayout(_verticalLayout_5);
     Label _label_10 = new Label(columna4);
-    final Procedure1<Label> _function_6 = new Procedure1<Label>() {
+    final Procedure1<Label> _function_8 = new Procedure1<Label>() {
       public void apply(final Label it) {
         it.setText("Asiento seleccionado");
         it.setForeground(Color.BLUE);
       }
     };
-    ObjectExtensions.<Label>operator_doubleArrow(_label_10, _function_6);
+    ObjectExtensions.<Label>operator_doubleArrow(_label_10, _function_8);
     Label _label_11 = new Label(columna4);
     ObservableValue<Control, ControlBuilder> _value_6 = _label_11.<ControlBuilder>value();
     ArenaXtendExtensions.operator_spaceship(_value_6, "asientoSeleccionado");
-    Panel _panel_10 = new Panel(linea3);
+    Panel _panel_9 = new Panel(linea3);
     VerticalLayout _verticalLayout_6 = new VerticalLayout();
-    final Panel linea4 = _panel_10.setLayout(_verticalLayout_6);
+    final Panel linea4 = _panel_9.setLayout(_verticalLayout_6);
     Label _label_12 = new Label(linea4);
-    final Procedure1<Label> _function_7 = new Procedure1<Label>() {
+    final Procedure1<Label> _function_9 = new Procedure1<Label>() {
       public void apply(final Label it) {
         it.setText("Monto a Pagar");
         it.setForeground(Color.BLUE);
       }
     };
-    ObjectExtensions.<Label>operator_doubleArrow(_label_12, _function_7);
+    ObjectExtensions.<Label>operator_doubleArrow(_label_12, _function_9);
     Label _label_13 = new Label(linea4);
     ObservableValue<Control, ControlBuilder> _value_7 = _label_13.<ControlBuilder>value();
     ArenaXtendExtensions.operator_spaceship(_value_7, "asientoSeleccionado.tarifa.precio");
-    Panel _panel_11 = new Panel(linea3);
+    Panel _panel_10 = new Panel(linea3);
     VerticalLayout _verticalLayout_7 = new VerticalLayout();
-    final Panel linea5 = _panel_11.setLayout(_verticalLayout_7);
+    final Panel linea5 = _panel_10.setLayout(_verticalLayout_7);
     Button _button = new Button(linea5);
-    final Procedure1<Button> _function_8 = new Procedure1<Button>() {
+    final Procedure1<Button> _function_10 = new Procedure1<Button>() {
       public void apply(final Button it) {
         it.setCaption("Reservar");
         final Action _function = new Action() {
@@ -203,6 +212,6 @@ public class ReservaAsiento extends TransactionalDialog<ReservaAsientoAppModel> 
         it.disableOnError();
       }
     };
-    ObjectExtensions.<Button>operator_doubleArrow(_button, _function_8);
+    ObjectExtensions.<Button>operator_doubleArrow(_button, _function_10);
   }
 }

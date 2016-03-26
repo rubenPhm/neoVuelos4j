@@ -14,6 +14,9 @@ import org.uqbar.arena.widgets.Panel
 import org.uqbar.arena.windows.WindowOwner
 
 import static extension org.uqbar.arena.xtend.ArenaXtendExtensions.*
+import org.uqbar.arena.widgets.tables.Table
+import org.uqbar.arena.widgets.tables.Column
+import Dominio.Vuelo
 
 class ReservaAsiento extends TransactionalDialog <ReservaAsientoAppModel> {
 
@@ -49,13 +52,25 @@ class ReservaAsiento extends TransactionalDialog <ReservaAsientoAppModel> {
 	
 	new Label(columna2) => [
 			text = "Tramos"]	
-		
-	new Panel(columna2) => [layout = new HorizontalLayout
-			new List(it) => [
-				var propiedadCondimentos = bindItemsToProperty("unVuelo.escalas")
-				//propiedadCondimentos.adapter = new PropertyAdapter(typeof(Escala), "destinoX")
-			]]
 			
+	val table = new Table<Escala>(columna2, typeof(Escala)) => [
+			bindItemsToProperty("unVuelo.escalas")
+		]
+
+		new Column<Escala>(table) => [
+			title = "Destino Intermedio"
+			fixedSize = 200
+			bindContentsToProperty("destino.pais")
+		]
+
+		new Column<Escala>(table) => [
+			title = "Llegada"
+			fixedSize = 100
+			bindContentsToProperty("horaLlegada")
+		]	
+		
+		
+		
 	val columna3 = new Panel(linea2).layout = new VerticalLayout
 	new Label(columna3) => [
 			text = "Aerolinea"
@@ -113,6 +128,9 @@ class ReservaAsiento extends TransactionalDialog <ReservaAsientoAppModel> {
 			setAsDefault
 			disableOnError
 		]
+		
+	
+		
 		
 	}
 

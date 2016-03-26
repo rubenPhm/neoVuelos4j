@@ -3,10 +3,12 @@ package Runnable
 import AppModel.BusquedaVueloAppModel
 import Dominio.Aeropuerto
 import Dominio.Asiento
+import Dominio.Escala
 import Dominio.Tarifa
 import Dominio.Usuario
 import Dominio.Vuelo
 import Vista.BusquedaVuelo
+import java.util.ArrayList
 import java.util.Calendar
 import java.util.List
 import org.uqbar.arena.Application

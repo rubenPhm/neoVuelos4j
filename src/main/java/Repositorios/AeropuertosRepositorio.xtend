@@ -11,6 +11,7 @@ class AeropuertosRepositorio {
 
 	public new() {
 		todosLosAeropuertos.add(new Aeropuerto("Buenos Aires", "Argentina"))
+		todosLosAeropuertos.add(new Aeropuerto("dasda", "Buenos Aires"))
 	}
 
 	static public def AeropuertosRepositorio getInstance() {

@@ -12,7 +12,7 @@ class Asiento {
 	int fila
 	String ubicacion
 	Date fechaDeReserva
-	Usuario duenio
+	Usuario duenio = null
 	Tarifa tarifa
 	Vuelo vuelo
 	
