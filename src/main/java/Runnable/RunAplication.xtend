@@ -7,6 +7,8 @@ import Dominio.Escala
 import Dominio.Tarifa
 import Dominio.Usuario
 import Dominio.Vuelo
+import Repositorios.AeropuertosRepositorio
+import Repositorios.VuelosRepositorio
 import Vista.BusquedaVuelo
 import java.util.ArrayList
 import java.util.Calendar
@@ -23,20 +25,31 @@ class RunAplication extends Application {
 	override protected Window<?> createMainWindow() {
 		
 		
-		var ezeiza = new Aeropuerto("ezeiza", "Buenos Aires") 
-		var ricafort = new Aeropuerto ("ricafort", "Miami")
-		var sanPablo = new Aeropuerto ("brazuca", "San Pablo")
+		var Aeropuerto ezeiza = new Aeropuerto("Ezeiza", "Buenos Aires") 
+		var Aeropuerto costanera = new Aeropuerto("Aeroparque", "Buenos Aires") 
+		var Aeropuerto ricafort = new Aeropuerto ("Miami", "EEUU")
+		var Aeropuerto brazuca = new Aeropuerto ("San Pablo", "Brasil")
+	
+		AeropuertosRepositorio.getInstance().todosLosAeropuertos.add(ezeiza)
+		AeropuertosRepositorio.getInstance().todosLosAeropuertos.add(costanera)
+		AeropuertosRepositorio.getInstance().todosLosAeropuertos.add(ricafort)
+		AeropuertosRepositorio.getInstance().todosLosAeropuertos.add(brazuca)
+		
+		
+		var Usuario gabo = new Usuario("gabo","gabo")
+			gabo.nombre = "Gabriel Perez"
+		var Usuario usr = new Usuario("adrian","adrian")
+			usr.nombre = "Adrian Barbani"
+		
 		
 				
 		
 		//return new Login(this)
-		var Usuario usr = new Usuario("adrian","adrian")
 
-		usr.nombre = "Adrian Barbani"
 		var Vuelo vuelo = new Vuelo()
 		var Escala escala1 = new Escala()
 		escala1.horaLlegada = Calendar.getInstance.getTime()
-		escala1.destino = sanPablo
+		escala1.destino = brazuca
 		
 		var misEscalas = new ArrayList <Escala>
 		
@@ -47,7 +60,7 @@ class RunAplication extends Application {
 		vuelo.destino = ricafort
 		vuelo.fechaSalida = Calendar.getInstance.getTime()
 		vuelo.fechaLlegada = Calendar.getInstance.getTime()
-		var List<Asiento> asientos = newArrayList
+		var List<Asiento> asientos = new ArrayList <Asiento>
 		
 		var asiento1 = new Asiento(1, "centro")
 		asiento1.duenio = usr
@@ -62,6 +75,11 @@ class RunAplication extends Application {
 		asientos.add(new Asiento(9, "centro"))
 		asientos.add(new Asiento(7, "medio"))
 		asientos.add(new Asiento(5, "centro"))
+		
+		vuelo.asientos = asientos
+		
+		VuelosRepositorio.getInstance().todosLosVuelos.add(vuelo)
+		
     	return new BusquedaVuelo(this, new BusquedaVueloAppModel(usr))
 //     	return new ReservaAsiento(this, new ReservaAsientoAppModel(usr, vuelo, asientos))
       

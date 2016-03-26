@@ -114,7 +114,7 @@ class BusquedaVuelo extends SimpleWindow<BusquedaVueloAppModel> {
 		new Column<Vuelo>(table) => [
 			title = "Escalas"
 			fixedSize = 200
-			bindContentsToProperty("escalas.size()")
+			bindContentsToProperty("cantidadEscalas")
 		]
 
 		new Column<Vuelo>(table) => [

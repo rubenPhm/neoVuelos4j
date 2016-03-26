@@ -22,7 +22,7 @@ class BusquedaVueloAppModel {
 	String destino
 	Date fechaDesde
 	Date fechaHasta
-	float tarifaMax
+	String tarifaMax
 		
 	Vuelo vueloSeleccionado
 	
@@ -39,26 +39,10 @@ class BusquedaVueloAppModel {
 	
 	def buscar() {
 		resultados = new Busqueda(origen, destino, fechaDesde, fechaHasta, tarifaMax).buscar(usr)
-				
-//		var vuelo = new Vuelo()
-//		vuelo.origen = origen
-//		vuelo.destino = destino
-//		vuelo.fechaLlegada = fechaHasta
-//		vuelo.fechaSalida = fechaDesde
-//		val busqueda = new Busqueda()
-//		busqueda.buscarVuelo(vuelo, usr)
-//		resultados = busqueda.resultados
-//		
-//		resultados.filter[ unVuelo | unVuelo.obtenerAsientosQueValganMenosQue(tarifaMax).size() > 0].toList
-//		
-//		for(Vuelo unVuelo: resultados){
-//			asientosPorVuelo.put(vuelo, vuelo.obtenerAsientosQueValganMenosQue(tarifaMax))
-//		}
-		
 	}
 	
 	def separarAsientos() {
-		asientosDisponibles = vueloSeleccionado.asientosValorMaximo(tarifaMax)
+		asientosDisponibles = vueloSeleccionado.asientosValorMaximo(Float.parseFloat(tarifaMax))
 	}
 	
 }

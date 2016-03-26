@@ -5,9 +5,11 @@ import Dominio.Asiento;
 import Dominio.Escala;
 import Dominio.Usuario;
 import com.google.common.base.Objects;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.eclipse.xtend.lib.annotations.Accessors;
+import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.Pure;
@@ -30,6 +32,13 @@ public class Vuelo {
   private Date fechaLlegada;
   
   private List<Escala> escalas;
+  
+  public Vuelo() {
+    ArrayList<Escala> _arrayList = new ArrayList<Escala>();
+    this.escalas = _arrayList;
+    ArrayList<Asiento> _arrayList_1 = new ArrayList<Asiento>();
+    this.asientos = _arrayList_1;
+  }
   
   public int getCantidadDeAsientosLibres() {
     final Function1<Asiento, Boolean> _function = new Function1<Asiento, Boolean>() {
@@ -54,7 +63,17 @@ public class Vuelo {
   }
   
   public boolean contTarifaMenorA(final float tarifa) {
-    return true;
+    boolean _and = false;
+    boolean _notEquals = (!Objects.equal(this.asientos, null));
+    if (!_notEquals) {
+      _and = false;
+    } else {
+      List<Asiento> _asientosValorMaximo = this.asientosValorMaximo(tarifa);
+      int _length = ((Object[])Conversions.unwrapArray(_asientosValorMaximo, Object.class)).length;
+      boolean _lessThan = (0 < _length);
+      _and = _lessThan;
+    }
+    return _and;
   }
   
   public List<Asiento> asientosValorMaximo(final float tarifa) {
@@ -74,6 +93,10 @@ public class Vuelo {
   
   public String getNombreDestino() {
     return this.destino.getNombre();
+  }
+  
+  public int getCantidadEscalas() {
+    return this.escalas.size();
   }
   
   @Pure

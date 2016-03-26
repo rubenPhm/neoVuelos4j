@@ -20,10 +20,6 @@ public class AeropuertosRepositorio {
   public List<Aeropuerto> todosLosAeropuertos = new ArrayList<Aeropuerto>();
   
   public AeropuertosRepositorio() {
-    Aeropuerto _aeropuerto = new Aeropuerto("Buenos Aires", "Argentina");
-    this.todosLosAeropuertos.add(_aeropuerto);
-    Aeropuerto _aeropuerto_1 = new Aeropuerto("dasda", "Buenos Aires");
-    this.todosLosAeropuertos.add(_aeropuerto_1);
   }
   
   public static AeropuertosRepositorio getInstance() {

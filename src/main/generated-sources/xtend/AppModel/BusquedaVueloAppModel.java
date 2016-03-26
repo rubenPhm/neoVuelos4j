@@ -28,7 +28,7 @@ public class BusquedaVueloAppModel {
   
   private Date fechaHasta;
   
-  private float tarifaMax;
+  private String tarifaMax;
   
   private Vuelo vueloSeleccionado;
   
@@ -52,7 +52,8 @@ public class BusquedaVueloAppModel {
   }
   
   public List<Asiento> separarAsientos() {
-    List<Asiento> _asientosValorMaximo = this.vueloSeleccionado.asientosValorMaximo(this.tarifaMax);
+    float _parseFloat = Float.parseFloat(this.tarifaMax);
+    List<Asiento> _asientosValorMaximo = this.vueloSeleccionado.asientosValorMaximo(_parseFloat);
     return this.asientosDisponibles = _asientosValorMaximo;
   }
   
@@ -111,11 +112,11 @@ public class BusquedaVueloAppModel {
   }
   
   @Pure
-  public float getTarifaMax() {
+  public String getTarifaMax() {
     return this.tarifaMax;
   }
   
-  public void setTarifaMax(final float tarifaMax) {
+  public void setTarifaMax(final String tarifaMax) {
     this.tarifaMax = tarifaMax;
   }
   

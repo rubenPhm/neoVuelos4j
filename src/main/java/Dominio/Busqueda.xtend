@@ -16,10 +16,10 @@ class Busqueda {
 	String destino
 	Date desdeFecha
 	Date hastaFecha
-	float maxPrecio
+	String maxPrecio 
 	
 	
-	new(String inicio, String fin, Date desde, Date hasta, float max){
+	new(String inicio, String fin, Date desde, Date hasta, String max){
 		origen = inicio
 		destino = fin
 		desdeFecha = desde
@@ -51,8 +51,11 @@ class Busqueda {
 		return this
 	}
 	
-	def Busqueda conPrecioMax(float tarifa){
-		if(! tarifa.equals(null)){ resultados = resultados.filter[contTarifaMenorA(tarifa)].toList}
+	def Busqueda conPrecioMax(String tarifaStr){
+		if( tarifaStr != null){ 
+			val float tarifa = Float.parseFloat(tarifaStr)
+			resultados = resultados.filter[contTarifaMenorA(tarifa)].toList
+		}
 		return this
 	}
 	

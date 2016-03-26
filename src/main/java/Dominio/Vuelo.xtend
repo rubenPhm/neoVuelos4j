@@ -1,5 +1,6 @@
 	package Dominio
 
+import java.util.ArrayList
 import java.util.Date
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
@@ -17,6 +18,13 @@ class Vuelo {
 	Date fechaLlegada
 	List<Escala> escalas
 	
+	new(){
+		escalas = new ArrayList<Escala>
+		asientos = new ArrayList<Asiento>
+	}
+	
+	
+	
 	def getCantidadDeAsientosLibres(){
 		asientos.filter[ asiento | asiento.duenio == null].toList.size()
 	}
@@ -30,8 +38,7 @@ class Vuelo {
 	}
 	
 	def contTarifaMenorA(float tarifa){
-//		return ((asientos != null) && (0 < this.asientosValorMaximo(tarifa).length))
-		true
+		return ((asientos != null) && (0 < this.asientosValorMaximo(tarifa).length))
 	}
 	
 	def asientosValorMaximo (float tarifa){
@@ -44,5 +51,9 @@ class Vuelo {
 	
 	def getNombreDestino(){
 		destino.nombre
+	}
+	
+	def getCantidadEscalas(){
+		escalas.size
 	}
 }

@@ -1,6 +1,5 @@
 package Repositorios;
 
-import Dominio.Aeropuerto;
 import Dominio.Vuelo;
 import com.google.common.base.Objects;
 import java.util.ArrayList;
@@ -15,13 +14,9 @@ import org.uqbar.commons.utils.Observable;
 public class VuelosRepositorio {
   private static VuelosRepositorio repositorio = null;
   
-  private List<Vuelo> todosLosVuelos = new ArrayList<Vuelo>();
+  public List<Vuelo> todosLosVuelos = new ArrayList<Vuelo>();
   
-  public VuelosRepositorio() {
-    Vuelo unVuelito = new Vuelo();
-    Aeropuerto _aeropuerto = new Aeropuerto("Buenos Aires", "Argentina");
-    unVuelito.setOrigen(_aeropuerto);
-    this.todosLosVuelos.add(unVuelito);
+  protected VuelosRepositorio() {
   }
   
   public static VuelosRepositorio getInstance() {

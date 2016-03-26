@@ -172,7 +172,7 @@ public class BusquedaVuelo extends SimpleWindow<BusquedaVueloAppModel> {
         public void apply(final Column<Vuelo> it) {
           it.setTitle("Escalas");
           it.setFixedSize(200);
-          it.bindContentsToProperty("escalas.size()");
+          it.bindContentsToProperty("cantidadEscalas");
         }
       };
       ObjectExtensions.<Column<Vuelo>>operator_doubleArrow(_column_4, _function_5);
