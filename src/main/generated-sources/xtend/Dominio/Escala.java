@@ -4,7 +4,9 @@ import Dominio.Aeropuerto;
 import java.util.Date;
 import org.eclipse.xtend.lib.annotations.Accessors;
 import org.eclipse.xtext.xbase.lib.Pure;
+import org.uqbar.commons.utils.Observable;
 
+@Observable
 @Accessors
 @SuppressWarnings("all")
 public class Escala {

@@ -24,7 +24,8 @@ class RunAplication extends Application {
 		
 		
 		var ezeiza = new Aeropuerto("ezeiza", "Buenos Aires") 
-		var aeroplata = new Aeropuerto ("aeroplata", "Mar del Plata")
+		var ricafort = new Aeropuerto ("ricafort", "Miami")
+		var sanPablo = new Aeropuerto ("brazuca", "San Pablo")
 		
 				
 		
@@ -34,7 +35,8 @@ class RunAplication extends Application {
 		usr.nombre = "Adrian Barbani"
 		var Vuelo vuelo = new Vuelo()
 		var Escala escala1 = new Escala()
-		escala1.destino = ezeiza
+		escala1.horaLlegada = Calendar.getInstance.getTime()
+		escala1.destino = sanPablo
 		
 		var misEscalas = new ArrayList <Escala>
 		
@@ -42,7 +44,7 @@ class RunAplication extends Application {
 		vuelo.escalas = misEscalas
 		vuelo.aerolinea = "Aerolineas Argentinas"
 		vuelo.origen = ezeiza
-		vuelo.destino = aeroplata
+		vuelo.destino = ricafort
 		vuelo.fechaSalida = Calendar.getInstance.getTime()
 		vuelo.fechaLlegada = Calendar.getInstance.getTime()
 		var List<Asiento> asientos = newArrayList

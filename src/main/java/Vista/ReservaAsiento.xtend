@@ -53,29 +53,23 @@ class ReservaAsiento extends TransactionalDialog <ReservaAsientoAppModel> {
 	new Label(columna2) => [
 			text = "Tramos"]	
 			
-	val table = new Table<Vuelo>(columna2, typeof(Vuelo))
-	
-		new Panel(columna2) => [layout = new HorizontalLayout
-			new List(it) => [
-				var propiedadCondiciones = bindItemsToProperty("unVuelo.escalas")
-				propiedadCondiciones.adapter = new PropertyAdapter(typeof(Escala), "destino.pais") 
-				width = 150
-				height = 30
-	]]
-				
-		
-		new Column<Vuelo>(table) => [
-			title = "Destino Intermedio"
-			fixedSize = 200
-			bindContentsToProperty("unVuelo.escalas.destino.pais")
-			 
+	val table = new Table<Escala>(columna2, typeof(Escala)) => [
+			bindItemsToProperty("unVuelo.escalas")
 		]
 
-		new Column<Vuelo>(table) => [
+		new Column<Escala>(table) => [
+			title = "Destino Intermedio"
+			fixedSize = 200
+			bindContentsToProperty("destino.pais")
+		]
+
+		new Column<Escala>(table) => [
 			title = "Llegada"
 			fixedSize = 100
-			bindContentsToProperty("fechaLlegada")
-		]
+			bindContentsToProperty("horaLlegada")
+		]	
+		
+		
 		
 	val columna3 = new Panel(linea2).layout = new VerticalLayout
 	new Label(columna3) => [
