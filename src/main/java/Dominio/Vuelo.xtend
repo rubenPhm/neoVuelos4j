@@ -4,7 +4,6 @@ import java.util.Date
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.uqbar.commons.utils.Observable
-import scala.Int
 
 @Accessors
 @Observable
@@ -26,4 +25,19 @@ class Vuelo {
 		asientos.filter[ asiento | asiento.tarifa.precio < precio].toList
 	}
 	
+	def conDestino(String destinoStr) {
+		destino.nombre.equals(destinoStr)
+	}
+	
+	def conOrigen(String origenStr){
+		origen.nombre.equals(origenStr)
+	}
+	
+	def contTarifaMenorA(float tarifa){
+		return (0 < this.asientosValorMaximo(tarifa).length)
+	}
+	
+	def asientosValorMaximo (float tarifa){
+		asientos.filter[precio() < tarifa].toList
+	}
 }

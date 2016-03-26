@@ -7,6 +7,6 @@ import org.uqbar.commons.utils.Observable
 @Accessors
 class Tarifa {
 	
-	int precio
+	float precio
 	
 }

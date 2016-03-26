@@ -30,5 +30,8 @@ class Asiento {
 		duenio == null
 	}
 	
+	def float precio(){
+		tarifa.getPrecio
+	}
 	
 }

@@ -10,7 +10,7 @@ class AeropuertosRepositorio {
 	public List<Aeropuerto> todosLosAeropuertos = new ArrayList<Aeropuerto>
 
 	public new() {
-		todosLosAeropuertos.add(new Aeropuerto("Buenos Aires"))
+		todosLosAeropuertos.add(new Aeropuerto("Buenos Aires", "Argentina"))
 	}
 
 	static public def AeropuertosRepositorio getInstance() {

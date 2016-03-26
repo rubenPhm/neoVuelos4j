@@ -4,9 +4,10 @@ import Dominio.Vuelo;
 import com.google.common.base.Objects;
 import java.util.ArrayList;
 import java.util.List;
-import org.eclipse.xtext.xbase.lib.Functions.Function1;
-import org.eclipse.xtext.xbase.lib.IterableExtensions;
+import org.eclipse.xtend.lib.annotations.Accessors;
+import org.eclipse.xtext.xbase.lib.Pure;
 
+@Accessors
 @SuppressWarnings("all")
 public class VuelosRepositorio {
   private static VuelosRepositorio repositorio = null;
@@ -29,14 +30,12 @@ public class VuelosRepositorio {
     return _xblockexpression;
   }
   
-  public List<Vuelo> obtenerVuelosQueCumplanCon(final Vuelo vuelo) {
-    final Function1<Vuelo, Boolean> _function = new Function1<Vuelo, Boolean>() {
-      public Boolean apply(final Vuelo unVuelo) {
-        return Boolean.valueOf(unVuelo.equals(vuelo));
-      }
-    };
-    Iterable<Vuelo> _filter = IterableExtensions.<Vuelo>filter(this.todosLosVuelos, _function);
-    final List<Vuelo> vuelos = IterableExtensions.<Vuelo>toList(_filter);
-    return vuelos;
+  @Pure
+  public List<Vuelo> getTodosLosVuelos() {
+    return this.todosLosVuelos;
+  }
+  
+  public void setTodosLosVuelos(final List<Vuelo> todosLosVuelos) {
+    this.todosLosVuelos = todosLosVuelos;
   }
 }

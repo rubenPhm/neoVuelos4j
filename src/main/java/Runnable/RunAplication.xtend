@@ -1,12 +1,12 @@
 package Runnable
 
-import AppModel.ReservaAsientoAppModel
+import AppModel.BusquedaVueloAppModel
 import Dominio.Aeropuerto
 import Dominio.Asiento
 import Dominio.Tarifa
 import Dominio.Usuario
 import Dominio.Vuelo
-import Vista.ReservaAsiento
+import Vista.BusquedaVuelo
 import java.util.Calendar
 import java.util.List
 import org.uqbar.arena.Application
@@ -22,7 +22,8 @@ class RunAplication extends Application {
 		
 		
 		var ezeiza = new Aeropuerto("ezeiza", "Buenos Aires") 
-		var aeroplata = new Aeropuerto ("aeroplata", "Mar del Plata")
+		var ricafort = new Aeropuerto ("ricafort", "Miami")
+		var sanPablo = new Aeropuerto ("brazuca", "San Pablo")
 		
 				
 		
@@ -31,9 +32,17 @@ class RunAplication extends Application {
 
 		usr.nombre = "Adrian Barbani"
 		var Vuelo vuelo = new Vuelo()
+		var Escala escala1 = new Escala()
+		escala1.horaLlegada = Calendar.getInstance.getTime()
+		escala1.destino = sanPablo
+		
+		var misEscalas = new ArrayList <Escala>
+		
+		misEscalas.add(escala1) 
+		vuelo.escalas = misEscalas
 		vuelo.aerolinea = "Aerolineas Argentinas"
 		vuelo.origen = ezeiza
-		vuelo.destino = aeroplata
+		vuelo.destino = ricafort
 		vuelo.fechaSalida = Calendar.getInstance.getTime()
 		vuelo.fechaLlegada = Calendar.getInstance.getTime()
 		var List<Asiento> asientos = newArrayList
@@ -51,8 +60,8 @@ class RunAplication extends Application {
 		asientos.add(new Asiento(9, "centro"))
 		asientos.add(new Asiento(7, "medio"))
 		asientos.add(new Asiento(5, "centro"))
-      //return new BusquedaVuelo(this, new BusquedaVueloAppModel(usr))
-      return new ReservaAsiento(this, new ReservaAsientoAppModel(usr, vuelo, asientos))
+    	return new BusquedaVuelo(this, new BusquedaVueloAppModel(usr))
+//     	return new ReservaAsiento(this, new ReservaAsientoAppModel(usr, vuelo, asientos))
       
 	}
 

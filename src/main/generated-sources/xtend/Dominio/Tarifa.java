@@ -8,14 +8,14 @@ import org.uqbar.commons.utils.Observable;
 @Accessors
 @SuppressWarnings("all")
 public class Tarifa {
-  private int precio;
+  private float precio;
   
   @Pure
-  public int getPrecio() {
+  public float getPrecio() {
     return this.precio;
   }
   
-  public void setPrecio(final int precio) {
+  public void setPrecio(final float precio) {
     this.precio = precio;
   }
 }

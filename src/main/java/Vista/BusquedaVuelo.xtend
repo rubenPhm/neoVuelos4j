@@ -1,6 +1,7 @@
 package Vista
 
 import AppModel.BusquedaVueloAppModel
+import AppModel.ReservaAsientoAppModel
 import Dominio.Vuelo
 import org.uqbar.arena.bindings.ObservableProperty
 import org.uqbar.arena.layout.HorizontalLayout
@@ -127,5 +128,21 @@ class BusquedaVuelo extends SimpleWindow<BusquedaVueloAppModel> {
 			]
 			setAsDefault
 		]
+		
+		new Button(panel) => [
+			caption = "Reservas"
+			onClick = [|
+				this.reservas
+			]
+			setAsDefault
+		]
 	}
+	
+	def reservas() {
+		modelObject.separarAsientos()
+		val proxModel = new ReservaAsientoAppModel(modelObject.usr, modelObject.vueloSeleccionado, modelObject.asientosDisponibles)
+			
+//		this.openDialog( new ReservaAsiento( this, proxModel) )
+	}
+	
 }

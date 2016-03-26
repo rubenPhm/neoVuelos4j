@@ -1,6 +1,5 @@
 package AppModel
 
-import Dominio.Aeropuerto
 import Dominio.Asiento
 import Dominio.Busqueda
 import Dominio.Usuario
@@ -16,16 +15,21 @@ import org.uqbar.commons.utils.Observable
 @Observable	
 class BusquedaVueloAppModel {
 	
+	Usuario usr	
+	List <String> todosLosAeropuertos
+	
 	String origen
 	String destino
 	Date fechaDesde
 	Date fechaHasta
-	int tarifaMax
-	Aeropuerto vueloSeleccionado
+	float tarifaMax
+		
+	Vuelo vueloSeleccionado
+	
 	List <Vuelo> resultados
-	Usuario usr	
-	List <String> todosLosAeropuertos
+	
 	Map <Vuelo, List<Asiento> > asientosPorVuelo
+	List<Asiento> asientosDisponibles
 	
 	 
 	new (Usuario unUsr){
@@ -34,23 +38,27 @@ class BusquedaVueloAppModel {
 	}
 	
 	def buscar() {
-		var vuelo = new Vuelo()
-		vuelo.origen = origen
-		vuelo.destino = destino
-		vuelo.fechaLlegada = fechaHasta
-		vuelo.fechaSalida = fechaDesde
+		resultados = new Busqueda(origen, destino, fechaDesde, fechaHasta, tarifaMax).buscar(usr)
+				
+//		var vuelo = new Vuelo()
+//		vuelo.origen = origen
+//		vuelo.destino = destino
+//		vuelo.fechaLlegada = fechaHasta
+//		vuelo.fechaSalida = fechaDesde
+//		val busqueda = new Busqueda()
+//		busqueda.buscarVuelo(vuelo, usr)
+//		resultados = busqueda.resultados
+//		
+//		resultados.filter[ unVuelo | unVuelo.obtenerAsientosQueValganMenosQue(tarifaMax).size() > 0].toList
+//		
+//		for(Vuelo unVuelo: resultados){
+//			asientosPorVuelo.put(vuelo, vuelo.obtenerAsientosQueValganMenosQue(tarifaMax))
+//		}
 		
-		val busqueda = new Busqueda()
-		busqueda.buscarVuelo(vuelo, usr)
-		resultados = busqueda.resultados
-		
-		resultados.filter[ unVuelo | unVuelo.obtenerAsientosQueValganMenosQue(tarifaMax).size() > 0].toList
-		
-		for(Vuelo unVuelo: resultados){
-			asientosPorVuelo.put(vuelo, vuelo.obtenerAsientosQueValganMenosQue(tarifaMax)) 
-			
-		}
-		
+	}
+	
+	def separarAsientos() {
+		asientosDisponibles = vueloSeleccionado.asientosValorMaximo(tarifaMax)
 	}
 	
 }

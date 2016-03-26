@@ -1,7 +1,7 @@
 package AppModel;
 
-import Dominio.Aeropuerto;
 import Dominio.Asiento;
+import Dominio.Busqueda;
 import Dominio.Usuario;
 import Dominio.Vuelo;
 import Repositorios.AeropuertosRepositorio;
@@ -16,6 +16,10 @@ import org.uqbar.commons.utils.Observable;
 @Observable
 @SuppressWarnings("all")
 public class BusquedaVueloAppModel {
+  private Usuario usr;
+  
+  private List<String> todosLosAeropuertos;
+  
   private String origen;
   
   private String destino;
@@ -24,17 +28,15 @@ public class BusquedaVueloAppModel {
   
   private Date fechaHasta;
   
-  private int tarifaMax;
+  private float tarifaMax;
   
-  private Aeropuerto vueloSeleccionado;
+  private Vuelo vueloSeleccionado;
   
   private List<Vuelo> resultados;
   
-  private Usuario usr;
-  
-  private List<String> todosLosAeropuertos;
-  
   private Map<Vuelo, List<Asiento>> asientosPorVuelo;
+  
+  private List<Asiento> asientosDisponibles;
   
   public BusquedaVueloAppModel(final Usuario unUsr) {
     this.usr = unUsr;
@@ -43,10 +45,33 @@ public class BusquedaVueloAppModel {
     this.todosLosAeropuertos = _nombreDeTodosLosAeropuertos;
   }
   
-  public void buscar() {
-    throw new Error("Unresolved compilation problems:"
-      + "\nType mismatch: cannot convert from String to Aeropuerto"
-      + "\nType mismatch: cannot convert from String to Aeropuerto");
+  public List<Vuelo> buscar() {
+    Busqueda _busqueda = new Busqueda(this.origen, this.destino, this.fechaDesde, this.fechaHasta, this.tarifaMax);
+    List<Vuelo> _buscar = _busqueda.buscar(this.usr);
+    return this.resultados = _buscar;
+  }
+  
+  public List<Asiento> separarAsientos() {
+    List<Asiento> _asientosValorMaximo = this.vueloSeleccionado.asientosValorMaximo(this.tarifaMax);
+    return this.asientosDisponibles = _asientosValorMaximo;
+  }
+  
+  @Pure
+  public Usuario getUsr() {
+    return this.usr;
+  }
+  
+  public void setUsr(final Usuario usr) {
+    this.usr = usr;
+  }
+  
+  @Pure
+  public List<String> getTodosLosAeropuertos() {
+    return this.todosLosAeropuertos;
+  }
+  
+  public void setTodosLosAeropuertos(final List<String> todosLosAeropuertos) {
+    this.todosLosAeropuertos = todosLosAeropuertos;
   }
   
   @Pure
@@ -86,20 +111,20 @@ public class BusquedaVueloAppModel {
   }
   
   @Pure
-  public int getTarifaMax() {
+  public float getTarifaMax() {
     return this.tarifaMax;
   }
   
-  public void setTarifaMax(final int tarifaMax) {
+  public void setTarifaMax(final float tarifaMax) {
     this.tarifaMax = tarifaMax;
   }
   
   @Pure
-  public Aeropuerto getVueloSeleccionado() {
+  public Vuelo getVueloSeleccionado() {
     return this.vueloSeleccionado;
   }
   
-  public void setVueloSeleccionado(final Aeropuerto vueloSeleccionado) {
+  public void setVueloSeleccionado(final Vuelo vueloSeleccionado) {
     this.vueloSeleccionado = vueloSeleccionado;
   }
   
@@ -113,29 +138,20 @@ public class BusquedaVueloAppModel {
   }
   
   @Pure
-  public Usuario getUsr() {
-    return this.usr;
-  }
-  
-  public void setUsr(final Usuario usr) {
-    this.usr = usr;
-  }
-  
-  @Pure
-  public List<String> getTodosLosAeropuertos() {
-    return this.todosLosAeropuertos;
-  }
-  
-  public void setTodosLosAeropuertos(final List<String> todosLosAeropuertos) {
-    this.todosLosAeropuertos = todosLosAeropuertos;
-  }
-  
-  @Pure
   public Map<Vuelo, List<Asiento>> getAsientosPorVuelo() {
     return this.asientosPorVuelo;
   }
   
   public void setAsientosPorVuelo(final Map<Vuelo, List<Asiento>> asientosPorVuelo) {
     this.asientosPorVuelo = asientosPorVuelo;
+  }
+  
+  @Pure
+  public List<Asiento> getAsientosDisponibles() {
+    return this.asientosDisponibles;
+  }
+  
+  public void setAsientosDisponibles(final List<Asiento> asientosDisponibles) {
+    this.asientosDisponibles = asientosDisponibles;
   }
 }

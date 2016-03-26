@@ -1,7 +1,11 @@
 package Vista;
 
 import AppModel.BusquedaVueloAppModel;
+import AppModel.ReservaAsientoAppModel;
+import Dominio.Asiento;
+import Dominio.Usuario;
 import Dominio.Vuelo;
+import java.util.List;
 import org.eclipse.xtext.xbase.lib.ObjectExtensions;
 import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 import org.uqbar.arena.bindings.ObservableProperty;
@@ -192,8 +196,34 @@ public class BusquedaVuelo extends SimpleWindow<BusquedaVueloAppModel> {
           it.setAsDefault();
         }
       };
-      _xblockexpression = ObjectExtensions.<Button>operator_doubleArrow(_button, _function);
+      ObjectExtensions.<Button>operator_doubleArrow(_button, _function);
+      Button _button_1 = new Button(panel);
+      final Procedure1<Button> _function_1 = new Procedure1<Button>() {
+        public void apply(final Button it) {
+          it.setCaption("Reservas");
+          final Action _function = new Action() {
+            public void execute() {
+              BusquedaVuelo.this.reservas();
+            }
+          };
+          it.onClick(_function);
+          it.setAsDefault();
+        }
+      };
+      _xblockexpression = ObjectExtensions.<Button>operator_doubleArrow(_button_1, _function_1);
     }
     return _xblockexpression;
+  }
+  
+  public void reservas() {
+    BusquedaVueloAppModel _modelObject = this.getModelObject();
+    _modelObject.separarAsientos();
+    BusquedaVueloAppModel _modelObject_1 = this.getModelObject();
+    Usuario _usr = _modelObject_1.getUsr();
+    BusquedaVueloAppModel _modelObject_2 = this.getModelObject();
+    Vuelo _vueloSeleccionado = _modelObject_2.getVueloSeleccionado();
+    BusquedaVueloAppModel _modelObject_3 = this.getModelObject();
+    List<Asiento> _asientosDisponibles = _modelObject_3.getAsientosDisponibles();
+    final ReservaAsientoAppModel proxModel = new ReservaAsientoAppModel(_usr, _vueloSeleccionado, _asientosDisponibles);
   }
 }
