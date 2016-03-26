@@ -14,6 +14,7 @@ import org.uqbar.arena.widgets.tables.Column
 import org.uqbar.arena.widgets.tables.Table
 import org.uqbar.arena.windows.SimpleWindow
 import org.uqbar.arena.windows.WindowOwner
+import org.uqbar.arena.layout.VerticalLayout
 
 class BusquedaVuelo extends SimpleWindow<BusquedaVueloAppModel> {
 
@@ -34,41 +35,46 @@ class BusquedaVuelo extends SimpleWindow<BusquedaVueloAppModel> {
 	def panelDeBusqueda(Panel mainPanel) {
 		
 		val lineaTitulos = new Panel(mainPanel).layout = new HorizontalLayout
-		val lineaInputs = new Panel(mainPanel).layout = new HorizontalLayout
+		
+		val colOrigen = new Panel(lineaTitulos).layout = new VerticalLayout
+		val colDestino = new Panel(lineaTitulos).layout = new VerticalLayout
+		val colDesde = new Panel(lineaTitulos).layout = new VerticalLayout
+		val colHasta = new Panel(lineaTitulos).layout = new VerticalLayout
+		val colMax = new Panel(lineaTitulos).layout = new VerticalLayout
+		
+		new Label(colOrigen).text = "Origen"
 
-		new Label(lineaTitulos).text = "Origen"
-
-		new Selector<String>(lineaInputs) => [
+		new Selector<String>(colOrigen) => [
 			allowNull = true
 			bindValueToProperty = "origen"
 			bindItems(new ObservableProperty(modelObject, "todosLosAeropuertos"))
 		]
 
-		new Label(lineaTitulos).text = "Destino"
+		new Label(colDestino).text = "Destino"
 
-		new Selector<String>(lineaInputs) => [
+		new Selector<String>(colDestino) => [
 			allowNull = true
 			bindValueToProperty = "destino"
 			bindItems(new ObservableProperty(modelObject, "todosLosAeropuertos"))
 		]
 
-		new Label(lineaTitulos).text = "Fecha Desde"
+		new Label(colDesde).text = "Fecha Desde"
 
-		new TextBox(lineaInputs) => [
+		new TextBox(colDesde) => [
 			bindValueToProperty("fechaDesde")
 			width = 150
 		]
 
-		new Label(lineaTitulos).text = "Fecha Hasta"
+		new Label(colHasta).text = "Fecha Hasta"
 
-		new TextBox(lineaInputs) => [
+		new TextBox(colHasta) => [
 			bindValueToProperty("fechaHasta")
 			width = 150
 		]
 
-		new Label(lineaTitulos).text = "Precio maximo"
+		new Label(colMax).text = "Precio maximo"
 
-		new TextBox(lineaInputs) => [
+		new TextBox(colMax) => [
 			bindValueToProperty("tarifaMax")
 			width = 150
 		]
@@ -84,13 +90,13 @@ class BusquedaVuelo extends SimpleWindow<BusquedaVueloAppModel> {
 		new Column<Vuelo>(table) => [
 			title = "Origen"
 			fixedSize = 200
-			bindContentsToProperty("origen")
+			bindContentsToProperty("nombreOrigen")
 		]
 
 		new Column<Vuelo>(table) => [
 			title = "Destino"
 			fixedSize = 100
-			bindContentsToProperty("destino")
+			bindContentsToProperty("nombreDestino")
 		]
 
 		new Column<Vuelo>(table) => [
@@ -100,13 +106,13 @@ class BusquedaVuelo extends SimpleWindow<BusquedaVueloAppModel> {
 		]
 
 		new Column<Vuelo>(table) => [
-			title = "llegada"
+			title = "Llegada"
 			fixedSize = 200
 			bindContentsToProperty("fechaLlegada")
 		]
 
 		new Column<Vuelo>(table) => [
-			title = "llegada"
+			title = "Escalas"
 			fixedSize = 200
 			bindContentsToProperty("escalas.size()")
 		]

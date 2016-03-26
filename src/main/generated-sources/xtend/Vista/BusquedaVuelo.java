@@ -10,6 +10,7 @@ import org.eclipse.xtext.xbase.lib.ObjectExtensions;
 import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 import org.uqbar.arena.bindings.ObservableProperty;
 import org.uqbar.arena.layout.HorizontalLayout;
+import org.uqbar.arena.layout.VerticalLayout;
 import org.uqbar.arena.widgets.Button;
 import org.uqbar.arena.widgets.Label;
 import org.uqbar.arena.widgets.Panel;
@@ -44,12 +45,24 @@ public class BusquedaVuelo extends SimpleWindow<BusquedaVueloAppModel> {
       Panel _panel = new Panel(mainPanel);
       HorizontalLayout _horizontalLayout = new HorizontalLayout();
       final Panel lineaTitulos = _panel.setLayout(_horizontalLayout);
-      Panel _panel_1 = new Panel(mainPanel);
-      HorizontalLayout _horizontalLayout_1 = new HorizontalLayout();
-      final Panel lineaInputs = _panel_1.setLayout(_horizontalLayout_1);
-      Label _label = new Label(lineaTitulos);
+      Panel _panel_1 = new Panel(lineaTitulos);
+      VerticalLayout _verticalLayout = new VerticalLayout();
+      final Panel colOrigen = _panel_1.setLayout(_verticalLayout);
+      Panel _panel_2 = new Panel(lineaTitulos);
+      VerticalLayout _verticalLayout_1 = new VerticalLayout();
+      final Panel colDestino = _panel_2.setLayout(_verticalLayout_1);
+      Panel _panel_3 = new Panel(lineaTitulos);
+      VerticalLayout _verticalLayout_2 = new VerticalLayout();
+      final Panel colDesde = _panel_3.setLayout(_verticalLayout_2);
+      Panel _panel_4 = new Panel(lineaTitulos);
+      VerticalLayout _verticalLayout_3 = new VerticalLayout();
+      final Panel colHasta = _panel_4.setLayout(_verticalLayout_3);
+      Panel _panel_5 = new Panel(lineaTitulos);
+      VerticalLayout _verticalLayout_4 = new VerticalLayout();
+      final Panel colMax = _panel_5.setLayout(_verticalLayout_4);
+      Label _label = new Label(colOrigen);
       _label.setText("Origen");
-      Selector<String> _selector = new Selector<String>(lineaInputs);
+      Selector<String> _selector = new Selector<String>(colOrigen);
       final Procedure1<Selector<String>> _function = new Procedure1<Selector<String>>() {
         public void apply(final Selector<String> it) {
           it.allowNull(true);
@@ -60,9 +73,9 @@ public class BusquedaVuelo extends SimpleWindow<BusquedaVueloAppModel> {
         }
       };
       ObjectExtensions.<Selector<String>>operator_doubleArrow(_selector, _function);
-      Label _label_1 = new Label(lineaTitulos);
+      Label _label_1 = new Label(colDestino);
       _label_1.setText("Destino");
-      Selector<String> _selector_1 = new Selector<String>(lineaInputs);
+      Selector<String> _selector_1 = new Selector<String>(colDestino);
       final Procedure1<Selector<String>> _function_1 = new Procedure1<Selector<String>>() {
         public void apply(final Selector<String> it) {
           it.allowNull(true);
@@ -73,9 +86,9 @@ public class BusquedaVuelo extends SimpleWindow<BusquedaVueloAppModel> {
         }
       };
       ObjectExtensions.<Selector<String>>operator_doubleArrow(_selector_1, _function_1);
-      Label _label_2 = new Label(lineaTitulos);
+      Label _label_2 = new Label(colDesde);
       _label_2.setText("Fecha Desde");
-      TextBox _textBox = new TextBox(lineaInputs);
+      TextBox _textBox = new TextBox(colDesde);
       final Procedure1<TextBox> _function_2 = new Procedure1<TextBox>() {
         public void apply(final TextBox it) {
           it.<Object, ControlBuilder>bindValueToProperty("fechaDesde");
@@ -83,9 +96,9 @@ public class BusquedaVuelo extends SimpleWindow<BusquedaVueloAppModel> {
         }
       };
       ObjectExtensions.<TextBox>operator_doubleArrow(_textBox, _function_2);
-      Label _label_3 = new Label(lineaTitulos);
+      Label _label_3 = new Label(colHasta);
       _label_3.setText("Fecha Hasta");
-      TextBox _textBox_1 = new TextBox(lineaInputs);
+      TextBox _textBox_1 = new TextBox(colHasta);
       final Procedure1<TextBox> _function_3 = new Procedure1<TextBox>() {
         public void apply(final TextBox it) {
           it.<Object, ControlBuilder>bindValueToProperty("fechaHasta");
@@ -93,9 +106,9 @@ public class BusquedaVuelo extends SimpleWindow<BusquedaVueloAppModel> {
         }
       };
       ObjectExtensions.<TextBox>operator_doubleArrow(_textBox_1, _function_3);
-      Label _label_4 = new Label(lineaTitulos);
+      Label _label_4 = new Label(colMax);
       _label_4.setText("Precio maximo");
-      TextBox _textBox_2 = new TextBox(lineaInputs);
+      TextBox _textBox_2 = new TextBox(colMax);
       final Procedure1<TextBox> _function_4 = new Procedure1<TextBox>() {
         public void apply(final TextBox it) {
           it.<Object, ControlBuilder>bindValueToProperty("tarifaMax");
@@ -123,7 +136,7 @@ public class BusquedaVuelo extends SimpleWindow<BusquedaVueloAppModel> {
         public void apply(final Column<Vuelo> it) {
           it.setTitle("Origen");
           it.setFixedSize(200);
-          it.bindContentsToProperty("origen");
+          it.bindContentsToProperty("nombreOrigen");
         }
       };
       ObjectExtensions.<Column<Vuelo>>operator_doubleArrow(_column, _function_1);
@@ -132,7 +145,7 @@ public class BusquedaVuelo extends SimpleWindow<BusquedaVueloAppModel> {
         public void apply(final Column<Vuelo> it) {
           it.setTitle("Destino");
           it.setFixedSize(100);
-          it.bindContentsToProperty("destino");
+          it.bindContentsToProperty("nombreDestino");
         }
       };
       ObjectExtensions.<Column<Vuelo>>operator_doubleArrow(_column_1, _function_2);
@@ -148,7 +161,7 @@ public class BusquedaVuelo extends SimpleWindow<BusquedaVueloAppModel> {
       Column<Vuelo> _column_3 = new Column<Vuelo>(table);
       final Procedure1<Column<Vuelo>> _function_4 = new Procedure1<Column<Vuelo>>() {
         public void apply(final Column<Vuelo> it) {
-          it.setTitle("llegada");
+          it.setTitle("Llegada");
           it.setFixedSize(200);
           it.bindContentsToProperty("fechaLlegada");
         }
@@ -157,7 +170,7 @@ public class BusquedaVuelo extends SimpleWindow<BusquedaVueloAppModel> {
       Column<Vuelo> _column_4 = new Column<Vuelo>(table);
       final Procedure1<Column<Vuelo>> _function_5 = new Procedure1<Column<Vuelo>>() {
         public void apply(final Column<Vuelo> it) {
-          it.setTitle("llegada");
+          it.setTitle("Escalas");
           it.setFixedSize(200);
           it.bindContentsToProperty("escalas.size()");
         }

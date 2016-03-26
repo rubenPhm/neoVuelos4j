@@ -25,7 +25,7 @@ class Busqueda {
 		desdeFecha = desde
 		hastaFecha = hasta
 		maxPrecio = max
-		resultados = new ArrayList	
+		resultados = new ArrayList <Vuelo>
 	}
 	
 	
@@ -42,17 +42,17 @@ class Busqueda {
 	}
 	
 	def Busqueda conDestino(String destino){
-		if (destino != null){resultados.filter[ conDestino(destino)].toList}
+		if (destino != null){resultados = resultados.filter[ conDestino(destino)].toList}
 		return this
 	}
 	
 	def Busqueda conOrigen(String origen){
-		if (origen != null){resultados.filter[ conOrigen(origen)].toList}
+		if (origen != null){resultados = resultados.filter[ conOrigen(origen)].toList}
 		return this
 	}
 	
 	def Busqueda conPrecioMax(float tarifa){
-		if(! tarifa.equals(null)){ resultados.filter[contTarifaMenorA(tarifa)].toList}
+		if(! tarifa.equals(null)){ resultados = resultados.filter[contTarifaMenorA(tarifa)].toList}
 		return this
 	}
 	

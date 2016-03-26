@@ -1,18 +1,24 @@
 package Repositorios
 
+import Dominio.Aeropuerto
 import Dominio.Vuelo
 import java.util.ArrayList
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
+import org.uqbar.commons.utils.Observable
 
 @Accessors
+@Observable 
 class VuelosRepositorio {
 	static VuelosRepositorio repositorio = null
 
 	List<Vuelo> todosLosVuelos = new ArrayList<Vuelo>
 
 	public new() {
-		//seteo de usuario para testing
+		var Vuelo unVuelito = new Vuelo()
+		unVuelito.setOrigen(new Aeropuerto("Buenos Aires", "Argentina"))
+		
+		todosLosVuelos.add(unVuelito)
 	}
 
 

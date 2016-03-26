@@ -3,13 +3,11 @@ package Dominio;
 import Dominio.Aeropuerto;
 import Dominio.Asiento;
 import Dominio.Escala;
-import Dominio.Tarifa;
 import Dominio.Usuario;
 import com.google.common.base.Objects;
 import java.util.Date;
 import java.util.List;
 import org.eclipse.xtend.lib.annotations.Accessors;
-import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.Pure;
@@ -45,18 +43,6 @@ public class Vuelo {
     return _list.size();
   }
   
-  public List<Asiento> obtenerAsientosQueValganMenosQue(final int precio) {
-    final Function1<Asiento, Boolean> _function = new Function1<Asiento, Boolean>() {
-      public Boolean apply(final Asiento asiento) {
-        Tarifa _tarifa = asiento.getTarifa();
-        float _precio = _tarifa.getPrecio();
-        return Boolean.valueOf((_precio < precio));
-      }
-    };
-    Iterable<Asiento> _filter = IterableExtensions.<Asiento>filter(this.asientos, _function);
-    return IterableExtensions.<Asiento>toList(_filter);
-  }
-  
   public boolean conDestino(final String destinoStr) {
     String _nombre = this.destino.getNombre();
     return _nombre.equals(destinoStr);
@@ -68,9 +54,7 @@ public class Vuelo {
   }
   
   public boolean contTarifaMenorA(final float tarifa) {
-    List<Asiento> _asientosValorMaximo = this.asientosValorMaximo(tarifa);
-    int _length = ((Object[])Conversions.unwrapArray(_asientosValorMaximo, Object.class)).length;
-    return (0 < _length);
+    return true;
   }
   
   public List<Asiento> asientosValorMaximo(final float tarifa) {
@@ -82,6 +66,14 @@ public class Vuelo {
     };
     Iterable<Asiento> _filter = IterableExtensions.<Asiento>filter(this.asientos, _function);
     return IterableExtensions.<Asiento>toList(_filter);
+  }
+  
+  public String getNombreOrigen() {
+    return this.origen.getNombre();
+  }
+  
+  public String getNombreDestino() {
+    return this.destino.getNombre();
   }
   
   @Pure

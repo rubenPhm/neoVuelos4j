@@ -1,4 +1,4 @@
-package Dominio
+	package Dominio
 
 import java.util.Date
 import java.util.List
@@ -21,10 +21,6 @@ class Vuelo {
 		asientos.filter[ asiento | asiento.duenio == null].toList.size()
 	}
 	
-	def obtenerAsientosQueValganMenosQue(int precio) {
-		asientos.filter[ asiento | asiento.tarifa.precio < precio].toList
-	}
-	
 	def conDestino(String destinoStr) {
 		destino.nombre.equals(destinoStr)
 	}
@@ -34,10 +30,19 @@ class Vuelo {
 	}
 	
 	def contTarifaMenorA(float tarifa){
-		return (0 < this.asientosValorMaximo(tarifa).length)
+//		return ((asientos != null) && (0 < this.asientosValorMaximo(tarifa).length))
+		true
 	}
 	
 	def asientosValorMaximo (float tarifa){
 		asientos.filter[precio() < tarifa].toList
+	}
+	
+	def getNombreOrigen(){
+		origen.nombre
+	}
+	
+	def getNombreDestino(){
+		destino.nombre
 	}
 }
