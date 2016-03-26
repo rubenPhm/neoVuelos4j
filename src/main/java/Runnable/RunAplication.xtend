@@ -3,10 +3,12 @@ package Runnable
 import AppModel.ReservaAsientoAppModel
 import Dominio.Aeropuerto
 import Dominio.Asiento
+import Dominio.Escala
 import Dominio.Tarifa
 import Dominio.Usuario
 import Dominio.Vuelo
 import Vista.ReservaAsiento
+import java.util.ArrayList
 import java.util.Calendar
 import java.util.List
 import org.uqbar.arena.Application
@@ -31,6 +33,13 @@ class RunAplication extends Application {
 
 		usr.nombre = "Adrian Barbani"
 		var Vuelo vuelo = new Vuelo()
+		var Escala escala1 = new Escala()
+		escala1.destino = ezeiza
+		
+		var misEscalas = new ArrayList <Escala>
+		
+		misEscalas.add(escala1) 
+		vuelo.escalas = misEscalas
 		vuelo.aerolinea = "Aerolineas Argentinas"
 		vuelo.origen = ezeiza
 		vuelo.destino = aeroplata

@@ -1,10 +1,11 @@
 package Dominio
 
 import java.util.Date
+import org.eclipse.xtend.lib.annotations.Accessors
 
+@Accessors
 class Escala {
 	
-	String destinoX
 	Aeropuerto destino
 	Date horaLlegada
 	Date horaSalida
