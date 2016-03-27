@@ -5,9 +5,9 @@ import Dominio.Busqueda
 import Dominio.Usuario
 import Dominio.Vuelo
 import Repositorios.AeropuertosRepositorio
+import java.util.ArrayList
 import java.util.Date
 import java.util.List
-import java.util.Map
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.uqbar.commons.utils.Observable
 
@@ -25,13 +25,11 @@ class BusquedaVueloAppModel {
 	String tarifaMax
 		
 	Vuelo vueloSeleccionado
+	List <Vuelo> resultados = newArrayList
+	List<Asiento> asientosDisponibles = newArrayList
 	
-	List <Vuelo> resultados
+//	Map <Vuelo, List<Asiento> > asientosPorVuelo
 	
-	Map <Vuelo, List<Asiento> > asientosPorVuelo
-	List<Asiento> asientosDisponibles
-	
-	 
 	new (Usuario unUsr){
 		usr = unUsr
 		todosLosAeropuertos = AeropuertosRepositorio.getInstance.nombreDeTodosLosAeropuertos

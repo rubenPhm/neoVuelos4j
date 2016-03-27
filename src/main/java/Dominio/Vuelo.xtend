@@ -1,6 +1,5 @@
 	package Dominio
 
-import java.util.ArrayList
 import java.util.Date
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
@@ -13,18 +12,11 @@ class Vuelo {
 	Aeropuerto origen
 	Aeropuerto destino
 	String aerolinea
-	List <Asiento> asientos
+	List <Asiento> asientos = newArrayList
 	Date fechaSalida
 	Date fechaLlegada
-	List<Escala> escalas
-	
-	new(){
-		escalas = new ArrayList<Escala>
-		asientos = new ArrayList<Asiento>
-	}
-	
-	
-	
+	List<Escala> escalas = newArrayList
+		
 	def getCantidadDeAsientosLibres(){
 		asientos.filter[ asiento | asiento.duenio == null].toList.size()
 	}

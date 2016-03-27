@@ -28,7 +28,6 @@ class Busqueda {
 		resultados = new ArrayList <Vuelo>
 	}
 	
-	
 	def buscar(Usuario usr){
 				
 		resultados = VuelosRepositorio.getInstance.getTodosLosVuelos
@@ -63,21 +62,4 @@ class Busqueda {
 		usuarioQueRealizaLaBusqueda = usr
 		fechaEnLaQueSeRealizoLaBusqueda = Calendar.getInstance().getTime();
 	}
-	
-	
-	
-	
-	
-//	new(){
-//		resultados = new ArrayList	
-//	}
-//	
-//	def buscarVuelo (Vuelo vuelo, Usuario usr){
-//		usuarioQueRealizaLaBusqueda = usr
-//		fechaEnLaQueSeRealizoLaBusqueda = Calendar.getInstance().getTime();
-//		resultados = VuelosRepositorio.getInstance.obtenerVuelosQueCumplanCon(vuelo);
-//		
-//		usuarioQueRealizaLaBusqueda.busquedasRealizadas.add(this);
-//	}
-	
 }

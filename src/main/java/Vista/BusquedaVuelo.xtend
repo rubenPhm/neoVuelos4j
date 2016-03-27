@@ -3,8 +3,10 @@ package Vista
 import AppModel.BusquedaVueloAppModel
 import AppModel.ReservaAsientoAppModel
 import Dominio.Vuelo
+import org.uqbar.arena.bindings.NotNullObservable
 import org.uqbar.arena.bindings.ObservableProperty
 import org.uqbar.arena.layout.HorizontalLayout
+import org.uqbar.arena.layout.VerticalLayout
 import org.uqbar.arena.widgets.Button
 import org.uqbar.arena.widgets.Label
 import org.uqbar.arena.widgets.Panel
@@ -14,7 +16,6 @@ import org.uqbar.arena.widgets.tables.Column
 import org.uqbar.arena.widgets.tables.Table
 import org.uqbar.arena.windows.SimpleWindow
 import org.uqbar.arena.windows.WindowOwner
-import org.uqbar.arena.layout.VerticalLayout
 
 class BusquedaVuelo extends SimpleWindow<BusquedaVueloAppModel> {
 
@@ -41,6 +42,14 @@ class BusquedaVuelo extends SimpleWindow<BusquedaVueloAppModel> {
 		val colDesde = new Panel(lineaTitulos).layout = new VerticalLayout
 		val colHasta = new Panel(lineaTitulos).layout = new VerticalLayout
 		val colMax = new Panel(lineaTitulos).layout = new VerticalLayout
+//		val colAcc = new Panel(lineaTitulos).layout = new VerticalLayout
+//		
+//		new Label(colAcc).text = "   "
+//		new Button(colAcc) => [
+//			caption = "Buscar"
+//			onClick = [|modelObject.buscar]
+//			setAsDefault
+//		]
 		
 		new Label(colOrigen).text = "Origen"
 
@@ -95,7 +104,7 @@ class BusquedaVuelo extends SimpleWindow<BusquedaVueloAppModel> {
 
 		new Column<Vuelo>(table) => [
 			title = "Destino"
-			fixedSize = 100
+			fixedSize = 200
 			bindContentsToProperty("nombreDestino")
 		]
 
@@ -125,22 +134,20 @@ class BusquedaVuelo extends SimpleWindow<BusquedaVueloAppModel> {
 	}
 	
 		def botonera(Panel mainPanel) {
+		val elementSelected = new NotNullObservable("vueloSeleccionado")
 		val panel = new Panel(mainPanel).layout = new HorizontalLayout
 
 		new Button(panel) => [
 			caption = "Buscar"
-			onClick = [|
-				modelObject.buscar
-			]
+			onClick = [|modelObject.buscar]
 			setAsDefault
 		]
 		
 		new Button(panel) => [
 			caption = "Reservas"
-			onClick = [|
-				this.reservas
-			]
-			setAsDefault
+			onClick = [|this.reservas]
+			bindEnabled(elementSelected)
+			
 		]
 	}
 	

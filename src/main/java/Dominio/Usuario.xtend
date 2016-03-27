@@ -18,7 +18,7 @@ class Usuario {
 	new ( String unNick, String unaContrasenia){
 		nick = unNick;
 		contrasenia = unaContrasenia;
-		asientosReservados = new ArrayList<Asiento>
-		busquedasRealizadas = new ArrayList<Busqueda>
+		asientosReservados = newArrayList
+		busquedasRealizadas = newArrayList
 	}	
 }
