@@ -27,8 +27,8 @@ class RunAplication extends Application {
 		
 		var Aeropuerto ezeiza = new Aeropuerto("Ezeiza", "Buenos Aires") 
 		var Aeropuerto costanera = new Aeropuerto("Aeroparque", "Buenos Aires") 
-		var Aeropuerto ricafort = new Aeropuerto ("Miami", "EEUU")
-		var Aeropuerto brazuca = new Aeropuerto ("San Pablo", "Brasil")
+		var Aeropuerto ricafort = new Aeropuerto ("Miami International Airport", "Miami")
+		var Aeropuerto brazuca = new Aeropuerto ("Aeroporto Internacional de São Paulo", "San Pablo")
 	
 		AeropuertosRepositorio.getInstance().todosLosAeropuertos.add(ezeiza)
 		AeropuertosRepositorio.getInstance().todosLosAeropuertos.add(costanera)
@@ -66,12 +66,32 @@ class RunAplication extends Application {
 		asiento1.duenio = usr
 			
 		asientos.add(asiento1)
-		asientos.add(new Asiento(2, "medio", new Tarifa(150)))
+		asientos.add(new Asiento(1, "medio", new Tarifa(150)))
+		asientos.add(new Asiento(1, "ventanilla", new Tarifa(350)))
+		asientos.add(new Asiento(2, "medio", new Tarifa(450)))
+		asientos.add(new Asiento(2, "centro",new Tarifa(180)))
+		asientos.add(new Asiento(2, "ventanilla", new Tarifa(350)))
+		asientos.add(new Asiento(3, "medio", new Tarifa(190)))
+		asientos.add(new Asiento(3, "centro", new Tarifa(460)))
+		asientos.add(new Asiento(3, "ventanilla", new Tarifa(350)))
+		asientos.add(new Asiento(4, "medio", new Tarifa(150)))
 		asientos.add(new Asiento(4, "centro", new Tarifa(350)))
-		asientos.add(new Asiento(6, "medio", new Tarifa(450)))
-		asientos.add(new Asiento(9, "centro",new Tarifa(180)))
-		asientos.add(new Asiento(7, "medio", new Tarifa(190)))
-		asientos.add(new Asiento(5, "centro", new Tarifa(460)))
+		asientos.add(new Asiento(4, "ventanilla", new Tarifa(350)))
+		asientos.add(new Asiento(5, "medio", new Tarifa(450)))
+		asientos.add(new Asiento(5, "centro",new Tarifa(180)))
+		asientos.add(new Asiento(5, "ventanilla", new Tarifa(350)))
+		asientos.add(new Asiento(6, "medio", new Tarifa(190)))
+		asientos.add(new Asiento(6, "centro", new Tarifa(460)))
+		asientos.add(new Asiento(6, "ventanilla", new Tarifa(350)))
+		asientos.add(new Asiento(7, "medio", new Tarifa(150)))
+		asientos.add(new Asiento(7, "centro", new Tarifa(350)))
+		asientos.add(new Asiento(7, "ventanilla", new Tarifa(350)))
+		asientos.add(new Asiento(8, "medio", new Tarifa(450)))
+		asientos.add(new Asiento(8, "centro",new Tarifa(180)))
+		asientos.add(new Asiento(8, "ventanilla", new Tarifa(350)))
+		asientos.add(new Asiento(9, "medio", new Tarifa(190)))
+		asientos.add(new Asiento(9, "centro", new Tarifa(460)))
+		asientos.add(new Asiento(9, "ventanilla", new Tarifa(350)))
 		
 		vuelo.asientos = asientos
 		

@@ -19,6 +19,7 @@ class ReservaAsiento extends TransactionalDialog <ReservaAsientoAppModel> {
 
 	new(WindowOwner parent, ReservaAsientoAppModel model) {
 		super(parent, model)
+		title = "Reserva de asientos"
 	}
 	
 	override protected addActions(Panel actionsPanel) {
@@ -37,12 +38,12 @@ class ReservaAsiento extends TransactionalDialog <ReservaAsientoAppModel> {
 	val columnaX = new Panel(linea1).layout = new VerticalLayout
 				
 	new Label(columnaX).value <=> "unVuelo.origen.pais"
-	new Label(columnaX).value <=> "unVuelo.fechaSalida"
+	new Label(columnaX).value <=> "unVuelo.fechaSalidaStr"
 	
 	val columnaX2 = new Panel(linea1).layout = new VerticalLayout
 				
 	new Label(columnaX2).value <=> "unVuelo.destino.pais"
-	new Label(columnaX2).value <=> "unVuelo.fechaLlegada"
+	new Label(columnaX2).value <=> "unVuelo.fechaLlegadaStr"
 	
 	val linea2 = new Panel(mainPanel).layout = new HorizontalLayout
 		val columna2 = new Panel(linea2).layout = new VerticalLayout
@@ -62,8 +63,8 @@ class ReservaAsiento extends TransactionalDialog <ReservaAsientoAppModel> {
 
 		new Column<Escala>(table) => [
 			title = "Llegada"
-			fixedSize = 100
-			bindContentsToProperty("horaLlegada")
+			fixedSize = 200
+			bindContentsToProperty("horaLlegadaStr")
 		]	
 		
 		
@@ -74,10 +75,10 @@ class ReservaAsiento extends TransactionalDialog <ReservaAsientoAppModel> {
 		]
 	new Label(columna3).value <=> "unVuelo.aerolinea"
 	
-		
+	val columna = new Panel(mainPanel).layout = new VerticalLayout
 	
-	new Label(mainPanel) => [
-			text = "Asientos"]	
+	new Label(columna) => [
+			text = "Asientos"	
 
 		(1 .. ReservaAsientoAppModel.MAX_ASIENTO).forEach [ i |
 			val filaPanel = new Panel(mainPanel)
@@ -93,7 +94,7 @@ class ReservaAsiento extends TransactionalDialog <ReservaAsientoAppModel> {
 					onClick [ | modelObject.asientoSeleccionado = asiento ]
 				]
 			]
-		]
+		]]
 		
 		val linea3 = new Panel(mainPanel).layout = new HorizontalLayout
 		val columna4 = new Panel(linea3).layout = new VerticalLayout
