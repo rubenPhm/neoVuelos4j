@@ -5,7 +5,6 @@ import Dominio.Busqueda
 import Dominio.Usuario
 import Dominio.Vuelo
 import Repositorios.AeropuertosRepositorio
-import java.util.ArrayList
 import java.util.Date
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors

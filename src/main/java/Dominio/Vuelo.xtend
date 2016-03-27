@@ -1,5 +1,6 @@
 	package Dominio
 
+import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
@@ -16,6 +17,9 @@ class Vuelo {
 	Date fechaSalida
 	Date fechaLlegada
 	List<Escala> escalas = newArrayList
+	
+	SimpleDateFormat dateToString = new SimpleDateFormat("dd/MM/yyyy hh:mm")
+	
 		
 	def getCantidadDeAsientosLibres(){
 		asientos.filter[ asiento | asiento.duenio == null].toList.size()
@@ -37,15 +41,21 @@ class Vuelo {
 		asientos.filter[precio() < tarifa].toList
 	}
 	
-	def getNombreOrigen(){
-		origen.nombre
+	def llegaAntesQue(Date unaFecha){
+		fechaLlegada.before(unaFecha)
 	}
 	
-	def getNombreDestino(){
-		destino.nombre
+	def saleAntesQue(Date unaFecha){
+		fechaSalida.before(unaFecha)
 	}
 	
-	def getCantidadEscalas(){
-		escalas.size
-	}
+	def getNombreOrigen(){ origen.nombre }
+	
+	def getNombreDestino(){ destino.nombre }
+	
+	def getCantidadEscalas(){ escalas.size }
+	
+	def getFechaSalida(){ dateToString.format(fechaSalida)}
+	
+	def getFechaLlegada(){ dateToString.format(fechaLlegada) }
 }

@@ -35,6 +35,8 @@ class Busqueda {
 		this.conDestino(destino)
 			.conOrigen(origen)
 			.conPrecioMax(maxPrecio)
+			.conFechaDesde(desdeFecha)
+			.conFechaHasta(hastaFecha)
 			.finBusqueda(usr)
 			
 		return resultados
@@ -54,6 +56,20 @@ class Busqueda {
 		if( tarifaStr != null){ 
 			val float tarifa = Float.parseFloat(tarifaStr)
 			resultados = resultados.filter[contTarifaMenorA(tarifa)].toList
+		}
+		return this
+	}
+	
+	def Busqueda conFechaDesde(Date unaFecha){
+		if(unaFecha != null){
+			resultados = resultados.filter[!saleAntesQue(unaFecha)].toList
+		}
+		return this
+	}
+	
+	def Busqueda conFechaHasta(Date unaFecha){
+		if(unaFecha != null){
+			resultados = resultados.filter[llegaAntesQue(unaFecha)].toList
 		}
 		return this
 	}
