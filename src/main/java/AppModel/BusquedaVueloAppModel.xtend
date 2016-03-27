@@ -1,6 +1,5 @@
 package AppModel
 
-import Dominio.Aeropuerto
 import Dominio.Asiento
 import Dominio.Busqueda
 import Dominio.Usuario
@@ -8,7 +7,6 @@ import Dominio.Vuelo
 import Repositorios.AeropuertosRepositorio
 import java.util.Date
 import java.util.List
-import java.util.Map
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.uqbar.commons.utils.Observable
 
@@ -16,41 +14,34 @@ import org.uqbar.commons.utils.Observable
 @Observable	
 class BusquedaVueloAppModel {
 	
+	Usuario usr	
+	List <String> todosLosAeropuertos
+	
 	String origen
 	String destino
 	Date fechaDesde
 	Date fechaHasta
-	int tarifaMax
-	Aeropuerto vueloSeleccionado
-	List <Vuelo> resultados
-	Usuario usr	
-	List <String> todosLosAeropuertos
-	Map <Vuelo, List<Asiento> > asientosPorVuelo
+	String tarifaMax
+		
+	Vuelo vueloSeleccionado
+	List <Vuelo> resultados = newArrayList
+	List<Asiento> asientosDisponibles = newArrayList
 	
-	 
 	new (Usuario unUsr){
 		usr = unUsr
 		todosLosAeropuertos = AeropuertosRepositorio.getInstance.nombreDeTodosLosAeropuertos
 	}
 	
 	def buscar() {
-		var vuelo = new Vuelo()
-		vuelo.origen = origen
-		vuelo.destino = destino
-		vuelo.fechaLlegada = fechaHasta
-		vuelo.fechaSalida = fechaDesde
 		
-		val busqueda = new Busqueda()
-		busqueda.buscarVuelo(vuelo, usr)
-		resultados = busqueda.resultados
-		
-		resultados.filter[ unVuelo | unVuelo.obtenerAsientosQueValganMenosQue(tarifaMax).size() > 0].toList
-		
-		for(Vuelo unVuelo: resultados){
-			asientosPorVuelo.put(vuelo, vuelo.obtenerAsientosQueValganMenosQue(tarifaMax)) 
-			
-		}
-		
+		resultados = new Busqueda(origen, destino, fechaDesde, fechaHasta, tarifaMax).buscar(usr)
 	}
 	
+	def separarAsientos() { // si se pone un precio maximo en la busqueda, NO le va a ofrecer asientos mas caros
+		if(tarifaMax != null){
+			val valor = Float.parseFloat(tarifaMax)
+			asientosDisponibles = vueloSeleccionado.asientosValorMaximo(valor)
+		}
+		asientosDisponibles = vueloSeleccionado.asientos
+	}
 }

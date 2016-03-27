@@ -1,9 +1,12 @@
 package Vista
 
 import AppModel.BusquedaVueloAppModel
+import AppModel.ReservaAsientoAppModel
 import Dominio.Vuelo
+import org.uqbar.arena.bindings.NotNullObservable
 import org.uqbar.arena.bindings.ObservableProperty
 import org.uqbar.arena.layout.HorizontalLayout
+import org.uqbar.arena.layout.VerticalLayout
 import org.uqbar.arena.widgets.Button
 import org.uqbar.arena.widgets.Label
 import org.uqbar.arena.widgets.Panel
@@ -13,6 +16,7 @@ import org.uqbar.arena.widgets.tables.Column
 import org.uqbar.arena.widgets.tables.Table
 import org.uqbar.arena.windows.SimpleWindow
 import org.uqbar.arena.windows.WindowOwner
+import org.uqbar.arena.windows.Dialog
 
 class BusquedaVuelo extends SimpleWindow<BusquedaVueloAppModel> {
 
@@ -33,41 +37,46 @@ class BusquedaVuelo extends SimpleWindow<BusquedaVueloAppModel> {
 	def panelDeBusqueda(Panel mainPanel) {
 		
 		val lineaTitulos = new Panel(mainPanel).layout = new HorizontalLayout
-		val lineaInputs = new Panel(mainPanel).layout = new HorizontalLayout
+		
+		val colOrigen = new Panel(lineaTitulos).layout = new VerticalLayout
+		val colDestino = new Panel(lineaTitulos).layout = new VerticalLayout
+		val colDesde = new Panel(lineaTitulos).layout = new VerticalLayout
+		val colHasta = new Panel(lineaTitulos).layout = new VerticalLayout
+		val colMax = new Panel(lineaTitulos).layout = new VerticalLayout
+		
+		new Label(colOrigen).text = "Origen"
 
-		new Label(lineaTitulos).text = "Origen"
-
-		new Selector<String>(lineaInputs) => [
+		new Selector<String>(colOrigen) => [
 			allowNull = true
 			bindValueToProperty = "origen"
 			bindItems(new ObservableProperty(modelObject, "todosLosAeropuertos"))
 		]
 
-		new Label(lineaTitulos).text = "Destino"
+		new Label(colDestino).text = "Destino"
 
-		new Selector<String>(lineaInputs) => [
+		new Selector<String>(colDestino) => [
 			allowNull = true
 			bindValueToProperty = "destino"
 			bindItems(new ObservableProperty(modelObject, "todosLosAeropuertos"))
 		]
 
-		new Label(lineaTitulos).text = "Fecha Desde"
+		new Label(colDesde).text = "Fecha Desde"
 
-		new TextBox(lineaInputs) => [
+		new TextBox(colDesde) => [
 			bindValueToProperty("fechaDesde")
 			width = 150
 		]
 
-		new Label(lineaTitulos).text = "Fecha Hasta"
+		new Label(colHasta).text = "Fecha Hasta"
 
-		new TextBox(lineaInputs) => [
+		new TextBox(colHasta) => [
 			bindValueToProperty("fechaHasta")
 			width = 150
 		]
 
-		new Label(lineaTitulos).text = "Precio maximo"
+		new Label(colMax).text = "Precio maximo"
 
-		new TextBox(lineaInputs) => [
+		new TextBox(colMax) => [
 			bindValueToProperty("tarifaMax")
 			width = 150
 		]
@@ -83,31 +92,31 @@ class BusquedaVuelo extends SimpleWindow<BusquedaVueloAppModel> {
 		new Column<Vuelo>(table) => [
 			title = "Origen"
 			fixedSize = 200
-			bindContentsToProperty("origen")
+			bindContentsToProperty("nombreOrigen")
 		]
 
 		new Column<Vuelo>(table) => [
 			title = "Destino"
-			fixedSize = 100
-			bindContentsToProperty("destino")
+			fixedSize = 200
+			bindContentsToProperty("nombreDestino")
 		]
 
 		new Column<Vuelo>(table) => [
 			title = "Salida"
 			fixedSize = 200
-			bindContentsToProperty("fechaSalida")
+			bindContentsToProperty("fechaSalidaStr")
 		]
 
 		new Column<Vuelo>(table) => [
-			title = "llegada"
+			title = "Llegada"
 			fixedSize = 200
-			bindContentsToProperty("fechaLlegada")
+			bindContentsToProperty("fechaLlegadaStr")
 		]
 
 		new Column<Vuelo>(table) => [
-			title = "llegada"
+			title = "Escalas"
 			fixedSize = 200
-			bindContentsToProperty("escalas.size()")
+			bindContentsToProperty("cantidadEscalas")
 		]
 
 		new Column<Vuelo>(table) => [
@@ -118,14 +127,31 @@ class BusquedaVuelo extends SimpleWindow<BusquedaVueloAppModel> {
 	}
 	
 		def botonera(Panel mainPanel) {
+		val elementSelected = new NotNullObservable("vueloSeleccionado")
 		val panel = new Panel(mainPanel).layout = new HorizontalLayout
 
 		new Button(panel) => [
 			caption = "Buscar"
-			onClick = [|
-				modelObject.buscar
-			]
+			onClick = [|modelObject.buscar]
 			setAsDefault
 		]
+		
+		new Button(panel) => [
+			caption = "Reservas"
+			onClick = [|this.reservas]
+			bindEnabled(elementSelected)
+			
+		]
+	}
+	
+	def reservas() {
+		modelObject.separarAsientos()
+		val proxModel = new ReservaAsientoAppModel(modelObject.usr, modelObject.vueloSeleccionado, modelObject.asientosDisponibles)
+		this.openDialog(new ReservaAsiento(this, proxModel))
+	}
+	
+	def openDialog(Dialog<?> dialog) {
+		//dialog.onAccept[|modelObject.]
+		dialog.open
 	}
 }

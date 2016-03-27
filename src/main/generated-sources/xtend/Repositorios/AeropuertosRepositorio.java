@@ -4,10 +4,15 @@ import Dominio.Aeropuerto;
 import com.google.common.base.Objects;
 import java.util.ArrayList;
 import java.util.List;
+import org.eclipse.xtend.lib.annotations.Accessors;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.ListExtensions;
+import org.eclipse.xtext.xbase.lib.Pure;
+import org.uqbar.commons.utils.Observable;
 
+@Observable
+@Accessors
 @SuppressWarnings("all")
 public class AeropuertosRepositorio {
   private static AeropuertosRepositorio repositorio = null;
@@ -38,5 +43,14 @@ public class AeropuertosRepositorio {
     };
     List<String> _map = ListExtensions.<Aeropuerto, String>map(this.todosLosAeropuertos, _function);
     return IterableExtensions.<String>toList(_map);
+  }
+  
+  @Pure
+  public List<Aeropuerto> getTodosLosAeropuertos() {
+    return this.todosLosAeropuertos;
+  }
+  
+  public void setTodosLosAeropuertos(final List<Aeropuerto> todosLosAeropuertos) {
+    this.todosLosAeropuertos = todosLosAeropuertos;
   }
 }

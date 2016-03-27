@@ -31,8 +31,8 @@ class ReservaAsientoAppModel {
 	}
 	
 	def reservarAsiento (){
-		asientoSeleccionado.duenio = unUsuario
-		unUsuario.asientosReservados.add(asientoSeleccionado)
+		asientoSeleccionado.reservarAsiento(unUsuario)
+
 	}
 	
 }
