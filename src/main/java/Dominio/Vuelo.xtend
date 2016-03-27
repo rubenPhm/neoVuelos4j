@@ -18,7 +18,7 @@ class Vuelo {
 	Date fechaLlegada
 	List<Escala> escalas = newArrayList
 	
-	SimpleDateFormat dateToString = new SimpleDateFormat("dd/MM/yyyy hh:mm")
+	SimpleDateFormat dateToString = new SimpleDateFormat("dd/MM/yyyy - hh:mm 'hs'")
 	
 		
 	def getCantidadDeAsientosLibres(){
@@ -37,8 +37,8 @@ class Vuelo {
 		return ((asientos != null) && (0 < this.asientosValorMaximo(tarifa).length))
 	}
 	
-	def asientosValorMaximo (float tarifa){
-		asientos.filter[precio() < tarifa].toList
+	def asientosValorMaximo (float valor){
+		asientos.filter[it.getPrecio() < valor].toList
 	}
 	
 	def llegaAntesQue(Date unaFecha){
@@ -55,7 +55,7 @@ class Vuelo {
 	
 	def getCantidadEscalas(){ escalas.size }
 	
-	def getFechaSalida(){ dateToString.format(fechaSalida)}
+	def getFechaSalidaStr(){ dateToString.format(fechaSalida)}
 	
-	def getFechaLlegada(){ dateToString.format(fechaLlegada) }
+	def getFechaLlegadaStr(){ dateToString.format(fechaLlegada) }
 }

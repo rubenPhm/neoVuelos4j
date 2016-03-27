@@ -62,25 +62,22 @@ class RunAplication extends Application {
 		vuelo.fechaLlegada = Calendar.getInstance.getTime()
 		var List<Asiento> asientos = new ArrayList <Asiento>
 		
-		var asiento1 = new Asiento(1, "centro")
+		var asiento1 = new Asiento(1, "centro", new Tarifa(200))
 		asiento1.duenio = usr
+			
 		asientos.add(asiento1)
-		var Tarifa tarifa = new Tarifa()
-		tarifa.precio = 200
-		asiento1.tarifa = tarifa
-		
-		asientos.add(new Asiento(2, "medio"))
-		asientos.add(new Asiento(4, "centro"))
-		asientos.add(new Asiento(6, "medio"))
-		asientos.add(new Asiento(9, "centro"))
-		asientos.add(new Asiento(7, "medio"))
-		asientos.add(new Asiento(5, "centro"))
+		asientos.add(new Asiento(2, "medio", new Tarifa(150)))
+		asientos.add(new Asiento(4, "centro", new Tarifa(350)))
+		asientos.add(new Asiento(6, "medio", new Tarifa(450)))
+		asientos.add(new Asiento(9, "centro",new Tarifa(180)))
+		asientos.add(new Asiento(7, "medio", new Tarifa(190)))
+		asientos.add(new Asiento(5, "centro", new Tarifa(460)))
 		
 		vuelo.asientos = asientos
 		
 		VuelosRepositorio.getInstance().todosLosVuelos.add(vuelo)
 		
-    	return new BusquedaVuelo(this, new BusquedaVueloAppModel(usr))
+	   	return new BusquedaVuelo(this, new BusquedaVueloAppModel(usr))
 //     	return new ReservaAsiento(this, new ReservaAsientoAppModel(usr, vuelo, asientos))
       
 	}

@@ -1,10 +1,10 @@
 package Dominio
 
+import Repositorios.VuelosRepositorio
 import java.util.ArrayList
 import java.util.Calendar
 import java.util.Date
 import java.util.List
-import Repositorios.VuelosRepositorio
 
 class Busqueda {
 	
@@ -52,10 +52,10 @@ class Busqueda {
 		return this
 	}
 	
-	def Busqueda conPrecioMax(String tarifaStr){
-		if( tarifaStr != null){ 
-			val float tarifa = Float.parseFloat(tarifaStr)
-			resultados = resultados.filter[contTarifaMenorA(tarifa)].toList
+	def Busqueda conPrecioMax(String valorStr){
+		if (valorStr != null){
+			val valor = Float.parseFloat(valorStr)
+			resultados = resultados.filter[contTarifaMenorA(valor)].toList
 		}
 		return this
 	}

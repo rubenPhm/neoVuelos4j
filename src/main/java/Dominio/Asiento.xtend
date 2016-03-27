@@ -15,6 +15,12 @@ class Asiento {
 	Tarifa tarifa
 	Vuelo vuelo
 	
+	new(int fila, String ubicacion, Tarifa unaTarifa) {
+		this.fila = fila
+		this.ubicacion = ubicacion
+		tarifa = unaTarifa
+	}
+	
 	
 	new(int fila, String ubicacion) {
 		this.fila = fila
@@ -29,8 +35,8 @@ class Asiento {
 		duenio == null
 	}
 	
-	def float precio(){
-		tarifa.getPrecio
+	def float getPrecio(){
+		100
+//		tarifa.precioFinal(vuelo.fechaSalida, fechaDeReserva)
 	}
-	
 }

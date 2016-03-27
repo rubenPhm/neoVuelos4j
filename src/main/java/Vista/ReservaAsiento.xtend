@@ -4,19 +4,16 @@ import AppModel.ReservaAsientoAppModel
 import Dominio.Escala
 import java.awt.Color
 import org.uqbar.arena.aop.windows.TransactionalDialog
-import org.uqbar.arena.bindings.PropertyAdapter
 import org.uqbar.arena.layout.HorizontalLayout
 import org.uqbar.arena.layout.VerticalLayout
 import org.uqbar.arena.widgets.Button
 import org.uqbar.arena.widgets.Label
-import org.uqbar.arena.widgets.List
 import org.uqbar.arena.widgets.Panel
+import org.uqbar.arena.widgets.tables.Column
+import org.uqbar.arena.widgets.tables.Table
 import org.uqbar.arena.windows.WindowOwner
 
 import static extension org.uqbar.arena.xtend.ArenaXtendExtensions.*
-import org.uqbar.arena.widgets.tables.Table
-import org.uqbar.arena.widgets.tables.Column
-import Dominio.Vuelo
 
 class ReservaAsiento extends TransactionalDialog <ReservaAsientoAppModel> {
 

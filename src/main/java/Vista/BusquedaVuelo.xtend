@@ -16,6 +16,7 @@ import org.uqbar.arena.widgets.tables.Column
 import org.uqbar.arena.widgets.tables.Table
 import org.uqbar.arena.windows.SimpleWindow
 import org.uqbar.arena.windows.WindowOwner
+import org.uqbar.arena.windows.Dialog
 
 class BusquedaVuelo extends SimpleWindow<BusquedaVueloAppModel> {
 
@@ -42,14 +43,6 @@ class BusquedaVuelo extends SimpleWindow<BusquedaVueloAppModel> {
 		val colDesde = new Panel(lineaTitulos).layout = new VerticalLayout
 		val colHasta = new Panel(lineaTitulos).layout = new VerticalLayout
 		val colMax = new Panel(lineaTitulos).layout = new VerticalLayout
-//		val colAcc = new Panel(lineaTitulos).layout = new VerticalLayout
-//		
-//		new Label(colAcc).text = "   "
-//		new Button(colAcc) => [
-//			caption = "Buscar"
-//			onClick = [|modelObject.buscar]
-//			setAsDefault
-//		]
 		
 		new Label(colOrigen).text = "Origen"
 
@@ -111,13 +104,13 @@ class BusquedaVuelo extends SimpleWindow<BusquedaVueloAppModel> {
 		new Column<Vuelo>(table) => [
 			title = "Salida"
 			fixedSize = 200
-			bindContentsToProperty("fechaSalida")
+			bindContentsToProperty("fechaSalidaStr")
 		]
 
 		new Column<Vuelo>(table) => [
 			title = "Llegada"
 			fixedSize = 200
-			bindContentsToProperty("fechaLlegada")
+			bindContentsToProperty("fechaLlegadaStr")
 		]
 
 		new Column<Vuelo>(table) => [
@@ -154,8 +147,11 @@ class BusquedaVuelo extends SimpleWindow<BusquedaVueloAppModel> {
 	def reservas() {
 		modelObject.separarAsientos()
 		val proxModel = new ReservaAsientoAppModel(modelObject.usr, modelObject.vueloSeleccionado, modelObject.asientosDisponibles)
-			
-//		this.openDialog( new ReservaAsiento( this, proxModel) )
+		this.openDialog(new ReservaAsiento(this, proxModel))
 	}
 	
+	def openDialog(Dialog<?> dialog) {
+		//dialog.onAccept[|modelObject.]
+		dialog.open
+	}
 }

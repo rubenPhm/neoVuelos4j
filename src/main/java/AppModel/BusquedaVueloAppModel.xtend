@@ -27,19 +27,21 @@ class BusquedaVueloAppModel {
 	List <Vuelo> resultados = newArrayList
 	List<Asiento> asientosDisponibles = newArrayList
 	
-//	Map <Vuelo, List<Asiento> > asientosPorVuelo
-	
 	new (Usuario unUsr){
 		usr = unUsr
 		todosLosAeropuertos = AeropuertosRepositorio.getInstance.nombreDeTodosLosAeropuertos
 	}
 	
 	def buscar() {
+		
 		resultados = new Busqueda(origen, destino, fechaDesde, fechaHasta, tarifaMax).buscar(usr)
 	}
 	
-	def separarAsientos() {
-		asientosDisponibles = vueloSeleccionado.asientosValorMaximo(Float.parseFloat(tarifaMax))
+	def separarAsientos() { // si se pone un precio maximo en la busqueda, NO le va a ofrecer asientos mas caros
+		if(tarifaMax != null){
+			val valor = Float.parseFloat(tarifaMax)
+			asientosDisponibles = vueloSeleccionado.asientosValorMaximo(valor)
+		}
+		asientosDisponibles = vueloSeleccionado.asientos
 	}
-	
 }
