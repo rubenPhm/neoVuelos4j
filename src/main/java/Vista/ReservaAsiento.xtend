@@ -19,7 +19,6 @@ class ReservaAsiento extends TransactionalDialog <ReservaAsientoAppModel> {
 
 	new(WindowOwner parent, ReservaAsientoAppModel model) {
 		super(parent, model)
-		title = "Reserva de asientos"
 	}
 	
 	override protected addActions(Panel actionsPanel) {
