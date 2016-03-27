@@ -30,16 +30,21 @@ class Busqueda {
 
 	def buscar(Usuario usr) {
 
-		if (desdeFecha > hastaFecha) {
-			throw new UserException("La 'Fecha Desde' no puede ser menor que 'Fecha Hasta' ")
-		} else {
+		this.validacionFecha()
 
-			resultados = VuelosRepositorio.getInstance.getTodosLosVuelos
+		resultados = VuelosRepositorio.getInstance.getTodosLosVuelos
 
-			this.conDestino(destino).conOrigen(origen).conPrecioMax(maxPrecio).conFechaDesde(desdeFecha).
-				conFechaHasta(hastaFecha).finBusqueda(usr)
+		this.conDestino(destino).conOrigen(origen).conPrecioMax(maxPrecio).conFechaDesde(desdeFecha).
+			conFechaHasta(hastaFecha).finBusqueda(usr)
 
-			return resultados
+		return resultados
+	}
+
+	def validacionFecha() {
+		if (desdeFecha != null && hastaFecha != null) {
+			if (desdeFecha > hastaFecha) {
+				throw new UserException("La 'Fecha Desde' no puede ser menor que 'Fecha Hasta' ")
+			}
 		}
 	}
 
