@@ -19,6 +19,7 @@ class Build {
 
 	public Usuario usr
 	Usuario gabo
+	Usuario fede
 
 	Vuelo vuelo
 
@@ -53,6 +54,7 @@ class Build {
 
 		var List<Asiento> asientos = new ArrayList<Asiento>
 		asientos.add(new Asiento(1, "medio", new Tarifa(150)))
+		asientos.add(new Asiento(1, "centro", new Tarifa(180)))
 		asientos.add(new Asiento(1, "ventanilla", new Tarifa(350)))
 		asientos.add(new Asiento(2, "medio", new Tarifa(450)))
 		asientos.add(new Asiento(2, "centro", new Tarifa(180)))
@@ -88,6 +90,8 @@ class Build {
 		gabo.nombre = "Gabriel Perez"
 		usr = new Usuario("adrian", "adrian")
 		usr.nombre = "Adrian Barbani"
+		fede = new Usuario ("fede", "fede")
+		fede.nombre = "Federico Peña"
 	}
 
 	def crearAeropuertos() {
