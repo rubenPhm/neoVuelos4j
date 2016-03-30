@@ -1,20 +1,21 @@
 package Vista
 
-import org.uqbar.arena.windows.SimpleWindow
+import AppModel.BusquedaVueloAppModel
 import AppModel.VerReservasAppModel
-import org.uqbar.arena.windows.WindowOwner
-import org.uqbar.arena.widgets.tables.Table
 import Dominio.Reserva
-import org.uqbar.arena.widgets.tables.Column
-import org.uqbar.arena.widgets.Panel
+import org.uqbar.arena.aop.windows.TransactionalDialog
+import org.uqbar.arena.bindings.NotNullObservable
 import org.uqbar.arena.layout.HorizontalLayout
 import org.uqbar.arena.widgets.Button
-import org.uqbar.arena.bindings.NotNullObservable
 import org.uqbar.arena.widgets.Label
-import static extension org.uqbar.arena.xtend.ArenaXtendExtensions.*
-import AppModel.BusquedaVueloAppModel
+import org.uqbar.arena.widgets.Panel
+import org.uqbar.arena.widgets.tables.Column
+import org.uqbar.arena.widgets.tables.Table
+import org.uqbar.arena.windows.WindowOwner
 
-class VerReservas extends SimpleWindow<VerReservasAppModel>{
+import static extension org.uqbar.arena.xtend.ArenaXtendExtensions.*
+
+class VerReservas extends TransactionalDialog<VerReservasAppModel>{
 	
 	new(WindowOwner parent, VerReservasAppModel model) {
 		super(parent, model)	

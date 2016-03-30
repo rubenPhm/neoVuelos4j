@@ -1,8 +1,8 @@
 package Runnable
 
-import AppModel.BusquedaVueloAppModel
+import AppModel.LoginAppModel
 import Repositorios.Build
-import Vista.BusquedaVuelo
+import Vista.Login
 import org.uqbar.arena.Application
 import org.uqbar.arena.windows.Window
 
@@ -15,8 +15,11 @@ class RunAplication extends Application {
 	override protected Window<?> createMainWindow() {
 
 		var Build builder = new Build()
-	   	return new BusquedaVuelo(this, new BusquedaVueloAppModel(builder.usr))
+		return new Login(this, new LoginAppModel(builder.usr))
+//		return new VerReservas(this, new VerReservasAppModel(builder.usr))
+//	   	return new BusquedaVuelo(this, new BusquedaVueloAppModel(builder.usr))
 //     	return new ReservaAsiento(this, new ReservaAsientoAppModel(usr, vuelo, asientos))
+
       
 	}
 

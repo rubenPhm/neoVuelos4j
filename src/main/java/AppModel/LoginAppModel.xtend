@@ -14,6 +14,13 @@ class LoginAppModel {
 	String nick
 	Usuario usuario
 	
+	new(Usuario unUsuario) {
+		contrasenia = unUsuario.contrasenia
+		nick = unUsuario.nick
+		
+		
+	}
+	
 	def autorizarLogin() {
 		usuario = UsuarioRepositorio.getInstance.obtenerUsuario(nick, contrasenia);
 		

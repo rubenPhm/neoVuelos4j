@@ -1,20 +1,21 @@
 package Vista
 
 import AppModel.LoginAppModel
+import AppModel.VerReservasAppModel
 import org.uqbar.arena.layout.HorizontalLayout
 import org.uqbar.arena.widgets.Button
 import org.uqbar.arena.widgets.Label
 import org.uqbar.arena.widgets.Panel
 import org.uqbar.arena.widgets.PasswordField
 import org.uqbar.arena.widgets.TextBox
+import org.uqbar.arena.windows.Dialog
 import org.uqbar.arena.windows.SimpleWindow
 import org.uqbar.arena.windows.WindowOwner
-import AppModel.VerReservasAppModel
 
 class Login extends SimpleWindow<LoginAppModel> {
 
-	new(WindowOwner parent) {
-		super(parent, new LoginAppModel)
+	new(WindowOwner owner, LoginAppModel model) {
+		super(owner, model)
 		title = "Login"
 	}
 
@@ -49,8 +50,8 @@ class Login extends SimpleWindow<LoginAppModel> {
 			caption = "Iniciar Sesíon"
 			onClick [|
 				modelObject.autorizarLogin
+				this.verReservas
 				this.loguear
-				this.verReservas(this)
 			]
 			setAsDefault
 		]
@@ -59,15 +60,18 @@ class Login extends SimpleWindow<LoginAppModel> {
 	def loguear() {
 		throw new UnsupportedOperationException(
 			"Logeado como Usuario: " + modelObject.usuario.nick + " y contraseñia: " + modelObject.usuario.contrasenia)
-        
-	//Aca es donde redirecciona a la siguiente pantalla
-	//Creo una nueva instancia de una venta y le paso el usuario que va a estar seteado en el controller
-	//this.openDialog( new SiguienteVenta ( this, modelObject.usuario) )
 	}
 	
-	def verReservas (Login login){
-		new VerReservas(login,new VerReservasAppModel(modelObject.usuario))
+	def verReservas(){
+		this.openDialog(new VerReservas(this, new VerReservasAppModel(modelObject.usuario)))
 		
 	}
+	
+	def openDialog(Dialog<?> dialog) {
 
+		//dialog.onAccept[|modelObject.]
+		dialog.open
+	}
+
+	
 }
