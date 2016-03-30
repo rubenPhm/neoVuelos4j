@@ -50,6 +50,7 @@ class Login extends SimpleWindow<LoginAppModel> {
 			onClick [|
 				modelObject.autorizarLogin
 				this.loguear
+				this.verReservas(this)
 			]
 			setAsDefault
 		]
@@ -58,10 +59,15 @@ class Login extends SimpleWindow<LoginAppModel> {
 	def loguear() {
 		throw new UnsupportedOperationException(
 			"Logeado como Usuario: " + modelObject.usuario.nick + " y contraseñia: " + modelObject.usuario.contrasenia)
-
+        
 	//Aca es donde redirecciona a la siguiente pantalla
 	//Creo una nueva instancia de una venta y le paso el usuario que va a estar seteado en el controller
 	//this.openDialog( new SiguienteVenta ( this, modelObject.usuario) )
+	}
+	
+	def verReservas (Login login){
+		new VerReservas(login,new VerReservasAppModel(modelObject.usuario))
+		
 	}
 
 }

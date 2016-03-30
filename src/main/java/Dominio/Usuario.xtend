@@ -21,5 +21,9 @@ class Usuario {
 		busquedasRealizadas = newArrayList
 	}
 	
+	def void eliminarReserva(Asiento asiento){
+		asientosReservados.remove(asiento)
+		
+	}
 
 }
