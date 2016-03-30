@@ -9,6 +9,7 @@ import org.uqbar.arena.widgets.PasswordField
 import org.uqbar.arena.widgets.TextBox
 import org.uqbar.arena.windows.SimpleWindow
 import org.uqbar.arena.windows.WindowOwner
+import AppModel.VerReservasAppModel
 
 class Login extends SimpleWindow<LoginAppModel> {
 
@@ -46,7 +47,7 @@ class Login extends SimpleWindow<LoginAppModel> {
 
 		new Button(panel) => [
 			caption = "Iniciar Sesíon"
-			onClick = [|
+			onClick [|
 				modelObject.autorizarLogin
 				this.loguear
 			]
