@@ -9,14 +9,20 @@ import java.util.Date
 class Tarifa {
 	
 	float precio
+	float descuento
 	String tipo 
 
 	new(float unValor){
 		precio = unValor
 	}
 	
+	new (float unValor, float otroValor){
+		precio = unValor
+		descuento = otroValor
+	}
+	
 	def precioFinal(Date salidaVuelo, Date reservaAsiento) {
-		precio
+		
 	}
 	
 }

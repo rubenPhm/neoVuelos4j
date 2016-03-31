@@ -13,10 +13,10 @@ class ReservaAsientoAppModel {
 	
 	Vuelo unVuelo
 	Usuario unUsuario
-	List<Asiento> asientos = newArrayList
+	static List<Asiento> asientos = newArrayList
 	Asiento asientoSeleccionado
 	
-	public static int MAX_ASIENTO = 10
+	//public static int MAX_ASIENTO = 10
 
 	new (Usuario usr, Vuelo vuelo, List<Asiento> asientosDisponibles){
 
@@ -25,7 +25,6 @@ class ReservaAsientoAppModel {
       asientos = asientosDisponibles
 	}
 	
-
 	def asientosDeFila(int filaPedida) {
 		asientos.filter [ it.fila == filaPedida ]
 	}
@@ -33,6 +32,10 @@ class ReservaAsientoAppModel {
 	def reservarAsiento (){
 		asientoSeleccionado.reservarAsiento(unUsuario)
 
+	}
+	
+	def static cantidadAsientos() {
+		asientos.size
 	}
 	
 }

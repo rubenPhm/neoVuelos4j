@@ -15,8 +15,7 @@ class UsuarioRepositorio {
 	List<Usuario> todosLosUsuarios = new ArrayList<Usuario>
 
 	public new() {
-		//seteo de usuario para testing
-		registrarUsuario("adrian", "adrian");
+		
 	}
 
 	static public def UsuarioRepositorio getInstance() {
