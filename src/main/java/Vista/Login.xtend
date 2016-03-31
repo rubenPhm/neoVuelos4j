@@ -51,7 +51,7 @@ class Login extends SimpleWindow<LoginAppModel> {
 			onClick [|
 				modelObject.autorizarLogin
 				this.verReservas
-				this.loguear
+				//this.loguear
 			]
 			setAsDefault
 		]
