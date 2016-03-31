@@ -1,2 +1,5 @@
 /target/
 /src/main/generated-sources/
+.classpath
+.settings
+.project
