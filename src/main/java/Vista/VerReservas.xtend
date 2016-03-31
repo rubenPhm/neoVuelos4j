@@ -42,25 +42,25 @@ class VerReservas extends TransactionalDialog<VerReservasAppModel>{
 		new Column<Reserva>(it) => [
 				title = "Origen" 
 			    fixedSize = 100  
-				bindContentsToProperty("origen")  
+				bindContentsToProperty("asiento.vuelo.origen.nombre")  
 			    
 			]
 		
 		new Column<Reserva>(it) => [			
 				title = "Destino" 
 			    fixedSize = 100   
-				bindContentsToProperty("destino")  	
+				bindContentsToProperty("asiento.vuelo.destino.nombre")  	
 			]	
 		
 		new Column<Reserva>(it) => [
 				title = " Salida" 
 			    fixedSize = 100   
-				bindContentsToProperty("salida")  
+				bindContentsToProperty("asiento.vuelo.fechaSalida")  
 			]
 		new Column<Reserva>(it) => [
 				title = "Llegada"
 			    fixedSize = 100  
-				bindContentsToProperty("llegada") 
+				bindContentsToProperty("asiento.vuelo.fechaLlegada") 
 			]		
 			   
 		new Column<Reserva>(it) => [
@@ -98,9 +98,7 @@ class VerReservas extends TransactionalDialog<VerReservasAppModel>{
 			
         new Button(botonera2)
 		    .setCaption("Log de Consultas Hechas")
-			.width = 150
-         			
-			
+			.width = 150        					
 	}
 	
 	

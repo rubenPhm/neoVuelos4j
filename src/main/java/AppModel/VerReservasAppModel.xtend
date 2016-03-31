@@ -6,6 +6,7 @@ import Dominio.Usuario
 import java.util.ArrayList
 import java.util.List
 import Dominio.Reserva
+import Dominio.Asiento
 
 @Observable
 @Accessors
@@ -14,8 +15,8 @@ class VerReservasAppModel {
 
  Usuario usuario
  String nombre 
- List asientos = new ArrayList
- List reservas = new ArrayList
+ List <Asiento> asientos = new ArrayList
+ List <Reserva>reservas = new ArrayList
  
  Reserva reservaSeleccionada = null	
 	
