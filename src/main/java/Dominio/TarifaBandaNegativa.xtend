@@ -13,7 +13,12 @@ class TarifaBandaNegativa extends Tarifa {
 	}
 	
 	override precioFinal(Date salidaVuelo, Date reservaAsiento){
+		precio - unDescuento(salidaVuelo, reservaAsiento)
+	}
+	
+	def unDescuento(Date date, Date date2) {
 		//20% si se reserva 72 horas antes o 10% en caso contrario
+		0
 	}
 	
 }
