@@ -21,8 +21,8 @@ class Tarifa {
 		descuento = otroValor
 	}
 	
-	def precioFinal(Date salidaVuelo, Date reservaAsiento) {
-		
+	def float precioFinal(Date salidaVuelo, Date reservaAsiento) {
+		0
 	}
 	
 }

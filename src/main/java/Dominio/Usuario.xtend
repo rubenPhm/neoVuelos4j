@@ -25,5 +25,8 @@ class Usuario {
 		asientosReservados.remove(asiento)
 		
 	}
-
+	
+	def reservaAsiento(Asiento unAsiento){
+		asientosReservados.add(unAsiento)
+	}
 }

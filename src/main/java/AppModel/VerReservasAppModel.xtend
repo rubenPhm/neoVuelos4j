@@ -34,7 +34,5 @@ class VerReservasAppModel {
    def cancelarReserva(Reserva reserva){
        usuario.eliminarReserva(reserva.asiento)
        reservas.remove(reserva)
-       
-}
-	
+	}
 }

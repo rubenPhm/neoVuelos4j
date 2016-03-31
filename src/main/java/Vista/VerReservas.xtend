@@ -42,25 +42,25 @@ class VerReservas extends TransactionalDialog<VerReservasAppModel>{
 		new Column<Reserva>(it) => [
 				title = "Origen" 
 			    fixedSize = 100  
-				bindContentsToProperty("asiento.vuelo.origen.nombre")  
+				bindContentsToProperty("origen")  
 			    
 			]
 		
 		new Column<Reserva>(it) => [			
 				title = "Destino" 
 			    fixedSize = 100   
-				bindContentsToProperty("asiento.vuelo.destino.nombre")  	
+				bindContentsToProperty("destino")  	
 			]	
 		
 		new Column<Reserva>(it) => [
 				title = " Salida" 
 			    fixedSize = 100   
-				bindContentsToProperty("asiento.vuelo.fechaSalida")  
+				bindContentsToProperty("fechaSalida")  
 			]
 		new Column<Reserva>(it) => [
 				title = "Llegada"
 			    fixedSize = 100  
-				bindContentsToProperty("asiento.vuelo.fechaLlegada") 
+				bindContentsToProperty("fechaLlegada") 
 			]		
 			   
 		new Column<Reserva>(it) => [

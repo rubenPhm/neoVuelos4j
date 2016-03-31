@@ -14,10 +14,6 @@ class UsuarioRepositorio {
 
 	List<Usuario> todosLosUsuarios = new ArrayList<Usuario>
 
-	public new() {
-		
-	}
-
 	static public def UsuarioRepositorio getInstance() {
 		if (repositorio == null) {
 			repositorio = new UsuarioRepositorio()

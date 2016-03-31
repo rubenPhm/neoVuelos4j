@@ -13,7 +13,7 @@ class TarifaComun extends Tarifa {
 	}
 	
 	override precioFinal(Date salidaVuelo, Date reservaAsiento){
-		precio
+		return precio
 	}
 	
 }

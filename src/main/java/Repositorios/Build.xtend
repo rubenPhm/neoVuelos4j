@@ -20,14 +20,15 @@ class Build {
 	Aeropuerto ponja
 
 	public Usuario usr
-	Usuario gabo
+	public Usuario gabo
 	public Usuario fede
 
-	Vuelo vuelo
-	Vuelo vuelo2
+	Vuelo vueloAA
+	Vuelo vueloLAN
 
 	Escala escala1
 	Escala escala2
+	
 
 	new() {
 		initData()
@@ -37,9 +38,10 @@ class Build {
 		this.crearAeropuertos
 		this.crearUsuarios
 		this.crearEscalas
-		this.crearVuelo
+		this.crearVuelo		
+		this.relacionarAsientosVuelosUsuarios
 	}
-
+	
 	def crearEscalas() {
 		escala1 = new Escala()
 		escala1.horaLlegada = Calendar.getInstance.getTime()
@@ -52,56 +54,95 @@ class Build {
 	}
 
 	def crearVuelo() {
-		vuelo = new Vuelo()
-		vuelo.escalas.add(escala1)
-		vuelo.aerolinea = "Aerolineas Argentinas"
-		vuelo.origen = ezeiza
-		vuelo.destino = ricafort
-		vuelo.fechaSalida = Calendar.getInstance.getTime()
-		vuelo.fechaLlegada = Calendar.getInstance.getTime()
+		vueloAA = new Vuelo()
+		vueloAA.escalas.add(escala1)
+		vueloAA.aerolinea = "Aerolineas Argentinas"
+		vueloAA.origen = ezeiza
+		vueloAA.destino = ricafort
+		vueloAA.fechaSalida = Calendar.getInstance.getTime()
+		vueloAA.fechaLlegada = Calendar.getInstance.getTime()
 
-		vuelo2 = new Vuelo()
-		vuelo2.escalas.add(escala1)
-		vuelo2.escalas.add(escala2)
-		vuelo2.aerolinea = "LAN Airlines"
-		vuelo2.origen = costanera
-		vuelo2.destino = ponja
-		vuelo2.fechaSalida = Calendar.getInstance.getTime()
-		vuelo2.fechaLlegada = Calendar.getInstance.getTime()
-
-		var List<Asiento> asientos = new ArrayList<Asiento>
-		asientos.add(new Asiento(1, "Pasillo", new TarifaComun(150)))
-		asientos.add(new Asiento(1, "Centro", new TarifaComun(180)))
-		asientos.add(new Asiento(1, "Ventanilla", new TarifaComun(350)))
-		asientos.add(new Asiento(2, "Pasillo", new TarifaComun(450)))
-		asientos.add(new Asiento(2, "Centro", new TarifaComun(180)))
-		asientos.add(new Asiento(2, "Ventanilla", new TarifaComun(350)))
-		asientos.add(new Asiento(3, "Pasillo", new TarifaComun(190)))
-		asientos.add(new Asiento(3, "Centro", new TarifaComun(460)))
-		asientos.add(new Asiento(3, "Ventanilla", new TarifaComun(350)))
-		asientos.add(new Asiento(4, "Pasillo", new TarifaComun(150)))
-		asientos.add(new Asiento(4, "Centro", new TarifaComun(350)))
-		asientos.add(new Asiento(4, "Ventanilla", new TarifaComun(350)))
-		asientos.add(new Asiento(5, "Pasillo", new TarifaComun(450)))
-		asientos.add(new Asiento(5, "Centro", new TarifaComun(180)))
-		asientos.add(new Asiento(5, "Ventanilla", new TarifaComun(350)))
-		asientos.add(new Asiento(6, "Pasillo", new TarifaComun(190)))
-		asientos.add(new Asiento(6, "Centro", new TarifaComun(460)))
-		asientos.add(new Asiento(6, "Ventanilla", new TarifaComun(350)))
-		asientos.add(new Asiento(7, "Pasillo", new TarifaComun(150)))
-		asientos.add(new Asiento(7, "Centro", new TarifaComun(350)))
-		asientos.add(new Asiento(7, "Ventanilla", new TarifaComun(350)))
-		asientos.add(new Asiento(8, "Pasillo", new TarifaComun(450)))
-		asientos.add(new Asiento(8, "Centro", new TarifaComun(180)))
-		asientos.add(new Asiento(8, "Ventanilla", new TarifaComun(350)))
-		asientos.add(new Asiento(9, "Pasillo", new TarifaComun(190)))
-		asientos.add(new Asiento(9, "Centro", new TarifaComun(460)))
-		asientos.add(new Asiento(9, "Ventanilla", new TarifaComun(350)))
-
-		vuelo.asientos = asientos
-		vuelo2.asientos = asientos
-		VuelosRepositorio.getInstance().todosLosVuelos.add(vuelo)
-		VuelosRepositorio.getInstance().todosLosVuelos.add(vuelo2)
+		vueloLAN = new Vuelo()
+		vueloLAN.escalas.add(escala1)
+		vueloLAN.escalas.add(escala2)
+		vueloLAN.aerolinea = "LAN Airlines"
+		vueloLAN.origen = costanera
+		vueloLAN.destino = ponja
+		vueloLAN.fechaSalida = Calendar.getInstance.getTime()
+		vueloLAN.fechaLlegada = Calendar.getInstance.getTime()
+}
+	def relacionarAsientosVuelosUsuarios(){
+		
+					
+		val Asiento asiento1 = new Asiento(1, "Pasillo", new TarifaComun(150))
+		val Asiento asiento2 = new Asiento(1, "Centro", new TarifaComun(180))
+		val Asiento asiento3 = new Asiento(1, "Ventanilla", new TarifaComun(350))
+		val Asiento asiento4 = new Asiento(2, "Pasillo", new TarifaComun(450))
+		val Asiento asiento5 = new Asiento(4, "Pasillo", new TarifaComun(150))
+		val Asiento asiento6 = new Asiento(8, "Ventanilla", new TarifaComun(350))
+		val Asiento asiento7 = new Asiento(1, "Ventanilla", new TarifaComun(350))
+		
+		
+		var List<Asiento> asientosAA = new ArrayList<Asiento>
+		asientosAA.add(new Asiento(1, "Pasillo", new TarifaComun(150)))
+		asientosAA.add(new Asiento(1, "Centro", new TarifaComun(180)))
+		asientosAA.add(new Asiento(2, "Pasillo", new TarifaComun(450)))
+		asientosAA.add(new Asiento(2, "Centro", new TarifaComun(180)))
+		asientosAA.add(new Asiento(2, "Ventanilla", new TarifaComun(350)))
+		asientosAA.add(new Asiento(3, "Pasillo", new TarifaComun(190)))
+		asientosAA.add(new Asiento(3, "Centro", new TarifaComun(460)))
+		asientosAA.add(new Asiento(3, "Ventanilla", new TarifaComun(350)))
+		asientosAA.add(new Asiento(4, "Centro", new TarifaComun(350)))
+		asientosAA.add(new Asiento(4, "Ventanilla", new TarifaComun(350)))
+		asientosAA.add(new Asiento(5, "Pasillo", new TarifaComun(450)))
+		asientosAA.add(new Asiento(5, "Centro", new TarifaComun(180)))
+		asientosAA.add(new Asiento(5, "Ventanilla", new TarifaComun(350)))
+		asientosAA => [
+			add(asiento1)
+			add(asiento3)
+			add(asiento5)
+			add(asiento7)]
+		asientosAA.forEach[setVuelo(vueloAA)]
+		
+		var List<Asiento> asientosLAN = new ArrayList<Asiento>
+		asientosLAN => [
+			add(new Asiento(6, "Pasillo", new TarifaComun(190)))
+			add(new Asiento(6, "Centro", new TarifaComun(460)))
+			add(new Asiento(6, "Ventanilla", new TarifaComun(350)))
+			add(new Asiento(7, "Pasillo", new TarifaComun(1)))
+			add(new Asiento(7, "Centro", new TarifaComun(350)))
+			add(new Asiento(7, "Ventanilla", new TarifaComun(350)))
+			add(new Asiento(8, "Pasillo", new TarifaComun(450)))
+			add(new Asiento(8, "Centro", new TarifaComun(180)))
+			add(new Asiento(9, "Pasillo", new TarifaComun(190)))
+			add(new Asiento(9, "Centro", new TarifaComun(460)))
+			add(new Asiento(9, "Ventanilla", new TarifaComun(350)))
+			add(asiento2)
+			add(asiento4)
+			add(asiento6)]
+			
+			asientosLAN.forEach[setVuelo(vueloLAN)]
+		
+		var List <Asiento> asientosAReservarUSR = new ArrayList <Asiento>
+		asientosAReservarUSR => [
+			add(asiento1)
+			add(asiento2)
+			add(asiento3)
+			add(asiento4) ]
+		asientosAReservarUSR.forEach[reservarAsiento(usr)]
+			
+		var List <Asiento> asientosAReservarGABO = new ArrayList <Asiento>
+			asientosAReservarGABO =>[
+				add(asiento5)
+				add(asiento6)
+				add(asiento7)]
+		asientosAReservarGABO.forEach[reservarAsiento(gabo)]		
+				
+		vueloAA.asientos = asientosAA
+		vueloLAN.asientos = asientosLAN
+		
+		VuelosRepositorio.getInstance().todosLosVuelos.add(vueloAA)
+		VuelosRepositorio.getInstance().todosLosVuelos.add(vueloLAN)
 
 	}
 

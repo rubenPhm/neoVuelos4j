@@ -137,7 +137,7 @@ class BusquedaVuelo extends TransactionalDialog<BusquedaVueloAppModel> {
 		]
 		
 		new Button(panel) => [
-			caption = "Reservas"
+			caption = "Reservar Asientos"
 			onClick = [|this.reservas]
 			bindEnabled(elementSelected)
 			

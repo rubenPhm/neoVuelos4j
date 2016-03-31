@@ -38,7 +38,7 @@ class Vuelo {
 	}
 	
 	def asientosValorMaximo (float valor){
-		asientos.filter[it.getPrecio() < valor].toList
+		asientos.filter[conPrecioMaximo(valor)].toList
 	}
 	
 	def llegaAntesQue(Date unaFecha){
@@ -58,4 +58,5 @@ class Vuelo {
 	def getFechaSalidaStr(){ dateToString.format(fechaSalida)}
 	
 	def getFechaLlegadaStr(){ dateToString.format(fechaLlegada) }
+	
 }

@@ -7,15 +7,30 @@ import org.eclipse.xtend.lib.annotations.Accessors
 @Accessors
 class Reserva {
 	
-	Asiento asiento  
+	Asiento asiento
+	
     Vuelo vuelo
-    String tramos 
     String fechaReserva  
     String asientoDescripcion 
+    
+    String origen
+	String destino
+	String fechaSalida
+	String fechaLlegada
+	
 	
 	new(Asiento unAsiento){
 		asiento = unAsiento
 		asientoDescripcion = asiento.toString
+		vuelo = asiento.vuelo
 		
+		origen = vuelo.nombreOrigen
+		destino = vuelo.nombreDestino
+		fechaSalida = vuelo.fechaSalidaStr
+		fechaLlegada = vuelo.fechaLlegadaStr
 	}
+	
+	def getTramos(){
+		vuelo.cantidadEscalas
+	}	
 }
