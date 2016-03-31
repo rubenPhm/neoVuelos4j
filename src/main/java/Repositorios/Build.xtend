@@ -19,7 +19,7 @@ class Build {
 
 	public Usuario usr
 	Usuario gabo
-	Usuario fede
+	public Usuario fede
 
 	Vuelo vuelo
 
@@ -92,6 +92,11 @@ class Build {
 		usr.nombre = "Adrian Barbani"
 		fede = new Usuario ("fede", "fede")
 		fede.nombre = "Federico Peña"
+		
+		UsuarioRepositorio.getInstance().todosLosUsuarios.add(usr)
+		UsuarioRepositorio.getInstance().todosLosUsuarios.add(fede)
+		UsuarioRepositorio.getInstance().todosLosUsuarios.add(gabo)
+		
 	}
 
 	def crearAeropuertos() {

@@ -10,7 +10,6 @@ import Dominio.Reserva
 @Observable
 @Accessors
  
-
 class VerReservasAppModel {
 
  Usuario usuario

@@ -11,6 +11,7 @@ import org.uqbar.arena.widgets.Label
 import org.uqbar.arena.widgets.Panel
 import org.uqbar.arena.widgets.tables.Column
 import org.uqbar.arena.widgets.tables.Table
+import org.uqbar.arena.windows.Dialog
 import org.uqbar.arena.windows.WindowOwner
 
 import static extension org.uqbar.arena.xtend.ArenaXtendExtensions.*
@@ -21,9 +22,14 @@ class VerReservas extends TransactionalDialog<VerReservasAppModel>{
 		super(parent, model)	
 	}
 	
+	override protected addActions(Panel actionsPanel) {
+		
+	}
+	
 	override protected createFormPanel(Panel mainPanel) {
 		
-		new Label(mainPanel).text = "Usuario: " + modelObject.usuario.nombre
+				
+		new Label(mainPanel).text = "Usuario: " + modelObject.nombre
 		new Label(mainPanel).text = "Reservas Efectuadas"
 		
         new Table<Reserva>(mainPanel, typeof(Reserva)) => [
@@ -86,7 +92,7 @@ class VerReservas extends TransactionalDialog<VerReservasAppModel>{
 		new Button(botonera2)=> [
 		    setCaption("Busqueda de Vuelos")
 			width = 150
-			onClick[|this.abrirBusqueda(this)]
+			onClick[|this.busqueda]
 			]
 			
 			
@@ -97,13 +103,14 @@ class VerReservas extends TransactionalDialog<VerReservasAppModel>{
 			
 	}
 	
-	def BusquedaVuelo abrirBusqueda(VerReservas ventana){
-		new BusquedaVuelo(ventana,new BusquedaVueloAppModel(modelObject.usuario))
 	
+	def busqueda(){
+		this.openDialog(new BusquedaVuelo(this, new BusquedaVueloAppModel(modelObject.usuario)))
 	}
 	
-	override protected addActions(Panel actionsPanel) {
-		
+	def openDialog(Dialog<?> dialog) {
+		dialog.open
 	}
+	
 	
 }

@@ -3,6 +3,7 @@ package Vista
 import AppModel.BusquedaVueloAppModel
 import AppModel.ReservaAsientoAppModel
 import Dominio.Vuelo
+import org.uqbar.arena.aop.windows.TransactionalDialog
 import org.uqbar.arena.bindings.NotNullObservable
 import org.uqbar.arena.bindings.ObservableProperty
 import org.uqbar.arena.layout.HorizontalLayout
@@ -14,11 +15,10 @@ import org.uqbar.arena.widgets.Selector
 import org.uqbar.arena.widgets.TextBox
 import org.uqbar.arena.widgets.tables.Column
 import org.uqbar.arena.widgets.tables.Table
-import org.uqbar.arena.windows.SimpleWindow
-import org.uqbar.arena.windows.WindowOwner
 import org.uqbar.arena.windows.Dialog
+import org.uqbar.arena.windows.WindowOwner
 
-class BusquedaVuelo extends SimpleWindow<BusquedaVueloAppModel> {
+class BusquedaVuelo extends TransactionalDialog<BusquedaVueloAppModel> {
 
 	new(WindowOwner owner, BusquedaVueloAppModel model) {
 		super(owner, model)
