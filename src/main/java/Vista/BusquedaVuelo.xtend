@@ -6,8 +6,8 @@ import Dominio.Vuelo
 import org.uqbar.arena.aop.windows.TransactionalDialog
 import org.uqbar.arena.bindings.NotNullObservable
 import org.uqbar.arena.bindings.ObservableProperty
+import org.uqbar.arena.layout.ColumnLayout
 import org.uqbar.arena.layout.HorizontalLayout
-import org.uqbar.arena.layout.VerticalLayout
 import org.uqbar.arena.widgets.Button
 import org.uqbar.arena.widgets.Label
 import org.uqbar.arena.widgets.Panel
@@ -35,112 +35,94 @@ class BusquedaVuelo extends TransactionalDialog<BusquedaVueloAppModel> {
 	}
 
 	def panelDeBusqueda(Panel mainPanel) {
+		new Panel(mainPanel) => [
+			layout = new ColumnLayout(2)
+			
+			new Label(it).text = "Origen"
+			new Label(it).text = "Fecha Desde"
+			
+			new Selector<String>(it) => [
+				allowNull = true
+				bindValueToProperty = "origen"
+				bindItems(new ObservableProperty(modelObject, "todosLosAeropuertos"))
+				width = 100
+			]
+			new TextBox(it) => [
+				bindValueToProperty("fechaDesde")
+				width = 100
+			]
+			new Label(it).text = "Destino"
+			new Label(it).text = "Fecha Hasta"
+			
+			new Selector<String>(it) => [
+				allowNull = true
+				bindValueToProperty = "destino"
+				bindItems(new ObservableProperty(modelObject, "todosLosAeropuertos"))
+				width = 100
+			]
+			new TextBox(it) => [
+				bindValueToProperty("fechaHasta")
+				width = 100
+			]			
+			new Label(it).text = "Precio maximo"
+			new Label(it).text = "   "
+			
+			new TextBox(it) => [
+				bindValueToProperty("tarifaMax")
+				width = 80
+			]
+			new Button(it) => [
+				caption = "Buscar"
+				onClick = [|modelObject.buscar]
+				setAsDefault
+				width = 80
+			]
+		]
+	}	
 		
-		val lineaTitulos = new Panel(mainPanel).layout = new HorizontalLayout
-		
-		val colOrigen = new Panel(lineaTitulos).layout = new VerticalLayout
-		val colDestino = new Panel(lineaTitulos).layout = new VerticalLayout
-		val colDesde = new Panel(lineaTitulos).layout = new VerticalLayout
-		val colHasta = new Panel(lineaTitulos).layout = new VerticalLayout
-		val colMax = new Panel(lineaTitulos).layout = new VerticalLayout
-		
-		new Label(colOrigen).text = "Origen"
-
-		new Selector<String>(colOrigen) => [
-			allowNull = true
-			bindValueToProperty = "origen"
-			bindItems(new ObservableProperty(modelObject, "todosLosAeropuertos"))
-		]
-
-		new Label(colDestino).text = "Destino"
-
-		new Selector<String>(colDestino) => [
-			allowNull = true
-			bindValueToProperty = "destino"
-			bindItems(new ObservableProperty(modelObject, "todosLosAeropuertos"))
-		]
-
-		new Label(colDesde).text = "Fecha Desde"
-
-		new TextBox(colDesde) => [
-			bindValueToProperty("fechaDesde")
-			width = 150
-		]
-
-		new Label(colHasta).text = "Fecha Hasta"
-
-		new TextBox(colHasta) => [
-			bindValueToProperty("fechaHasta")
-			width = 150
-		]
-
-		new Label(colMax).text = "Precio maximo"
-
-		new TextBox(colMax) => [
-			bindValueToProperty("tarifaMax")
-			width = 150
-		]
-	}
-
 	def tablaResultados(Panel mainPanel) {
-
-		val table = new Table<Vuelo>(mainPanel, typeof(Vuelo)) => [
+		new Table<Vuelo>(mainPanel, typeof(Vuelo)) => [
 			bindItemsToProperty("resultados")
-			bindValueToProperty("vueloSeleccionado")
-		]
-
-		new Column<Vuelo>(table) => [
-			title = "Origen"
-			fixedSize = 200
-			bindContentsToProperty("nombreOrigen")
-		]
-
-		new Column<Vuelo>(table) => [
-			title = "Destino"
-			fixedSize = 200
-			bindContentsToProperty("nombreDestino")
-		]
-
-		new Column<Vuelo>(table) => [
-			title = "Salida"
-			fixedSize = 200
-			bindContentsToProperty("fechaSalidaStr")
-		]
-
-		new Column<Vuelo>(table) => [
-			title = "Llegada"
-			fixedSize = 200
-			bindContentsToProperty("fechaLlegadaStr")
-		]
-
-		new Column<Vuelo>(table) => [
-			title = "Escalas"
-			fixedSize = 200
-			bindContentsToProperty("cantidadEscalas")
-		]
-
-		new Column<Vuelo>(table) => [
-			title = "Asientos Libres"
-			fixedSize = 200
-			bindContentsToProperty("cantidadDeAsientosLibres")
+			bindSelectionToProperty("vueloSeleccionado")
+			height = 200
+			numberVisibleRows = 10
+		
+			 new Column<Vuelo>(it) => [
+				title = "Origen"
+				fixedSize = 100
+				bindContentsToProperty("nombreOrigen")
+			]new Column<Vuelo>(it) => [
+				title = "Destino"
+				fixedSize = 100
+				bindContentsToProperty("nombreDestino")
+			]new Column<Vuelo>(it) => [
+				title = "Salida"
+				fixedSize = 128
+				bindContentsToProperty("fechaSalidaStr")
+			]new Column<Vuelo>(it) => [
+				title = "Llegada"
+				fixedSize = 128
+				bindContentsToProperty("fechaLlegadaStr")
+			]new Column<Vuelo>(it) => [
+				title = "Escalas"
+				fixedSize = 54
+				bindContentsToProperty("cantidadEscalas")
+			]new Column<Vuelo>(it) => [
+				title = "Asientos Libres"
+				fixedSize = 100
+				bindContentsToProperty("cantidadDeAsientosLibres")
+			]
 		]
 	}
 	
-		def botonera(Panel mainPanel) {
+	def botonera(Panel mainPanel) {
 		val elementSelected = new NotNullObservable("vueloSeleccionado")
 		val panel = new Panel(mainPanel).layout = new HorizontalLayout
-
-		new Button(panel) => [
-			caption = "Buscar"
-			onClick = [|modelObject.buscar]
-			setAsDefault
-		]
-		
+	
 		new Button(panel) => [
 			caption = "Reservar Asientos"
 			onClick = [|this.reservas]
 			bindEnabled(elementSelected)
-			
 		]
 	}
 	
@@ -151,7 +133,6 @@ class BusquedaVuelo extends TransactionalDialog<BusquedaVueloAppModel> {
 	}
 	
 	def openDialog(Dialog<?> dialog) {
-		//dialog.onAccept[|modelObject.]
 		dialog.open
 	}
 }

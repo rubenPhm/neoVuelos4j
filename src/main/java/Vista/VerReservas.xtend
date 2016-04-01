@@ -5,6 +5,7 @@ import AppModel.VerReservasAppModel
 import Dominio.Reserva
 import org.uqbar.arena.aop.windows.TransactionalDialog
 import org.uqbar.arena.bindings.NotNullObservable
+import org.uqbar.arena.layout.ColumnLayout
 import org.uqbar.arena.layout.HorizontalLayout
 import org.uqbar.arena.widgets.Button
 import org.uqbar.arena.widgets.Label
@@ -20,16 +21,16 @@ class VerReservas extends TransactionalDialog<VerReservasAppModel>{
 	
 	new(WindowOwner parent, VerReservasAppModel model) {
 		super(parent, model)	
-	}
-	
-	override protected addActions(Panel actionsPanel) {
-		
+		title = "Reservas"
 	}
 	
 	override protected createFormPanel(Panel mainPanel) {
 		
-				
-		new Label(mainPanel).text = "Usuario: " + modelObject.nombre
+		new Panel(mainPanel) => [
+			layout = new ColumnLayout(1)
+			new Label(it).text = "Usuario: " + this.getModelObject.nombre
+		]
+		
 		new Label(mainPanel).text = "Reservas Efectuadas"
 		
         new Table<Reserva>(mainPanel, typeof(Reserva)) => [
@@ -38,69 +39,63 @@ class VerReservas extends TransactionalDialog<VerReservasAppModel>{
             bindSelectionToProperty("reservaSeleccionada")
             numberVisibleRows = 10
        		 		  				    
+			new Column<Reserva>(it) => [
+					title = "Origen" 
+				    fixedSize = 100  
+					bindContentsToProperty("origen")  
+			]
 			
-		new Column<Reserva>(it) => [
-				title = "Origen" 
-			    fixedSize = 100  
-				bindContentsToProperty("origen")  
-			    
-			]
-		
-		new Column<Reserva>(it) => [			
-				title = "Destino" 
-			    fixedSize = 100   
-				bindContentsToProperty("destino")  	
+			new Column<Reserva>(it) => [			
+					title = "Destino" 
+				    fixedSize = 100   
+					bindContentsToProperty("destino")  	
 			]	
-		
-		new Column<Reserva>(it) => [
-				title = " Salida" 
-			    fixedSize = 100   
-				bindContentsToProperty("fechaSalida")  
+			
+			new Column<Reserva>(it) => [
+					title = " Salida" 
+				    fixedSize = 100   
+					bindContentsToProperty("fechaSalida")  
 			]
-		new Column<Reserva>(it) => [
-				title = "Llegada"
-			    fixedSize = 100  
-				bindContentsToProperty("fechaLlegada") 
+			new Column<Reserva>(it) => [
+					title = "Llegada"
+				    fixedSize = 100  
+					bindContentsToProperty("fechaLlegada") 
 			]		
-			   
-		new Column<Reserva>(it) => [
-				title = "Tramos"
-			    fixedSize = 100  
-				bindContentsToProperty("tramos") 
+				   
+			new Column<Reserva>(it) => [
+					title = "Tramos"
+				    fixedSize = 100  
+					bindContentsToProperty("tramos") 
 			]		   
-        
-       new Column<Reserva>(it) => [
-				title = "Asiento Reservado"
-			    fixedSize = 50  
-				bindContentsToProperty("asientoDescripcion") 
+	        
+	       new Column<Reserva>(it) => [
+					title = "Asiento Reservado"
+				    fixedSize = 50  
+					bindContentsToProperty("asientoDescripcion") 
 			]
-	   			
-		 ]
+		]
 		
 		val botonera = new Panel(mainPanel).layout = new HorizontalLayout
 		
 		new Button(botonera) => [
 			caption = "Cancelar Reserva"
 			width = 150
-			onClick[|modelObject.cancelarReserva(modelObject.reservaSeleccionada)						
-			 ]
+			onClick[|modelObject.cancelarReserva(modelObject.reservaSeleccionada)]
 			bindEnabled(new NotNullObservable("reservaSeleccionada"))
-			]
-			
+		]
 		
 		val botonera2 = new Panel(mainPanel).layout = new HorizontalLayout
-		new Button(botonera2)=> [
-		    setCaption("Busqueda de Vuelos")
+		new Button(botonera2) => [
+		    setCaption = "Busqueda de Vuelos"
 			width = 150
 			onClick[|this.busqueda]
-			]
+		]
 			
-			
-        new Button(botonera2)
-		    .setCaption("Log de Consultas Hechas")
-			.width = 150        					
+        new Button(botonera2) => [
+		    setCaption = "Log de Consultas Hechas"
+			width = 150
+		]        					
 	}
-	
 	
 	def busqueda(){
 		this.openDialog(new BusquedaVuelo(this, new BusquedaVueloAppModel(modelObject.usuario)))
@@ -110,5 +105,6 @@ class VerReservas extends TransactionalDialog<VerReservasAppModel>{
 		dialog.open
 	}
 	
-	
+	override protected addActions(Panel actionsPanel) {
+	}
 }
