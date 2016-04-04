@@ -33,4 +33,8 @@ class Reserva {
 	def getTramos(){
 		vuelo.cantidadEscalas
 	}	
+	
+	def liberarAsiento(){
+		asiento.esLiberado
+	}
 }

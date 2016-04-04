@@ -59,7 +59,7 @@ class ReservaAsiento extends TransactionalDialog<ReservaAsientoAppModel> {
 
 		new Button(columna3) => [
 			caption = "Reservar"
-			onClick = [|
+			onClick [|
 				modelObject.reservarAsiento
 				this.accept
 			]

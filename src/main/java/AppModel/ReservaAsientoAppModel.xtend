@@ -31,7 +31,7 @@ class ReservaAsientoAppModel {
 	
 	def reservarAsiento (){
 		asientoSeleccionado.reservarAsiento(unUsuario)
-
+        unUsuario.actualizarReservas(asientoSeleccionado)
 	}
 	
 	def static cantidadAsientos() {

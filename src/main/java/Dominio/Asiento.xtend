@@ -37,6 +37,10 @@ class Asiento {
 		duenio == null
 	}
 	
+	def esLiberado(){
+		duenio = null
+	}
+	
 	def conPrecioMaximo(float valor){
 		this.getPrecio <= valor
 	}

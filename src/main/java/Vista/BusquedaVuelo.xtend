@@ -73,7 +73,7 @@ class BusquedaVuelo extends TransactionalDialog<BusquedaVueloAppModel> {
 			]
 			new Button(it) => [
 				caption = "Buscar"
-				onClick = [|modelObject.buscar]
+				onClick [|modelObject.buscar]
 				setAsDefault
 				width = 80
 			]
@@ -121,7 +121,7 @@ class BusquedaVuelo extends TransactionalDialog<BusquedaVueloAppModel> {
 	
 		new Button(panel) => [
 			caption = "Reservar Asientos"
-			onClick = [|this.reservas]
+			onClick [|this.reservas]
 			bindEnabled(elementSelected)
 		]
 	}
