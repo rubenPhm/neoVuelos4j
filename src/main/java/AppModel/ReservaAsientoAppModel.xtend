@@ -10,33 +10,50 @@ import Dominio.Usuario
 @Observable
 @Accessors
 class ReservaAsientoAppModel {
-	
+
 	Vuelo unVuelo
 	Usuario unUsuario
 	static List<Asiento> asientos = newArrayList
 	Asiento asientoSeleccionado
 	String alertaReserva
+
 	//public static int MAX_ASIENTO = 10
+	new(Usuario usr, Vuelo vuelo, List<Asiento> asientosDisponibles) {
 
-	new (Usuario usr, Vuelo vuelo, List<Asiento> asientosDisponibles){
-
-      unUsuario = usr
-      unVuelo = vuelo
-      asientos = asientosDisponibles
+		unUsuario = usr
+		unVuelo = vuelo
+		asientos = asientosDisponibles
 	}
-	
+
 	def asientosDeFila(int filaPedida) {
-		asientos.filter [ it.fila == filaPedida ]
+		asientos.filter[it.fila == filaPedida]
 	}
-	
-	def reservarAsiento (){
+
+	def reservarAsiento() {
 		asientoSeleccionado.reservarAsiento(unUsuario)
-        unUsuario.actualizarReservas(asientoSeleccionado)
-        alertaReserva = "Se reservo con exito el asiento" +asientoSeleccionado.toString()
+		unUsuario.actualizarReservas(asientoSeleccionado)
+		alertaReserva = "Se reservo con exito el asiento" + asientoSeleccionado.toString()
 	}
-	
+
 	def static cantidadAsientos() {
 		asientos.size
 	}
-	
+
+	def getAsientoSeleccionadoPrecio() {
+
+		if (asientoSeleccionado == null) {
+			return "--"
+		} else {
+			return asientoSeleccionado.precio.toString()
+		}
+	}
+
+	def getNombreAsientoSeleccionado() {
+		if (asientoSeleccionado == null) {
+			return "--"
+		} else {
+			return asientoSeleccionado.toString()
+		}
+	}
+
 }

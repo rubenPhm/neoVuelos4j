@@ -71,6 +71,7 @@ class Login extends SimpleWindow<LoginAppModel> {
 
 		//dialog.onAccept[|modelObject.]
 		dialog.open
+		
 	}
 
 	

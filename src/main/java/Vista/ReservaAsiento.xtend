@@ -46,7 +46,7 @@ class ReservaAsiento extends TransactionalDialog<ReservaAsientoAppModel> {
 			text = "Asiento seleccionado"
 			foreground = Color.BLUE
 		]
-		new Label(columna).value <=> "asientoSeleccionado"
+		new Label(columna).value <=> "nombreAsientoSeleccionado"
 
 		val columna2 = new Panel(linea).layout = new VerticalLayout
 
@@ -54,7 +54,7 @@ class ReservaAsiento extends TransactionalDialog<ReservaAsientoAppModel> {
 			text = "Monto a Pagar"
 			foreground = Color.BLUE
 		]
-		new Label(columna2).value <=> "asientoSeleccionado.precio"
+		new Label(columna2).value <=> "asientoSeleccionadoPrecio"
 
 		val columna3 = new Panel(linea).layout = new VerticalLayout
 
