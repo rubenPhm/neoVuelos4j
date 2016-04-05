@@ -1,11 +1,12 @@
 package AppModel
 
 import Dominio.Asiento
+import Dominio.Usuario
 import Dominio.Vuelo
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
+import org.uqbar.commons.utils.Dependencies
 import org.uqbar.commons.utils.Observable
-import Dominio.Usuario
 
 @Observable
 @Accessors
@@ -16,7 +17,6 @@ class ReservaAsientoAppModel {
 	static List<Asiento> asientos = newArrayList
 	Asiento asientoSeleccionado
 	String alertaReserva
-
 	//public static int MAX_ASIENTO = 10
 	new(Usuario usr, Vuelo vuelo, List<Asiento> asientosDisponibles) {
 
@@ -39,6 +39,7 @@ class ReservaAsientoAppModel {
 		asientos.size
 	}
 
+	@Dependencies("asientoSeleccionado")
 	def getAsientoSeleccionadoPrecio() {
 
 		if (asientoSeleccionado == null) {
@@ -48,6 +49,7 @@ class ReservaAsientoAppModel {
 		}
 	}
 
+	@Dependencies("asientoSeleccionado")
 	def getNombreAsientoSeleccionado() {
 		if (asientoSeleccionado == null) {
 			return "--"
