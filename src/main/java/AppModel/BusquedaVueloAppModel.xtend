@@ -5,6 +5,7 @@ import Dominio.Busqueda
 import Dominio.Usuario
 import Dominio.Vuelo
 import Repositorios.AeropuertosRepositorio
+import Repositorios.VuelosRepositorio
 import java.util.Date
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
@@ -33,8 +34,8 @@ class BusquedaVueloAppModel {
 	}
 	
 	def buscar() {
-		
-		resultados = new Busqueda(origen, destino, fechaDesde, fechaHasta, tarifaMax).buscar(usr)
+		var Busqueda busqueda = new Busqueda(origen, destino, fechaDesde, fechaHasta, tarifaMax,usr)
+		resultados = VuelosRepositorio.getInstance.buscar(busqueda)
 	}
 	
 	def separarAsientos() { 

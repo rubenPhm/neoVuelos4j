@@ -20,6 +20,9 @@ class Vuelo {
 	
 	SimpleDateFormat dateToString = new SimpleDateFormat("dd/MM/yyyy - hh:mm 'hs'")
 	
+	def agregarEscala(Escala escala){
+		escalas.add(escala)
+	}
 		
 	def getCantidadDeAsientosLibres(){
 		asientos.filter[ asiento | asiento.duenio == null].toList.size()

@@ -11,6 +11,9 @@ import java.util.Calendar
 import java.util.List
 
 class Build {
+	
+	VuelosRepositorio repoVuelos
+	AeropuertosRepositorio repoAeropuertos
 
 	Aeropuerto ezeiza
 	Aeropuerto costanera
@@ -31,6 +34,9 @@ class Build {
 	
 
 	new() {
+		repoAeropuertos = AeropuertosRepositorio.getInstance
+		repoVuelos = VuelosRepositorio.getInstance
+		
 		initData()
 	}
 
@@ -38,39 +44,47 @@ class Build {
 		this.crearAeropuertos
 		this.crearUsuarios
 		this.crearEscalas
-		this.crearVuelo		
+		this.crearVuelo
 		this.relacionarAsientosVuelosUsuarios
 	}
 	
 	def crearEscalas() {
 		escala1 = new Escala()
-		escala1.horaLlegada = Calendar.getInstance.getTime()
-		escala1.destino = brazuca
-
 		escala2 = new Escala()
-		escala2.horaLlegada = Calendar.getInstance.getTime()
-		escala2.destino = gotze
-
+		
+		escala1 => [
+			horaLlegada = Calendar.getInstance.getTime()
+			destino = brazuca
+		]
+		escala2 =>[
+			horaLlegada = Calendar.getInstance.getTime()
+			destino = gotze
+		]
 	}
 
 	def crearVuelo() {
 		vueloAA = new Vuelo()
-		vueloAA.escalas.add(escala1)
-		vueloAA.aerolinea = "Aerolineas Argentinas"
-		vueloAA.origen = ezeiza
-		vueloAA.destino = ricafort
-		vueloAA.fechaSalida = Calendar.getInstance.getTime()
-		vueloAA.fechaLlegada = Calendar.getInstance.getTime()
+		vueloAA => [
+			agregarEscala(escala1)
+			aerolinea = "Aerolineas Argentinas"
+			origen = ezeiza
+			destino = ricafort
+			fechaSalida = Calendar.getInstance.getTime()
+			fechaLlegada = Calendar.getInstance.getTime()
+		]
 
 		vueloLAN = new Vuelo()
-		vueloLAN.escalas.add(escala1)
-		vueloLAN.escalas.add(escala2)
-		vueloLAN.aerolinea = "LAN Airlines"
-		vueloLAN.origen = costanera
-		vueloLAN.destino = ponja
-		vueloLAN.fechaSalida = Calendar.getInstance.getTime()
-		vueloLAN.fechaLlegada = Calendar.getInstance.getTime()
-}
+		vueloLAN => [ 
+			agregarEscala(escala1)
+			agregarEscala(escala2)
+			aerolinea = "LAN Airlines"
+			origen = costanera
+			destino = ponja
+			fechaSalida = Calendar.getInstance.getTime()
+			fechaLlegada = Calendar.getInstance.getTime()
+		]
+	}
+
 	def relacionarAsientosVuelosUsuarios(){
 		
 					
@@ -141,8 +155,10 @@ class Build {
 		vueloAA.asientos = asientosAA
 		vueloLAN.asientos = asientosLAN
 		
-		VuelosRepositorio.getInstance().todosLosVuelos.add(vueloAA)
-		VuelosRepositorio.getInstance().todosLosVuelos.add(vueloLAN)
+		repoVuelos => [
+			agregarVuelo(vueloAA)
+			agregarVuelo(vueloLAN)
+			]
 
 	}
 

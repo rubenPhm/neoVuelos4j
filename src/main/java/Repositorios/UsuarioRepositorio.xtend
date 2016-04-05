@@ -18,7 +18,7 @@ class UsuarioRepositorio {
 		if (repositorio == null) {
 			repositorio = new UsuarioRepositorio()
 		}
-      repositorio;
+      repositorio
 	}
 
 	def registrarUsuario(String nick, String contrasenia) {

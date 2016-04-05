@@ -3,6 +3,7 @@ package Vista
 import AppModel.BusquedaVueloAppModel
 import AppModel.ReservaAsientoAppModel
 import Dominio.Vuelo
+import org.eclipse.xtend.lib.annotations.Accessors
 import org.uqbar.arena.aop.windows.TransactionalDialog
 import org.uqbar.arena.bindings.NotNullObservable
 import org.uqbar.arena.bindings.ObservableProperty
@@ -17,7 +18,10 @@ import org.uqbar.arena.widgets.tables.Column
 import org.uqbar.arena.widgets.tables.Table
 import org.uqbar.arena.windows.Dialog
 import org.uqbar.arena.windows.WindowOwner
+import org.uqbar.commons.utils.Observable
 
+@Observable
+@Accessors
 class BusquedaVuelo extends TransactionalDialog<BusquedaVueloAppModel> {
 
 	new(WindowOwner owner, BusquedaVueloAppModel model) {

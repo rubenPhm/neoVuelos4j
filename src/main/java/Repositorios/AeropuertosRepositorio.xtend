@@ -22,7 +22,7 @@ class AeropuertosRepositorio {
 		if (repositorio == null) {
 			repositorio = new AeropuertosRepositorio()
 		}
-      repositorio;
+      repositorio
 	}
 	
 	def nombreDeTodosLosAeropuertos() {

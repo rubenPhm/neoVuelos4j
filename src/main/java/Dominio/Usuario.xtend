@@ -13,14 +13,12 @@ class Usuario {
 	String contrasenia;
 	String nick;
 	List <Asiento> asientosReservados
-	List <Busqueda> busquedasRealizadas 
 	VerReservasAppModel model
 	
 	new ( String unNick, String unaContrasenia){
 		nick = unNick;
 		contrasenia = unaContrasenia;
 		asientosReservados = newArrayList
-		busquedasRealizadas = newArrayList
 	}
 	
 	def void eliminarReserva(Asiento asiento){
