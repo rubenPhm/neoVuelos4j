@@ -8,6 +8,7 @@ import Dominio.Usuario
 import Dominio.Vuelo
 import java.util.ArrayList
 import java.util.Calendar
+import java.util.GregorianCalendar
 import java.util.List
 
 class Build {
@@ -51,13 +52,14 @@ class Build {
 	def crearEscalas() {
 		escala1 = new Escala()
 		escala2 = new Escala()
-		
+
 		escala1 => [
-			horaLlegada = Calendar.getInstance.getTime()
+			
+			horaLlegada = new GregorianCalendar(2016, Calendar.MARCH, 7).getTime();
 			destino = brazuca
 		]
 		escala2 =>[
-			horaLlegada = Calendar.getInstance.getTime()
+			horaLlegada = new GregorianCalendar(2016, Calendar.MARCH, 8).getTime();
 			destino = gotze
 		]
 	}
@@ -69,8 +71,8 @@ class Build {
 			aerolinea = "Aerolineas Argentinas"
 			origen = ezeiza
 			destino = ricafort
-			fechaSalida = Calendar.getInstance.getTime()
-			fechaLlegada = Calendar.getInstance.getTime()
+			fechaSalida = new GregorianCalendar(2016, Calendar.MARCH, 21).getTime();
+			fechaLlegada = new GregorianCalendar(2016, Calendar.MARCH, 22).getTime();
 		]
 
 		vueloLAN = new Vuelo()
@@ -80,8 +82,8 @@ class Build {
 			aerolinea = "LAN Airlines"
 			origen = costanera
 			destino = ponja
-			fechaSalida = Calendar.getInstance.getTime()
-			fechaLlegada = Calendar.getInstance.getTime()
+			fechaSalida = new GregorianCalendar(2016, Calendar.MARCH, 7).getTime();
+			fechaLlegada = new GregorianCalendar(2016, Calendar.MARCH, 15).getTime();
 		]
 	}
 
