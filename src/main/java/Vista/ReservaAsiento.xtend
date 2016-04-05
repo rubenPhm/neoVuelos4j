@@ -26,14 +26,13 @@ class ReservaAsiento extends TransactionalDialog<ReservaAsientoAppModel> {
 	}
 
 	override protected createFormPanel(Panel mainPanel) {
-	
-		
+
 		this.labelUsuarioOrigenYDestino(mainPanel)
-		
+
 		this.tablaTramosYAerolinea(mainPanel)
-		
+
 		this.asientos(mainPanel)
-		
+
 		this.ultimaLinea(mainPanel)
 
 	}
@@ -66,16 +65,22 @@ class ReservaAsiento extends TransactionalDialog<ReservaAsientoAppModel> {
 			setAsDefault
 			disableOnError
 		]
+		
+		val columna4 = new Panel(linea).layout = new VerticalLayout
+		
+		new Button(columna4) => [
+			caption = "Volver"
+			onClick [| this.accept]
+		]
+
+		val linea2 = new Panel(mainPanel).layout = new HorizontalLayout
+
+		new Label(linea2) => [value <=> "alertaReserva" fontSize = 10]
 	}
 
 	protected def asientos(Panel mainPanel) {
 		val columna = new Panel(mainPanel).layout = new VerticalLayout
 
-		new Label(columna) => [ value <=>"alertaReserva"
-					fontSize = 20
-		]
-		
-		
 		new Label(columna) => [text = "Asientos"
 			(1 .. ReservaAsientoAppModel.cantidadAsientos).forEach [ i |
 				val filaPanel = new Panel(mainPanel)
@@ -115,14 +120,14 @@ class ReservaAsiento extends TransactionalDialog<ReservaAsientoAppModel> {
 			fixedSize = 200
 			bindContentsToProperty("horaLlegadaStr")
 		]
-		
+
 		val columna2 = new Panel(linea).layout = new VerticalLayout
 		new Label(columna2) => [
 			text = "Aerolinea"
 		]
 		new Label(columna2).value <=> "unVuelo.aerolinea"
 		linea
-		
+
 	}
 
 	protected def labelUsuarioOrigenYDestino(Panel mainPanel) {

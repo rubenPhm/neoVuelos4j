@@ -94,7 +94,12 @@ class VerReservas extends TransactionalDialog<VerReservasAppModel>{
         new Button(botonera2) => [
 		    setCaption = "Log de Consultas Hechas"
 			width = 150
-		]        					
+		] 
+		
+		new Button(botonera2) => [
+			caption = "Salir"
+			onClick [| this.accept]
+		]       					
 	}
 	
 	def busqueda(){
