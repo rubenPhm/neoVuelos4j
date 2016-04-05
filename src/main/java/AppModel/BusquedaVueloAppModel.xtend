@@ -6,6 +6,7 @@ import Dominio.Usuario
 import Dominio.Vuelo
 import Repositorios.AeropuertosRepositorio
 import Repositorios.VuelosRepositorio
+import java.util.ArrayList
 import java.util.Date
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
@@ -16,7 +17,7 @@ import org.uqbar.commons.utils.Observable
 class BusquedaVueloAppModel {
 	
 	Usuario usr	
-	List <String> todosLosAeropuertos
+	List <String> todosLosAeropuertos = new ArrayList<String>
 	
 	String origen
 	String destino
@@ -30,9 +31,10 @@ class BusquedaVueloAppModel {
 	
 	new (Usuario unUsr){
 		usr = unUsr
-		todosLosAeropuertos = AeropuertosRepositorio.getInstance.nombreDeTodosLosAeropuertos
+		todosLosAeropuertos.add("TODOS")
+		todosLosAeropuertos.addAll(AeropuertosRepositorio.getInstance.nombreDeTodosLosAeropuertos)
 	}
-	
+		
 	def buscar() {
 		var Busqueda busqueda = new Busqueda(origen, destino, fechaDesde, fechaHasta, tarifaMax,usr)
 		resultados = VuelosRepositorio.getInstance.buscar(busqueda)

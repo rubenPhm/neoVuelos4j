@@ -58,11 +58,13 @@ class VuelosRepositorio {
 	}
 	
 	def vuelosConDestino(String destino){
-		if (destino != null) {vuelosBuffer = vuelosBuffer.filter[conDestino(destino)].toList}
+		if (destino != null && !destino.equals("TODOS")) 
+		{vuelosBuffer = vuelosBuffer.filter[conDestino(destino)].toList}
 	}
 	
 	def vuelosConOrigen(String origen){
-		if (origen != null) {vuelosBuffer = vuelosBuffer.filter[conOrigen(origen)].toList}
+		if (origen != null && !origen.equals("TODOS"))
+		{vuelosBuffer = vuelosBuffer.filter[conOrigen(origen)].toList}
 	}
 	
 	def vuelosDesdeFecha(Date salida){
