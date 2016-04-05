@@ -15,7 +15,7 @@ class ReservaAsientoAppModel {
 	Usuario unUsuario
 	static List<Asiento> asientos = newArrayList
 	Asiento asientoSeleccionado
-	
+	String alertaReserva
 	//public static int MAX_ASIENTO = 10
 
 	new (Usuario usr, Vuelo vuelo, List<Asiento> asientosDisponibles){
@@ -32,6 +32,7 @@ class ReservaAsientoAppModel {
 	def reservarAsiento (){
 		asientoSeleccionado.reservarAsiento(unUsuario)
         unUsuario.actualizarReservas(asientoSeleccionado)
+        alertaReserva = "Se reservo con exito el asiento" +asientoSeleccionado.toString()
 	}
 	
 	def static cantidadAsientos() {

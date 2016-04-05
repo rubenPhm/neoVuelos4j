@@ -26,7 +26,8 @@ class ReservaAsiento extends TransactionalDialog<ReservaAsientoAppModel> {
 	}
 
 	override protected createFormPanel(Panel mainPanel) {
-
+	
+		
 		this.labelUsuarioOrigenYDestino(mainPanel)
 		
 		this.tablaTramosYAerolinea(mainPanel)
@@ -61,7 +62,6 @@ class ReservaAsiento extends TransactionalDialog<ReservaAsientoAppModel> {
 			caption = "Reservar"
 			onClick [|
 				modelObject.reservarAsiento
-				this.accept
 			]
 			setAsDefault
 			disableOnError
@@ -71,6 +71,11 @@ class ReservaAsiento extends TransactionalDialog<ReservaAsientoAppModel> {
 	protected def asientos(Panel mainPanel) {
 		val columna = new Panel(mainPanel).layout = new VerticalLayout
 
+		new Label(columna) => [ value <=>"alertaReserva"
+					fontSize = 20
+		]
+		
+		
 		new Label(columna) => [text = "Asientos"
 			(1 .. ReservaAsientoAppModel.cantidadAsientos).forEach [ i |
 				val filaPanel = new Panel(mainPanel)
