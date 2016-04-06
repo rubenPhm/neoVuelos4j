@@ -13,14 +13,8 @@ class RunAplication extends Application {
 	}
 
 	override protected Window<?> createMainWindow() {
-
-		var Build builder = new Build()
+		new Build()
 		return new Login(this, new LoginAppModel())
-//		return new VerReservas(this, new VerReservasAppModel(builder.usr))
-//	   	return new BusquedaVuelo(this, new BusquedaVueloAppModel(builder.usr))
-//     	return new ReservaAsiento(this, new ReservaAsientoAppModel(usr, vuelo, asientos))
-
-      
 	}
 
 }
