@@ -42,7 +42,6 @@ class BusquedaVueloAppModel {
 	
 	def separarAsientos() { 
 	// la parte comentada de este metodo,debe ofrecer solamente los asientos con precio menor al buscado
-							
 //		if(tarifaMax != null){
 //			val valor = Float.parseFloat(tarifaMax)
 //			asientosDisponibles = vueloSeleccionado.asientosValorMaximo(valor)

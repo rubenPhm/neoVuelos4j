@@ -97,6 +97,7 @@ class VerReservas extends TransactionalDialog<VerReservasAppModel>{
 		] 
 		
 		new Button(botonera2) => [
+			width = 80
 			caption = "Salir"
 			onClick [| this.accept]
 		]       					
