@@ -14,34 +14,33 @@ class ReservaAsientoAppModel {
 
 	Vuelo unVuelo
 	Usuario unUsuario
-	static List<Asiento> asientos = newArrayList
 	Asiento asientoSeleccionado
 	String alertaReserva
-	//public static int MAX_ASIENTO = 10
+	
 	new(Usuario usr, Vuelo vuelo, List<Asiento> asientosDisponibles) {
-
 		unUsuario = usr
 		unVuelo = vuelo
-		asientos = asientosDisponibles
 	}
 
+	def getAsientos() {
+		unVuelo.asientos	
+	}
+	
 	def asientosDeFila(int filaPedida) {
 		asientos.filter[it.fila == filaPedida]
 	}
 
 	def reservarAsiento() {
 		asientoSeleccionado.reservarAsiento(unUsuario)
-		unUsuario.actualizarReservas(asientoSeleccionado)
 		alertaReserva = "Se reservo con exito el asiento" + asientoSeleccionado.toString()
 	}
 
-	def static cantidadAsientos() {
+	def cantidadAsientos() {
 		asientos.size
 	}
 
 	@Dependencies("asientoSeleccionado")
 	def getAsientoSeleccionadoPrecio() {
-
 		if (asientoSeleccionado == null) {
 			return "--"
 		} else {

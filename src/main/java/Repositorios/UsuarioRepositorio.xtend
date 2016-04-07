@@ -22,17 +22,12 @@ class UsuarioRepositorio {
 	}
 
 	def registrarUsuario(String nick, String contrasenia) {
-
 		if (todosLosUsuarios.exists[usr|usr.nick == nick]) {
-			
 			throw new UserException("El nombre de usuario: " + nick + " ya existe")
-		
 		} else {
-			
 			val Usuario usuario = new Usuario(nick, contrasenia)
 			todosLosUsuarios.add(usuario)
 		}
-
 	}
 
 	def Usuario obtenerUsuario(String nick, String contrasenia) {

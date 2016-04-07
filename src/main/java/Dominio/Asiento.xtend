@@ -1,7 +1,6 @@
 package Dominio
 
 import java.util.Calendar
-import java.util.Date
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.uqbar.commons.model.UserException
 import org.uqbar.commons.utils.Observable
@@ -12,7 +11,6 @@ class Asiento {
 	
 	int fila
 	String ubicacion
-	Date fechaDeReserva
 	Usuario duenio = null
 	Tarifa tarifa
 	Vuelo vuelo
@@ -37,9 +35,10 @@ class Asiento {
 		duenio == null
 	}
 	
-	def esLiberado(){
+	def liberar(){
 		duenio = null
 	}
+	
 	
 	def conPrecioMaximo(float valor){
 		this.getPrecio <= valor
@@ -52,10 +51,9 @@ class Asiento {
 	def reservarAsiento(Usuario usuario) {
 		if(duenio != null){
 			throw new UserException ("Este asiento ya ha sido reservado.")
-		}else{
+		} else {
 				duenio = usuario
-				usuario.reservaAsiento(this)
-				fechaDeReserva = Calendar.getInstance.time
+				usuario.reservar(new Reserva(this))
 		}
 	}
 }

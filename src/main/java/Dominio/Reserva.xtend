@@ -11,30 +11,37 @@ class Reserva {
 	
     Vuelo vuelo
     String fechaReserva  
-    String asientoDescripcion 
     
-    String origen
-	String destino
-	String fechaSalida
-	String fechaLlegada
-	
-	
 	new(Asiento unAsiento){
 		asiento = unAsiento
-		asientoDescripcion = asiento.toString
 		vuelo = asiento.vuelo
-		
-		origen = vuelo.nombreOrigen
-		destino = vuelo.nombreDestino
-		fechaSalida = vuelo.fechaSalidaStr
-		fechaLlegada = vuelo.fechaLlegadaStr
 	}
 	
 	def getTramos(){
 		vuelo.cantidadEscalas
 	}	
 	
-	def liberarAsiento(){
-		asiento.esLiberado
+	def void liberarAsiento(){
+		asiento.liberar
+	}
+	
+	def getAsientoDescripcion() {
+		asiento.toString
+	}
+	
+	def getOrigen() {
+		vuelo.nombreOrigen
+	}
+	
+	def getDestino() {
+		vuelo.nombreDestino
+	}
+	
+	def getFechaSalida() {
+		vuelo.fechaSalidaStr
+	}
+	
+	def getFechaLlegada() {
+		vuelo.fechaLlegadaStr
 	}
 }

@@ -3,38 +3,32 @@ package Dominio
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.uqbar.commons.utils.Observable
-import AppModel.VerReservasAppModel
 
 @Observable
 @Accessors
 class Usuario {
 	
 	String nombre
-	String contrasenia;
-	String nick;
-	List <Asiento> asientosReservados
-	VerReservasAppModel model
+	String contrasenia
+	String nick
+	List<Reserva> reservas = newArrayList
 	
 	new ( String unNick, String unaContrasenia){
-		nick = unNick;
-		contrasenia = unaContrasenia;
-		asientosReservados = newArrayList
+		nick = unNick
+		contrasenia = unaContrasenia
 	}
 	
-	def void eliminarReserva(Asiento asiento){
-		asientosReservados.remove(asiento)
-		
+	def void eliminarReserva(Reserva reserva){
+		reservas.remove(reserva)
+		reserva.liberarAsiento
 	}
 	
-	def reservaAsiento(Asiento unAsiento){
-		asientosReservados.add(unAsiento)
+	def reservar(Reserva reserva){
+		reservas.add(reserva)
 	}
 	
-	def agregarModel(VerReservasAppModel unModel){
-		model = unModel
+	def getAsientosReservados() {
+		reservas.map [ it.asiento ].toList
 	}
 	
-	def actualizarReservas(Asiento asiento){
-		model.agregarReserva(asiento)
-	}
 }

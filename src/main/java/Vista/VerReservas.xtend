@@ -28,13 +28,13 @@ class VerReservas extends TransactionalDialog<VerReservasAppModel>{
 		
 		new Panel(mainPanel) => [
 			layout = new ColumnLayout(1)
-			new Label(it).text = "Usuario: " + this.getModelObject.nombre
+			new Label(it).text = "Usuario: " + this.getModelObject.usuario.nombre
 		]
 		
 		new Label(mainPanel).text = "Reservas Efectuadas"
 		
         new Table<Reserva>(mainPanel, typeof(Reserva)) => [
-			items <=> "reservas"
+			items <=> "usuario.reservas"
 			height = 200
             bindSelectionToProperty("reservaSeleccionada")
             numberVisibleRows = 10

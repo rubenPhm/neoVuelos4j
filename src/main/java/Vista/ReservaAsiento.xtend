@@ -82,7 +82,7 @@ class ReservaAsiento extends TransactionalDialog<ReservaAsientoAppModel> {
 		val columna = new Panel(mainPanel).layout = new VerticalLayout
 
 		new Label(columna) => [text = "Asientos"
-			(1 .. ReservaAsientoAppModel.cantidadAsientos).forEach [ i |
+			(1 .. this.modelObject.cantidadAsientos).forEach [ i |
 				val filaPanel = new Panel(mainPanel)
 				filaPanel.layout = new HorizontalLayout
 				modelObject.asientosDeFila(i).forEach [ asiento |
