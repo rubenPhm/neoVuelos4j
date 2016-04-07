@@ -8,8 +8,8 @@ import java.util.Date
 @Accessors
 class Tarifa {
 	
-	float precio
 	float descuento
+	float precio
 	String tipo 
 
 	new(float unValor){

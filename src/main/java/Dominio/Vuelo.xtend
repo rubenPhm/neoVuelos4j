@@ -23,6 +23,7 @@ class Vuelo {
 	def agregarEscala(Escala escala){
 		escalas.add(escala)
 	}
+	
 		
 	def getCantidadDeAsientosLibres(){
 		asientos.filter[ asiento | asiento.duenio == null].toList.size()
@@ -35,6 +36,10 @@ class Vuelo {
 	def conOrigen(String origenStr){
 		origen.nombre.equals(origenStr)
 	}
+	
+//	def getCantAsientosMenorA(float valor){
+//		conTar
+//	}
 	
 	def contTarifaMenorA(float valor){
 		asientos.exists[conPrecioMaximo(valor)]
