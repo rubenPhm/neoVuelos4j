@@ -33,7 +33,7 @@ class BusquedaVueloAppModel {
 	new (Usuario unUsr){
 		usr = unUsr
 		todosLosAeropuertos.add("TODOS")
-		todosLosAeropuertos.addAll(AeropuertosRepositorio.getInstance.nombreDeTodosLosAeropuertos)
+		//todosLosAeropuertos.addAll(AeropuertosRepositorio.getInstance.nombreDeTodosLosAeropuertos)
 	}
 		
 	def buscar() {

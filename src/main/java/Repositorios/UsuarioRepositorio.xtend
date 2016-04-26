@@ -3,6 +3,8 @@ package Repositorios
 import Dominio.Usuario
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.hibernate.Criteria
+import org.hibernate.FetchMode
+import org.hibernate.HibernateException
 import org.hibernate.criterion.Restrictions
 import org.uqbar.commons.utils.Observable
 
@@ -10,8 +12,6 @@ import org.uqbar.commons.utils.Observable
 @Accessors
 class UsuarioRepositorio extends RepositorioDefault<Usuario> {
 	static UsuarioRepositorio repositorio = null
-
-	//List<Usuario> todosLosUsuarios = new ArrayList<Usuario>
 
 	static public def UsuarioRepositorio getInstance() {
 		if (repositorio == null) {
@@ -29,6 +29,24 @@ class UsuarioRepositorio extends RepositorioDefault<Usuario> {
 			criteria.add(Restrictions.eq("nombre", usuario.nombre))
 		}
 	}
+	
+	def Usuario searchByNickContrasenia(String nick, String contrasenia) {
+		val session = openSession
+		try {
+			val usuarios = session.createCriteria(Usuario).setFetchMode("usuarios", FetchMode.JOIN).add(
+				Restrictions.eq("nick", nick)).add( Restrictions.eq("contrasenia", contrasenia)).list
+			if (usuarios.empty) {
+				return null
+			} else {
+				return usuarios.head
+			}
+		} catch (HibernateException e) {
+			throw new RuntimeException(e)
+		} finally {
+			session.close
+		}
+		
+		}
 
 	/*def registrarUsuario(String nick, String contrasenia) {
 		if (todosLosUsuarios.exists[usr|usr.nick == nick]) {
@@ -37,11 +55,7 @@ class UsuarioRepositorio extends RepositorioDefault<Usuario> {
 			val Usuario usuario = new Usuario(nick, contrasenia)
 			todosLosUsuarios.add(usuario)
 		}
-	} 
+	} */
 
-	def Usuario obtenerUsuario(String nick, String contrasenia) {
-		val Usuario usuario = todosLosUsuarios.findFirst[usr|usr.nick == nick && usr.contrasenia == contrasenia]
-		return usuario;
-	}*/
 
 }

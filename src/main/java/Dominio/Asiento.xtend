@@ -26,7 +26,7 @@ class Asiento {
 
 	@Column(length=150)
 	String ubicacion
-
+	
 	//un asiento tiene un usr y un usr puede tener muchos asientos.
 	@ManyToOne()
 	Usuario duenio

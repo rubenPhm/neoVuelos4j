@@ -12,11 +12,11 @@ import org.uqbar.commons.utils.Observable
 class AeropuertosRepositorio extends RepositorioDefault<Aeropuerto> {
 	static AeropuertosRepositorio repositorio = null
 	
-	public List<Aeropuerto> todosLosAeropuertos = new ArrayList<Aeropuerto>
+	/*public List<Aeropuerto> todosLosAeropuertos = new ArrayList<Aeropuerto>
 	
 		def nombreDeTodosLosAeropuertos() {
 		todosLosAeropuertos.map[ aeropuerto | aeropuerto.nombre ].toList
-	}
+	}*/
 	
 	static public def AeropuertosRepositorio getInstance() {
 		if (repositorio == null) {

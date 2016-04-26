@@ -122,7 +122,7 @@ class BusquedaVuelo extends TransactionalDialog<BusquedaVueloAppModel> {
 		new Button(panel) => [
 			width = 100
 			caption = "Reservar Asientos"
-			onClick [|this.reservas]
+			//onClick [|this.reservas]
 			bindEnabled(elementSelected)
 		]
 		new Button(panel) => [
@@ -132,12 +132,12 @@ class BusquedaVuelo extends TransactionalDialog<BusquedaVueloAppModel> {
 		]
 	}
 
-	def reservas() {
+	/*def reservas() {
 		modelObject.separarAsientos()
 		val proxModel = new ReservaAsientoAppModel(modelObject.usr, modelObject.vueloSeleccionado,
 			modelObject.asientosDisponibles)
 		this.openDialog(new ReservaAsiento(this, proxModel))
-	}
+	}*/
 
 	def openDialog(Dialog<?> dialog) {
 		dialog.open

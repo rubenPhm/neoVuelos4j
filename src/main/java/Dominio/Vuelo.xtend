@@ -43,6 +43,9 @@ class Vuelo {
 	//cambio de list a set.
 	@OneToMany(cascade=CascadeType.ALL)
 	Set<Escala> escalas = new HashSet
+	
+	@ManyToOne()
+	Reserva miReserva
 
 	//es necesario parsearlo??
 	SimpleDateFormat dateToString = new SimpleDateFormat("dd/MM/yyyy - hh:mm 'hs'")
