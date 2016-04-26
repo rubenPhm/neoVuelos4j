@@ -1,16 +1,16 @@
 package Dominio
 
 import java.util.Calendar
+import javax.persistence.CascadeType
 import javax.persistence.Column
+import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
 import javax.persistence.ManyToOne
 import javax.persistence.OneToOne
 import org.eclipse.xtend.lib.annotations.Accessors
-import org.hibernate.annotations.Entity
 import org.uqbar.commons.model.UserException
 import org.uqbar.commons.utils.Observable
-import javax.persistence.CascadeType
 
 @Entity
 @Accessors

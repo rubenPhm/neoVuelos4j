@@ -6,17 +6,23 @@ import java.util.HashSet
 import java.util.Set
 import javax.persistence.CascadeType
 import javax.persistence.Column
+import javax.persistence.Entity
+import javax.persistence.GeneratedValue
+import javax.persistence.Id
 import javax.persistence.ManyToOne
 import javax.persistence.OneToMany
 import org.eclipse.xtend.lib.annotations.Accessors
-import org.hibernate.annotations.Entity
 import org.uqbar.commons.utils.Observable
 
 @Entity
 @Accessors
 @Observable
 class Vuelo {
-
+	
+	@Id
+	@GeneratedValue
+	private Long id
+	
 	@ManyToOne()
 	Aeropuerto origen
 

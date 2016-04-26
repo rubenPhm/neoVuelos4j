@@ -3,12 +3,14 @@ package Dominio
 import java.text.SimpleDateFormat
 import java.util.Date
 import javax.persistence.Column
+import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
 import javax.persistence.ManyToOne
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.uqbar.commons.utils.Observable
 
+@Entity
 @Observable
 @Accessors
 class Escala {

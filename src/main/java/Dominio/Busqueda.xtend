@@ -5,12 +5,12 @@ import java.util.Date
 import java.util.HashSet
 import java.util.Set
 import javax.persistence.Column
+import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
 import javax.persistence.ManyToMany
 import javax.persistence.ManyToOne
 import org.eclipse.xtend.lib.annotations.Accessors
-import org.hibernate.annotations.Entity
 import org.uqbar.commons.model.UserException
 import org.uqbar.commons.utils.Observable
 

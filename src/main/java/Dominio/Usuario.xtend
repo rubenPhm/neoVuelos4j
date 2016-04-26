@@ -1,6 +1,7 @@
 package Dominio
 
 import java.util.HashSet
+import java.util.List
 import java.util.Set
 import javax.persistence.CascadeType
 import javax.persistence.Column
@@ -28,6 +29,8 @@ class Usuario {
 	
 	@Column (length = 150)
 	String nick
+	
+
 	
 	//Un usr puede tener muchas reservas y una reserva un solo usr. cascade para que se borre la reserva cuando el usuario la borra.
 	//cambio list  a set.
