@@ -9,7 +9,9 @@ import Dominio.Vuelo
 import java.util.ArrayList
 import java.util.Calendar
 import java.util.GregorianCalendar
+import java.util.HashSet
 import java.util.List
+import java.util.Set
 
 class Build {
 	
@@ -99,7 +101,7 @@ class Build {
 		val Asiento asiento7 = new Asiento(1, "Ventanilla", new TarifaComun(350))
 		
 		
-		var List<Asiento> asientosAA = new ArrayList<Asiento>
+		var Set<Asiento> asientosAA = new HashSet<Asiento>
 		asientosAA.add(new Asiento(1, "Pasillo", new TarifaComun(150)))
 		asientosAA.add(new Asiento(1, "Centro", new TarifaComun(180)))
 		asientosAA.add(new Asiento(2, "Pasillo", new TarifaComun(450)))
@@ -120,7 +122,7 @@ class Build {
 			add(asiento7)]
 		asientosAA.forEach[setVuelo(vueloAA)]
 		
-		var List<Asiento> asientosLAN = new ArrayList<Asiento>
+		var Set<Asiento> asientosLAN = new HashSet<Asiento>
 		asientosLAN => [
 			add(new Asiento(6, "Pasillo", new TarifaComun(190)))
 			add(new Asiento(6, "Centro", new TarifaComun(460)))
@@ -172,10 +174,18 @@ class Build {
 		fede = new Usuario("fede", "fede")
 		fede.nombre = "Federico Peña"
 
-		UsuarioRepositorio.getInstance().todosLosUsuarios.add(usr)
-		UsuarioRepositorio.getInstance().todosLosUsuarios.add(fede)
-		UsuarioRepositorio.getInstance().todosLosUsuarios.add(gabo)
+		creoUsuario(gabo)
+		creoUsuario(usr)
+		creoUsuario(fede)
 
+	}
+	
+	def creoUsuario(Usuario usuario) {
+		val repoUsuarios = UsuarioRepositorio.instance
+		if (repoUsuarios.searchByExample(usuario).isEmpty) {
+			repoUsuarios.create(usuario)
+			println("Usuario " + usuario.nombre + " creado")
+		}
 	}
 
 	def crearAeropuertos() {
@@ -185,14 +195,22 @@ class Build {
 		brazuca = new Aeropuerto("Aeroporto Internacional de São Paulo", "San Pablo")
 		gotze = new Aeropuerto("Aeropuerto Internacional de Múnich", "Munich")
 		ponja = new Aeropuerto("Aeropuerto Internacional Haneda", "Tokio")
+		
+		creoAeropuerto(ezeiza)
+		creoAeropuerto(costanera)
+		creoAeropuerto(ricafort)
+		creoAeropuerto(brazuca)
+		creoAeropuerto(gotze)
+		creoAeropuerto(ponja)
 
-		AeropuertosRepositorio.getInstance().todosLosAeropuertos.add(ezeiza)
-		AeropuertosRepositorio.getInstance().todosLosAeropuertos.add(costanera)
-		AeropuertosRepositorio.getInstance().todosLosAeropuertos.add(ricafort)
-		AeropuertosRepositorio.getInstance().todosLosAeropuertos.add(brazuca)
-		AeropuertosRepositorio.getInstance().todosLosAeropuertos.add(gotze)
-		AeropuertosRepositorio.getInstance().todosLosAeropuertos.add(ponja)
-
+	}
+	
+	def creoAeropuerto(Aeropuerto aero) {
+		val repoAeropuertos = AeropuertosRepositorio.instance
+		if (repoAeropuertos.searchByExample(aero).isEmpty) {
+			repoAeropuertos.create(aero)
+			println("Aeropuerto " + aero.nombre + " creado")
+		}
 	}
 
 }

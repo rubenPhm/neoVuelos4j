@@ -5,25 +5,39 @@ import Dominio.Usuario
 import Dominio.Vuelo
 import java.util.ArrayList
 import java.util.Date
+import java.util.HashSet
 import java.util.List
+import java.util.Set
 import org.eclipse.xtend.lib.annotations.Accessors
+import org.hibernate.Criteria
+import org.hibernate.criterion.Restrictions
 import org.uqbar.commons.utils.Observable
 
 @Accessors
 @Observable 
-class VuelosRepositorio {
+class VuelosRepositorio extends RepositorioDefault<Vuelo> {
 	static VuelosRepositorio repositorio = null
 
-	List<Vuelo> todosLosVuelos
+	Set<Vuelo> todosLosVuelos
 	List<Busqueda> busquedasRealizadas
 	
-	List<Vuelo> vuelosBuffer
+	Set<Vuelo> vuelosBuffer
+
+	override getEntityType() {
+		typeof(Vuelo)
+	}
+
+	override addQueryByExample(Criteria criteria, Vuelo vuelo) {
+		if (vuelo.origen != null) {
+			criteria.add(Restrictions.eq("nombre", vuelo.origen))
+		}
+	}
 
 
 	protected  new(){
-		todosLosVuelos = new ArrayList<Vuelo>
+		todosLosVuelos = new HashSet<Vuelo>
 		busquedasRealizadas = new ArrayList<Busqueda>
-		vuelosBuffer = new ArrayList<Vuelo>
+		vuelosBuffer = new HashSet<Vuelo>
 	}
 	
 	static public def VuelosRepositorio getInstance() {
@@ -59,25 +73,25 @@ class VuelosRepositorio {
 	
 	def vuelosConDestino(String destino){
 		if (destino != null && !destino.equals("TODOS")) 
-		{vuelosBuffer = vuelosBuffer.filter[conDestino(destino)].toList}
+		{vuelosBuffer = vuelosBuffer.filter[conDestino(destino)].toSet}
 	}
 	
 	def vuelosConOrigen(String origen){
 		if (origen != null && !origen.equals("TODOS"))
-		{vuelosBuffer = vuelosBuffer.filter[conOrigen(origen)].toList}
+		{vuelosBuffer = vuelosBuffer.filter[conOrigen(origen)].toSet}
 	}
 	
 	def vuelosDesdeFecha(Date salida){
-		if (salida != null) {vuelosBuffer = vuelosBuffer.filter[!saleAntesQue(salida)].toList}	
+		if (salida != null) {vuelosBuffer = vuelosBuffer.filter[!saleAntesQue(salida)].toSet}	
 	}
 	
 	def vuelosHastaFecha(Date llegada){
-		if (llegada != null) {vuelosBuffer = vuelosBuffer.filter[llegaAntesQue(llegada)].toList}	
+		if (llegada != null) {vuelosBuffer = vuelosBuffer.filter[llegaAntesQue(llegada)].toSet}	
 	}
 	
 	def vuelosPrecioMax(String precioMax){
 		if (precioMax != null) {val valor = Float.parseFloat(precioMax)
-			vuelosBuffer = vuelosBuffer.filter[contTarifaMenorA(valor)].toList
+			vuelosBuffer = vuelosBuffer.filter[contTarifaMenorA(valor)].toSet
 		}
 	}
 		
@@ -86,7 +100,7 @@ class VuelosRepositorio {
 	}
 	
 	def limpiarBufferVuelos(){
-		vuelosBuffer = new ArrayList<Vuelo>
+		vuelosBuffer = new HashSet<Vuelo>
 	}
 	
 	def busquedasDe(Usuario usr){
