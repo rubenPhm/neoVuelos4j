@@ -7,7 +7,6 @@ import javax.persistence.GeneratedValue
 import javax.persistence.Id
 import javax.persistence.Inheritance
 import javax.persistence.InheritanceType
-import javax.persistence.OneToOne
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.uqbar.commons.utils.Observable
 

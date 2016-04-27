@@ -13,10 +13,13 @@ class AeropuertosRepositorio extends RepositorioDefault<Aeropuerto> {
 	static AeropuertosRepositorio repositorio = null
 	
 	/*public List<Aeropuerto> todosLosAeropuertos = new ArrayList<Aeropuerto>
+	*/
 	
-		def nombreDeTodosLosAeropuertos() {
-		todosLosAeropuertos.map[ aeropuerto | aeropuerto.nombre ].toList
-	}*/
+	def nombreDeTodosLosAeropuertos() {
+		//todosLosAeropuertos.map[ aeropuerto | aeropuerto.nombre ].toList
+		allInstances.map[ aeropuerto | aeropuerto.nombre ].toList  // optimizar para traer solamente los nombres?
+	}
+	
 	
 	static public def AeropuertosRepositorio getInstance() {
 		if (repositorio == null) {
@@ -34,7 +37,5 @@ class AeropuertosRepositorio extends RepositorioDefault<Aeropuerto> {
 			criteria.add(Restrictions.eq("nombre", aeropuerto.nombre))
 		}
 	}
-	
-	
 }
 

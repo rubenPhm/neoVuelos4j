@@ -33,7 +33,6 @@ class VuelosRepositorio extends RepositorioDefault<Vuelo> {
 		}
 	}
 
-
 	protected  new(){
 		todosLosVuelos = new HashSet<Vuelo>
 		busquedasRealizadas = new ArrayList<Busqueda>

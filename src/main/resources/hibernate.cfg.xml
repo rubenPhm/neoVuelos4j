@@ -13,13 +13,13 @@
 		</property>
 	
 		<property name="hibernate.connection.url">
-			jdbc:mysql://localhost/vuelos
+			jdbc:mysql://localhost:3306/vuelos
 		</property>
 		<property name="hibernate.connection.username">
 			root
 		</property>
 		<property name="hibernate.connection.password">
-			***********
+			1234
 		</property>
 
 		<property name="show_sql">true</property>

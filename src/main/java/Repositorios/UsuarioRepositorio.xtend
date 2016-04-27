@@ -46,7 +46,7 @@ class UsuarioRepositorio extends RepositorioDefault<Usuario> {
 			session.close
 		}
 		
-		}
+	}
 
 	/*def registrarUsuario(String nick, String contrasenia) {
 		if (todosLosUsuarios.exists[usr|usr.nick == nick]) {

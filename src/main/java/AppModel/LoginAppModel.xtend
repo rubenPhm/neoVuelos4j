@@ -14,25 +14,14 @@ class LoginAppModel {
 	String nick
 	Usuario usuario
 	
-//	new(Usuario unUsuario) {
-//		contrasenia = unUsuario.contrasenia
-//		nick = unUsuario.nick
-//		usuario = unUsuario
-//		
-//	}
-	
 	new (){
-		
 	}
 	
 	def autorizarLogin() {
-		usuario = UsuarioRepositorio.getInstance.searchByNickContrasenia(nick, contrasenia);
+		usuario = UsuarioRepositorio.getInstance.searchByNickContrasenia(nick, contrasenia)
 		
 		if(usuario == null){
 			throw new UserException ("El Usuario o Contraseña ingresados no son correctos")
 		}	
 	}
-	
-	
-	
 }
