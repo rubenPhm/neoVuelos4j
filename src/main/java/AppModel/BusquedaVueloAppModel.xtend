@@ -36,6 +36,7 @@ class BusquedaVueloAppModel {
 		
 	def buscar() {
 		var Busqueda busqueda = new Busqueda(origen, destino, fechaDesde, fechaHasta, tarifaMax,usr)
-		resultados = newHashSet(VuelosRepositorio.getInstance.allInstances)
+//		resultados = newHashSet(VuelosRepositorio.getInstance.buscar(busqueda))
+		resultados = newHashSet(VuelosRepositorio.getInstance.searchByBusqueda(busqueda))
 	}
 }

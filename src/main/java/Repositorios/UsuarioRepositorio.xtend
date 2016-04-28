@@ -34,8 +34,12 @@ class UsuarioRepositorio extends RepositorioDefault<Usuario> {
 	def Usuario searchByNickContrasenia(String nick, String contrasenia) {
 		val session = openSession
 		try {
-			val usuarios = session.createCriteria(Usuario).setFetchMode("usuarios", FetchMode.JOIN).add(
-				Restrictions.eq("nick", nick)).add( Restrictions.eq("contrasenia", contrasenia)).list
+			val usuarios = 	session
+				.createCriteria(Usuario)
+				.setFetchMode("usuarios", FetchMode.JOIN)
+				.add(Restrictions.eq("nick", nick))
+				.add(Restrictions.eq("contrasenia", contrasenia))
+				.list
 			if (usuarios.empty) {
 				return null
 			} else {
@@ -46,7 +50,6 @@ class UsuarioRepositorio extends RepositorioDefault<Usuario> {
 		} finally {
 			session.close
 		}
-		
 	}
 
 	/*def registrarUsuario(String nick, String contrasenia) {

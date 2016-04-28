@@ -1,15 +1,13 @@
 package Repositorios
 
 import Dominio.Busqueda
-import Dominio.Usuario
 import Dominio.Vuelo
-import java.util.ArrayList
-import java.util.Date
-import java.util.HashSet
 import java.util.List
 import java.util.Set
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.hibernate.Criteria
+import org.hibernate.FetchMode
+import org.hibernate.HibernateException
 import org.hibernate.criterion.Restrictions
 import org.uqbar.commons.utils.Observable
 
@@ -29,70 +27,6 @@ class VuelosRepositorio extends RepositorioDefault<Vuelo> {
 		repositorio
 	}
 
-	def buscar(Busqueda unaBusqueda) {
-		iniciarBusqueda()
-//		
-//		unaBusqueda.validacionFecha()
-//		
-//		vuelosConDestino(unaBusqueda.destino)
-//		vuelosConOrigen (unaBusqueda.origen)
-//		vuelosDesdeFecha(unaBusqueda.desdeFecha)
-//		vuelosHastaFecha(unaBusqueda.hastaFecha)
-//		vuelosPrecioMax(unaBusqueda.maxPrecio)
-//		
-//		finalizarBusqueda(unaBusqueda)
-//		return	vuelosBuffer
-	}
-	
-	def iniciarBusqueda() {
-//		vuelosBuffer = todosLosVuelos
-	}
-	
-	def finalizarBusqueda(Busqueda busqueda) {
-//		agregarBusqueda(busqueda)
-//		busqueda.setResultados(vuelosBuffer)
-	}
-	
-	def vuelosConDestino(String destino){
-//		if (destino != null && !destino.equals("TODOS")) 
-//		{vuelosBuffer = vuelosBuffer.filter[conDestino(destino)].toSet}
-	}
-	
-	def vuelosConOrigen(String origen){
-//		if (origen != null && !origen.equals("TODOS"))
-//		{vuelosBuffer = vuelosBuffer.filter[conOrigen(origen)].toSet}
-	}
-	
-	def vuelosDesdeFecha(Date salida){
-//		if (salida != null) {vuelosBuffer = vuelosBuffer.filter[!saleAntesQue(salida)].toSet}	
-	}
-	
-	def vuelosHastaFecha(Date llegada){
-//		if (llegada != null) {vuelosBuffer = vuelosBuffer.filter[llegaAntesQue(llegada)].toSet}	
-	}
-	
-	def vuelosPrecioMax(String precioMax){
-//		if (precioMax != null) {val valor = Float.parseFloat(precioMax)
-//			vuelosBuffer = vuelosBuffer.filter[contTarifaMenorA(valor)].toSet
-//		}
-	}
-		
-	def agregarBusqueda(Busqueda busqueda) {
-//		busquedasRealizadas.add(busqueda)
-	}
-	
-	def limpiarBufferVuelos(){
-//		vuelosBuffer = new HashSet<Vuelo>
-	}
-	
-	def busquedasDe(Usuario usr){
-//		busquedasRealizadas.filter[realizadoPor(usr)].toList
-//	}
-//	
-//		override getEntityType() {
-//		typeof(Vuelo)
-	}
-
 	override addQueryByExample(Criteria criteria, Vuelo vuelo) {
 		if (vuelo.origen != null) {
 			criteria.add(Restrictions.eq("aerolinea", vuelo.aerolinea))
@@ -102,5 +36,92 @@ class VuelosRepositorio extends RepositorioDefault<Vuelo> {
 	override getEntityType() {
 		typeof(Vuelo)
 	}
+	
+	def Set<Vuelo> searchByBusqueda(Busqueda unaBusqueda){
+		val session = openSession
+		try {
+			val vuelos = session
+			.createCriteria(Vuelo)
+			.setFetchMode("vuelos", FetchMode.JOIN)
+//			.add(Restrictions.eq("origen.nombre", unaBusqueda.origen))
+			.add(Restrictions.gt("fechaSalida",unaBusqueda.desdeFecha))
+			.list
+			
+			if (vuelos.empty) {
+				return newHashSet
+			} else {
+				vuelos.toSet
+			}
+		} catch (HibernateException e) {
+			throw new RuntimeException(e)
+		} finally {
+			session.close
+		}		
+	}
+
+	def buscar(Busqueda unaBusqueda) {
+		val List<Vuelo> resultados = this.allInstances
+//		iniciarBusqueda()
+//		 
+//		unaBusqueda.validacionFecha()
+//		
+		vuelosConDestino(unaBusqueda.destino, resultados)
+//		vuelosConOrigen (unaBusqueda.origen)
+//		vuelosDesdeFecha(unaBusqueda.desdeFecha)
+//		vuelosHastaFecha(unaBusqueda.hastaFecha)
+//		vuelosPrecioMax(unaBusqueda.maxPrecio)
+//		
+//		finalizarBusqueda(unaBusqueda)
+//		return	vuelosBuffer
+	}
+//	
+//	def iniciarBusqueda() {
+//		vuelosBuffer = todosLosVuelos
+//	}
+//	
+//	def finalizarBusqueda(Busqueda busqueda) {
+//		agregarBusqueda(busqueda)
+//		busqueda.setResultados(vuelosBuffer)
+//	}
+//	
+	def vuelosConDestino(String destino, List <Vuelo> vuelosBuffer){
+		if (destino != null && !destino.equals("TODOS")) 
+		{vuelosBuffer.filter[conDestino(destino)].toList}
+	}
+//	
+//	def vuelosConOrigen(String origen){
+//		if (origen != null && !origen.equals("TODOS"))
+//		{vuelosBuffer = vuelosBuffer.filter[conOrigen(origen)].toSet}
+//	}
+//	
+//	def vuelosDesdeFecha(Date salida){
+//		if (salida != null) {vuelosBuffer = vuelosBuffer.filter[!saleAntesQue(salida)].toSet}	
+//	}
+//	
+//	def vuelosHastaFecha(Date llegada){
+//		if (llegada != null) {vuelosBuffer = vuelosBuffer.filter[llegaAntesQue(llegada)].toSet}	
+//	}
+//	
+//	def vuelosPrecioMax(String precioMax){
+//		if (precioMax != null) {val valor = Float.parseFloat(precioMax)
+//			vuelosBuffer = vuelosBuffer.filter[contTarifaMenorA(valor)].toSet
+//		}
+//	}
+//		
+//	def agregarBusqueda(Busqueda busqueda) {
+//		busquedasRealizadas.add(busqueda)
+//	}
+//	
+//	def limpiarBufferVuelos(){
+//		vuelosBuffer = new HashSet<Vuelo>
+//	}
+//	
+//	def busquedasDe(Usuario usr){
+//		busquedasRealizadas.filter[realizadoPor(usr)].toList
+//	}
+//	
+//		override getEntityType() {
+//		typeof(Vuelo)
+//	}
 	
 }

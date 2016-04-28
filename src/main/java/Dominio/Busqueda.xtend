@@ -40,6 +40,7 @@ class Busqueda {
 	
 	@Column(length = 150)
 	String destino
+	
 	@Column
 	Date desdeFecha
 	
