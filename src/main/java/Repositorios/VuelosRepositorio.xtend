@@ -2,12 +2,14 @@ package Repositorios
 
 import Dominio.Busqueda
 import Dominio.Vuelo
+import java.util.Date
 import java.util.List
 import java.util.Set
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.hibernate.Criteria
 import org.hibernate.FetchMode
 import org.hibernate.HibernateException
+import org.hibernate.classic.Session
 import org.hibernate.criterion.Restrictions
 import org.uqbar.commons.utils.Observable
 
@@ -40,14 +42,12 @@ class VuelosRepositorio extends RepositorioDefault<Vuelo> {
 	def Set<Vuelo> searchByBusqueda(Busqueda unaBusqueda){
 		val session = openSession
 		try {
-			val vuelos = session
-			.createCriteria(Vuelo)
-			.setFetchMode("vuelos", FetchMode.JOIN)
-//			.add(Restrictions.eq("origen.nombre", unaBusqueda.origen))
-			.add(Restrictions.ge("fechaSalida",unaBusqueda.desdeFecha))
-			.add(Restrictions.le("fechaLlegada",unaBusqueda.hastaFecha))
+			val vuelos = 	vuelosDesdeFecha(unaBusqueda.desdeFecha,
+							initialCriteria(session))
+////		.add(Restrictions.eq("origen.nombre", unaBusqueda.origen))
+//			.add(Restrictions.ge("fechaSalida",unaBusqueda.desdeFecha))
+//			.add(Restrictions.le("fechaLlegada",unaBusqueda.hastaFecha))
 			.list
-			
 			if (vuelos.empty) {
 				return newHashSet
 			} else {
@@ -59,7 +59,17 @@ class VuelosRepositorio extends RepositorioDefault<Vuelo> {
 			session.close
 		}		
 	}
-
+	
+	def Criteria initialCriteria(Session session){
+		session.createCriteria(Vuelo).setFetchMode("vuelos", FetchMode.JOIN)
+	}
+	
+	def Criteria vuelosDesdeFecha(Date salida, Criteria criteriaVuelos){
+		if (salida != null){criteriaVuelos.add(Restrictions.ge("fechaSalida",salida))}
+		else{criteriaVuelos}
+	}
+	
+	
 	def buscar(Busqueda unaBusqueda) {
 		val List<Vuelo> resultados = this.allInstances
 //		iniciarBusqueda()

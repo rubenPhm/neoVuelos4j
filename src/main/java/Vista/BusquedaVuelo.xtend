@@ -55,8 +55,8 @@ class BusquedaVuelo extends TransactionalDialog<BusquedaVueloAppModel> {
 				bindValueToProperty("tarifaMax")
 				width = 80
 			]
-			new Label(it).text = "mm/dd/aaa Desde"
-			new Label(it).text = "mm/dd/aaa Hasta"
+			new Label(it).text = "(cuidado formato) Desde"
+			new Label(it).text = "(cuidado formato)"
 			new Label(it).text = "  " //boton
 			new TextBox(it) => [
 				bindValueToProperty("fechaDesde")
