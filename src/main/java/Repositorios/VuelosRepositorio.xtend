@@ -76,13 +76,12 @@ class VuelosRepositorio extends RepositorioDefault<Vuelo> {
 	}
 	
 	
-	def buscar(Busqueda unaBusqueda) {
-		val List<Vuelo> resultados = this.allInstances
+//	def buscar(Busqueda unaBusqueda) {
+//		val List<Vuelo> resultados = this.allInstances
 //		iniciarBusqueda()
 //		 
 //		unaBusqueda.validacionFecha()
-//		
-		vuelosConDestino(unaBusqueda.destino, resultados)
+//		vuelosConDestino(unaBusqueda.destino, resultados)
 //		vuelosConOrigen (unaBusqueda.origen)
 //		vuelosDesdeFecha(unaBusqueda.desdeFecha)
 //		vuelosHastaFecha(unaBusqueda.hastaFecha)
@@ -101,10 +100,10 @@ class VuelosRepositorio extends RepositorioDefault<Vuelo> {
 //		busqueda.setResultados(vuelosBuffer)
 //	}
 //	
-	def vuelosConDestino(String destino, List <Vuelo> vuelosBuffer){
-		if (destino != null && !destino.equals("TODOS")) 
-		{vuelosBuffer.filter[conDestino(destino)].toList}
-	}
+//	def vuelosConDestino(String destino, List <Vuelo> vuelosBuffer){
+//		if (destino != null && !destino.equals("TODOS")) 
+//		{vuelosBuffer.filter[conDestino(destino)].toList}
+//	}
 //	
 //	def vuelosConOrigen(String origen){
 //		if (origen != null && !origen.equals("TODOS"))
@@ -136,9 +135,4 @@ class VuelosRepositorio extends RepositorioDefault<Vuelo> {
 //	def busquedasDe(Usuario usr){
 //		busquedasRealizadas.filter[realizadoPor(usr)].toList
 //	}
-//	
-//		override getEntityType() {
-//		typeof(Vuelo)
-//	}
-	
 }
