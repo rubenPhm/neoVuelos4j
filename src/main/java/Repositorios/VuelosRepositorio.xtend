@@ -44,7 +44,8 @@ class VuelosRepositorio extends RepositorioDefault<Vuelo> {
 			.createCriteria(Vuelo)
 			.setFetchMode("vuelos", FetchMode.JOIN)
 //			.add(Restrictions.eq("origen.nombre", unaBusqueda.origen))
-			.add(Restrictions.gt("fechaSalida",unaBusqueda.desdeFecha))
+			.add(Restrictions.ge("fechaSalida",unaBusqueda.desdeFecha))
+			.add(Restrictions.le("fechaLlegada",unaBusqueda.hastaFecha))
 			.list
 			
 			if (vuelos.empty) {
