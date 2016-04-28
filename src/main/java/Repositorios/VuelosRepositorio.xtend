@@ -43,11 +43,12 @@ class VuelosRepositorio extends RepositorioDefault<Vuelo> {
 		val session = openSession
 		try {
 			val vuelos = 	vuelosDesdeFecha(unaBusqueda.desdeFecha,
-							initialCriteria(session))
+							vuelosHastaFecha(unaBusqueda.hastaFecha,
+							initialCriteria(session)))
 ////		.add(Restrictions.eq("origen.nombre", unaBusqueda.origen))
 //			.add(Restrictions.ge("fechaSalida",unaBusqueda.desdeFecha))
 //			.add(Restrictions.le("fechaLlegada",unaBusqueda.hastaFecha))
-			.list
+							.list
 			if (vuelos.empty) {
 				return newHashSet
 			} else {
@@ -66,6 +67,11 @@ class VuelosRepositorio extends RepositorioDefault<Vuelo> {
 	
 	def Criteria vuelosDesdeFecha(Date salida, Criteria criteriaVuelos){
 		if (salida != null){criteriaVuelos.add(Restrictions.ge("fechaSalida",salida))}
+		else{criteriaVuelos}
+	}
+	
+	def vuelosHastaFecha(Date llegada, Criteria criteriaVuelos) {
+		if (llegada != null){criteriaVuelos.add(Restrictions.le("fechaLlegada",llegada))}
 		else{criteriaVuelos}
 	}
 	
