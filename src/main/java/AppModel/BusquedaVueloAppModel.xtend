@@ -26,7 +26,7 @@ class BusquedaVueloAppModel {
 	String tarifaMax
 		
 	Vuelo vueloSeleccionado
-	Set <Vuelo> resultados = newHashSet
+	List <Vuelo> resultados = newArrayList
 	
 	new (Usuario unUsr){
 		usr = unUsr
@@ -36,6 +36,6 @@ class BusquedaVueloAppModel {
 		
 	def buscar() {
 		var Busqueda busqueda = new Busqueda(origen, destino, fechaDesde, fechaHasta, tarifaMax,usr)
-//		resultados = VuelosRepositorio.getInstance.buscar(busqueda)
+		resultados = VuelosRepositorio.getInstance.allInstances
 	}
 }

@@ -1,5 +1,7 @@
 package Dominio
 
+import java.util.Date
+import java.util.GregorianCalendar
 import javax.persistence.CascadeType
 import javax.persistence.Column
 import javax.persistence.Entity
@@ -26,12 +28,13 @@ class Reserva {
 	Vuelo vuelo
 
 	@Column(length=150)
-	String fechaReserva
+	Date fechaReserva
 
 	new() {
 	}
 	
 	new(Asiento unAsiento, Vuelo unVuelo) {
+		fechaReserva = GregorianCalendar.instance.time
 		unAsiento.reservar()
 		asiento = unAsiento
 		vuelo = unVuelo

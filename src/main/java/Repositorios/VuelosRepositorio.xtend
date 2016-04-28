@@ -30,7 +30,7 @@ class VuelosRepositorio extends RepositorioDefault<Vuelo> {
 	}
 
 	def buscar(Busqueda unaBusqueda) {
-//		iniciarBusqueda()
+		iniciarBusqueda()
 //		
 //		unaBusqueda.validacionFecha()
 //		

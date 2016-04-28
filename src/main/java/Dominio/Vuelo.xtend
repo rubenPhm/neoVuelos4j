@@ -33,7 +33,7 @@ class Vuelo {
 	@Column(length=150)
 	String aerolinea
 
-	@OneToMany(fetch=FetchType.LAZY	, cascade=CascadeType.ALL)
+	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	Set<Asiento> asientos = new HashSet
 
 	@Column
