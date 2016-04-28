@@ -28,12 +28,14 @@ class Escala {
 
 	@Column
 	Date horaSalida
+	
+	@Column(length=150)
+	String formatoVerFechas = "dd/MM/yyyy - hh:mm 'hs'"
+//	SimpleDateFormat dateToString = new SimpleDateFormat("dd/MM/yyyy - hh:mm 'hs'")
 
 	new(){}
-	
-	SimpleDateFormat dateToString = new SimpleDateFormat("dd/MM/yyyy - hh:mm 'hs'")
 
-	def getHoraSalidaStr() { dateToString.format(horaSalida) }
+	def getHoraSalidaStr() { new SimpleDateFormat(formatoVerFechas).format(horaSalida) }
 
-	def getHoraLlegadaStr() { dateToString.format(horaLlegada) }
+	def getHoraLlegadaStr() { new SimpleDateFormat(formatoVerFechas).format(horaLlegada) }
 }

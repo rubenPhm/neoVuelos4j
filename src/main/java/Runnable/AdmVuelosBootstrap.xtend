@@ -54,12 +54,12 @@ class AdmVuelosBootstrap implements Bootstrap{
 		crearAeropuerto(gotze)
 		crearAeropuerto(ponja)
 
+		crearVuelo(vueloLAN)
+		crearVuelo(vueloAA)
+
 		crearUsuario(gabo)
 		crearUsuario(usr)
 		crearUsuario(fede)
-		
-		crearVuelo(vueloLAN)
-		crearVuelo(vueloAA)
 	}
  
 	def initAsientos() {
@@ -135,6 +135,7 @@ class AdmVuelosBootstrap implements Bootstrap{
 	
 	def initVuelos() {
 		initEscalas
+		
 		vueloAA = new Vuelo()
 		vueloAA => [
 			agregarEscala(escala1)
@@ -147,7 +148,7 @@ class AdmVuelosBootstrap implements Bootstrap{
 
 		vueloLAN = new Vuelo()
 		vueloLAN => [ 
-			agregarEscala(escala1)
+//			agregarEscala(escala1)  2 vuelos no pueden tener la misma escala.(escala tiene hora de salida, podria tener pista etc)
 			agregarEscala(escala2)
 			aerolinea = "LAN Airlines"
 			origen = costanera
@@ -193,7 +194,7 @@ class AdmVuelosBootstrap implements Bootstrap{
 		val repoVuelos = VuelosRepositorio.instance
 		if (repoVuelos.searchByExample(vuelo).isEmpty) {
 			repoVuelos.create(vuelo)
-			println("Usuario " + vuelo.nombreOrigen +" a " + vuelo.nombreDestino + " creado")
+			println("Vuelo " + vuelo.nombreOrigen +" a " + vuelo.nombreDestino + " creado")
 		}
 	}
 	

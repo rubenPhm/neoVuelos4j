@@ -28,7 +28,7 @@ abstract class RepositorioDefault<T> {
 		.buildSessionFactory()
 
 	def List<T> allInstances() {
-		val session = sessionFactory.openSession
+		val session = openSession
 		try {
 			return session.createCriteria(getEntityType).list()
 		} finally {
@@ -37,7 +37,7 @@ abstract class RepositorioDefault<T> {
 	}
 
 	def List<T> searchByExample(T t) {
-		val session = sessionFactory.openSession
+		val session = openSession
 		try {
 			val criteria = session.createCriteria(getEntityType)
 			this.addQueryByExample(criteria, t)
@@ -50,7 +50,7 @@ abstract class RepositorioDefault<T> {
 	}
 
 	def void create(T t) {
-		val session = sessionFactory.openSession
+		val session = openSession
 		try {
 			session.beginTransaction
 			session.save(t)

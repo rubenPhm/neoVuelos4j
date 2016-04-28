@@ -28,6 +28,7 @@ class UsuarioRepositorio extends RepositorioDefault<Usuario> {
 		if (usuario.nombre != null) {
 			criteria.add(Restrictions.eq("nombre", usuario.nombre))
 		}
+		
 	}
 	
 	def Usuario searchByNickContrasenia(String nick, String contrasenia) {

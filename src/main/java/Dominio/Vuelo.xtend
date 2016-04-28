@@ -44,8 +44,10 @@ class Vuelo {
 
 	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	Set<Escala> escalas = new HashSet
-
-	SimpleDateFormat dateToString = new SimpleDateFormat("dd/MM/yyyy - hh:mm 'hs'")
+	
+	@Column(length=150)
+	String formatoVerFechas = "dd/MM/yyyy - hh:mm 'hs'"
+//	SimpleDateFormat dateToString = new SimpleDateFormat("dd/MM/yyyy - hh:mm 'hs'")
 
 	new() {
 	}
@@ -88,8 +90,8 @@ class Vuelo {
 
 	def getCantidadEscalas() { escalas.size }
 
-	def getFechaSalidaStr() { dateToString.format(fechaSalida) }
+	def getFechaSalidaStr() { new SimpleDateFormat(formatoVerFechas).format(fechaSalida) }
 
-	def getFechaLlegadaStr() { dateToString.format(fechaLlegada) }
+	def getFechaLlegadaStr() { new SimpleDateFormat(formatoVerFechas).format(fechaLlegada) }
 
 }

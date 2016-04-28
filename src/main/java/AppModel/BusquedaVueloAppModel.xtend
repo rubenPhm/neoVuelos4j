@@ -36,6 +36,6 @@ class BusquedaVueloAppModel {
 		
 	def buscar() {
 		var Busqueda busqueda = new Busqueda(origen, destino, fechaDesde, fechaHasta, tarifaMax,usr)
-		resultados = VuelosRepositorio.getInstance.buscar(busqueda)
+//		resultados = VuelosRepositorio.getInstance.buscar(busqueda)
 	}
 }

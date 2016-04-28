@@ -27,9 +27,9 @@ class BusquedaVuelo extends TransactionalDialog<BusquedaVueloAppModel> {
 
 	override protected createFormPanel(Panel mainPanel) {
 		panelDeBusqueda(mainPanel)	
-//		botoneraAcciones(mainPanel)
+		botoneraAcciones(mainPanel)
 		tablaResultados(mainPanel)
-		botoneraAcciones(mainPanel) //si la pongo aca, desaparece un boton, parece ser algo grafico.
+//		botoneraAcciones(mainPanel) //si la pongo aca, desaparece un boton, parece ser algo grafico.
 	}
 
 	def panelDeBusqueda(Panel mainPanel) {
