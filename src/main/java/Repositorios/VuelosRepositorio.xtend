@@ -14,18 +14,18 @@ import org.hibernate.criterion.Restrictions
 import org.uqbar.commons.utils.Observable
 
 @Accessors
-@Observable 
+@Observable
 class VuelosRepositorio extends RepositorioDefault<Vuelo> {
 
 //	Set<Vuelo> todosLosVuelos = newHashSet
 //	List<Busqueda> busquedasRealizadas = newArrayList
 //	Set<Vuelo> vuelosBuffer = newHashSet
-	
 	static VuelosRepositorio repositorio = null
-	
+
 	static public def VuelosRepositorio getInstance() {
 		if (repositorio == null) {
-			repositorio = new VuelosRepositorio()}
+			repositorio = new VuelosRepositorio()
+		}
 		repositorio
 	}
 
@@ -34,48 +34,54 @@ class VuelosRepositorio extends RepositorioDefault<Vuelo> {
 			criteria.add(Restrictions.eq("aerolinea", vuelo.aerolinea))
 		}
 	}
-	
+
 	override getEntityType() {
 		typeof(Vuelo)
 	}
-	
-	def Set<Vuelo> searchByBusqueda(Busqueda unaBusqueda){
+
+	def Set<Vuelo> searchByBusqueda(Busqueda unaBusqueda) {
 		val session = openSession
 		try {
-			val vuelos = 	vuelosDesdeFecha(unaBusqueda.desdeFecha,
-							vuelosHastaFecha(unaBusqueda.hastaFecha,
-							initialCriteria(session)))
-////		.add(Restrictions.eq("origen.nombre", unaBusqueda.origen))
+//			vuelosDesdeFecha(unaBusqueda.desdeFecha,
+//				vuelosHastaFecha(unaBusqueda.hastaFecha, initialCriteria(session)))////		.add(Restrictions.eq("origen.nombre", unaBusqueda.origen))
 //			.add(Restrictions.ge("fechaSalida",unaBusqueda.desdeFecha))
 //			.add(Restrictions.le("fechaLlegada",unaBusqueda.hastaFecha))
-							.list
-			if (vuelos.empty) {
-				return newHashSet
-			} else {
-				vuelos.toSet
+			val criteria = session.createCriteria(typeof(Vuelo))
+			if (unaBusqueda.origen != null) {
+				criteria.add(Restrictions.eq("origen", unaBusqueda.origen))
 			}
+			val aliasAsientos = criteria.createAlias("asientos", "asientos")
+			if (unaBusqueda.maxPrecio != 0) {
+				aliasAsientos.add(Restrictions.lt("tarifa.precio", unaBusqueda.maxPrecio))
+			}
+			criteria.list.toSet
 		} catch (HibernateException e) {
 			throw new RuntimeException(e)
 		} finally {
 			session.close
-		}		
+		}
 	}
-	
-	def Criteria initialCriteria(Session session){
+
+	def Criteria initialCriteria(Session session) {
 		session.createCriteria(Vuelo).setFetchMode("vuelos", FetchMode.JOIN)
 	}
-	
-	def Criteria vuelosDesdeFecha(Date salida, Criteria criteriaVuelos){
-		if (salida != null){criteriaVuelos.add(Restrictions.ge("fechaSalida",salida))}
-		else{criteriaVuelos}
-	}
-	
-	def vuelosHastaFecha(Date llegada, Criteria criteriaVuelos) {
-		if (llegada != null){criteriaVuelos.add(Restrictions.le("fechaLlegada",llegada))}
-		else{criteriaVuelos}
-	}
-}	
 
+	def Criteria vuelosDesdeFecha(Date salida, Criteria criteriaVuelos) {
+		if (salida != null) {
+			criteriaVuelos.add(Restrictions.ge("fechaSalida", salida))
+		} else {
+			criteriaVuelos
+		}
+	}
+
+	def vuelosHastaFecha(Date llegada, Criteria criteriaVuelos) {
+		if (llegada != null) {
+			criteriaVuelos.add(Restrictions.le("fechaLlegada", llegada))
+		} else {
+			criteriaVuelos
+		}
+	}
+}
 //	def buscar(Busqueda unaBusqueda) {
 //		val List<Vuelo> resultados = this.allInstances
 //		iniciarBusqueda()

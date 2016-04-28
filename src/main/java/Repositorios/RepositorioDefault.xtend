@@ -64,7 +64,7 @@ abstract class RepositorioDefault<T> {
 	}
 
 	def void update(T t) {
-		val session = sessionFactory.openSession
+		val session = openSession
 		try {
 			session.beginTransaction
 			session.update(t)

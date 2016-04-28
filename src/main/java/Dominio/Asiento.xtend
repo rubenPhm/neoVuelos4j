@@ -2,12 +2,11 @@ package Dominio
 
 import java.util.Calendar
 import java.util.Date
-import javax.persistence.CascadeType
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
-import javax.persistence.OneToOne
+import javax.persistence.ManyToOne
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.uqbar.commons.utils.Observable
 
@@ -34,7 +33,7 @@ class Asiento {
 	
 	//un asiento tiene una tarifa y una tarifa tiene un asiento
 	//igual que el punto que sigue si se borra el asiento quiero que se borre la tarifa, no se si el cascade esta bien definido.
-	@OneToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	Tarifa tarifa
 
 	new(){}

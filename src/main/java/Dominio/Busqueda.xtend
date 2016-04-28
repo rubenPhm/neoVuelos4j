@@ -36,10 +36,10 @@ class Busqueda {
 	public Set<Vuelo> resultados = new HashSet
 
 	@Column(length = 150)
-	String origen
+	Aeropuerto origen
 	
 	@Column(length = 150)
-	String destino
+	Aeropuerto destino
 	
 	@Column
 	Date desdeFecha
@@ -52,7 +52,7 @@ class Busqueda {
 
 	new(){}
 	
-	new(String inicio, String fin, Date desde, Date hasta, String max, Usuario usr) {
+	new(Aeropuerto inicio, Aeropuerto fin, Date desde, Date hasta, String max, Usuario usr) {
 		origen = inicio
 		destino = fin
 		desdeFecha = desde

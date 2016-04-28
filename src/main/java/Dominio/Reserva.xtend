@@ -21,18 +21,19 @@ class Reserva {
 	@GeneratedValue
 	private Long id
 
-	@OneToOne(cascade=CascadeType.ALL)
+	@OneToOne
 	Asiento asiento
 
-	@ManyToOne()
+	@ManyToOne
 	Vuelo vuelo
 
-	@Column(length=150)
+	@Column
 	Date fechaReserva
 
 	new() {
 	}
 	
+	// TODO Refactorizar
 	new(Asiento unAsiento, Vuelo unVuelo) {
 		fechaReserva = GregorianCalendar.instance.time
 		unAsiento.reservar()

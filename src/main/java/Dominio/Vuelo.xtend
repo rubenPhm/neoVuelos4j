@@ -24,10 +24,10 @@ class Vuelo {
 	@GeneratedValue
 	private Long id
 	
-	@ManyToOne()
+	@ManyToOne
 	Aeropuerto origen
 
-	@ManyToOne()
+	@ManyToOne
 	Aeropuerto destino
 
 	@Column(length=150)
@@ -45,8 +45,7 @@ class Vuelo {
 	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	Set<Escala> escalas = new HashSet
 	
-	@Column(length=150)
-	String formatoVerFechas = "dd/MM/yyyy - hh:mm 'hs'"
+	transient static String formatoVerFechas = "dd/MM/yyyy - hh:mm 'hs'"
 //	SimpleDateFormat dateToString = new SimpleDateFormat("dd/MM/yyyy - hh:mm 'hs'")
 
 	new() {

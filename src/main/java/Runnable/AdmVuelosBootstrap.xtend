@@ -47,6 +47,8 @@ class AdmVuelosBootstrap implements Bootstrap{
 	}
 	
 	def crearEntidades() {
+		// TODO: Analizar qué tienen que cambiar al sacar el cascade
+		// Tarifas?
 		crearAeropuerto(ezeiza)
 		crearAeropuerto(costanera)
 		crearAeropuerto(ricafort)

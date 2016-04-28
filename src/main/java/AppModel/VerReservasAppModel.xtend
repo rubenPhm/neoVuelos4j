@@ -4,6 +4,7 @@ import Dominio.Reserva
 import Dominio.Usuario
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.uqbar.commons.utils.Observable
+import Repositorios.UsuarioRepositorio
 
 @Observable
 @Accessors
@@ -19,6 +20,7 @@ class VerReservasAppModel {
 
 	def cancelarReserva(Reserva reserva) {
 		usuario.eliminarReserva(reserva)
+		UsuarioRepositorio.instance.update(usuario)
 	}
 	
 }
