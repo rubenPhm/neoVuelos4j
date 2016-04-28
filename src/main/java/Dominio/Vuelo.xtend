@@ -33,10 +33,7 @@ class Vuelo {
 	@Column(length=150)
 	String aerolinea
 
-	//un vuelo puede tener muchos asientos y un asiento puede tener solo un vuelo.
-	//cascade para borrar los asientos si se borra el vuelo.
-	//cambio de list a set.
-	@OneToMany(cascade=CascadeType.ALL)
+	@OneToMany(fetch=FetchType.LAZY	, cascade=CascadeType.ALL)
 	Set<Asiento> asientos = new HashSet
 
 	@Column
@@ -45,16 +42,9 @@ class Vuelo {
 	@Column
 	Date fechaLlegada
 
-	//un vuelo puede tener muchas escalas y una escala puede tener solo un vuelo.
-	//cascade para borrar las escalas si se borra el vuelo. Una Escala por vuelo
-	//cambio de list a set.
-	@OneToMany(cascade=CascadeType.ALL)
+	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	Set<Escala> escalas = new HashSet
-	
-//	@ManyToOne()
-//	Reserva miReserva
 
-	//es necesario parsearlo?? RTA: no, cuando se instancia un vuelo ya se genera solo el formato
 	SimpleDateFormat dateToString = new SimpleDateFormat("dd/MM/yyyy - hh:mm 'hs'")
 
 	new() {
@@ -76,9 +66,6 @@ class Vuelo {
 		origen.nombre.equals(origenStr)
 	}
 
-	//	def getCantAsientosMenorA(float valor){
-	//		conTar
-	//	}
 	def contTarifaMenorA(float valor) {
 		asientos.exists[conPrecioMaximo(valor)]
 	}

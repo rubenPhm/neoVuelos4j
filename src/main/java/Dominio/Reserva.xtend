@@ -19,13 +19,9 @@ class Reserva {
 	@GeneratedValue
 	private Long id
 
-	//una reserva tiene un asiento y un asiento puede tener una sola reserva.
-	//si se borra el asiento que se borre la reserva. lo que no quiero es que si se borra la reserva se borre el asiento. por eso no se si esta bien puesto los cascade.
 	@OneToOne(cascade=CascadeType.ALL)
 	Asiento asiento
 
-	//una reserva tiene un vuelo, pero un vuelo puede tener muchas reservas
-	//si se borra el vuelo, los asientos del vuelo se tienen que borrar. por esto es que estan configurado tipo cascade(ver en Asiento (no se si esta bien hecho))por lo tanto se borraria aca tambien.
 	@ManyToOne()
 	Vuelo vuelo
 

@@ -30,8 +30,6 @@ class Usuario {
 	@Column (length = 150)
 	String nick
 	
-	//Un usr puede tener muchas reservas y una reserva un solo usr. cascade para que se borre la reserva cuando el usuario la borra.
-	//cambio list  a set.
 	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	Set<Reserva> reservas = new HashSet
 	

@@ -41,8 +41,8 @@ class AdmVuelosBootstrap implements Bootstrap{
 	override run() {
 		initAeropuertos
 		initUsuarios
-//		initVuelos
-//		initAsientos
+		initVuelos
+		initAsientos
 		crearEntidades
 	}
 	
@@ -58,8 +58,8 @@ class AdmVuelosBootstrap implements Bootstrap{
 		crearUsuario(usr)
 		crearUsuario(fede)
 		
-//		crearVuelo(vueloLAN)
-//		crearVuelo(vueloAA)
+		crearVuelo(vueloLAN)
+		crearVuelo(vueloAA)
 	}
  
 	def initAsientos() {
@@ -128,8 +128,9 @@ class AdmVuelosBootstrap implements Bootstrap{
 					
 		asientosAA.forEach[setVuelo(vueloAA)]
 		asientosLAN.forEach[setVuelo(vueloLAN)]
-		vueloAA.asientos = asientosAA
 		vueloLAN.asientos = asientosLAN
+		vueloAA.asientos = asientosAA
+		
 	}
 	
 	def initVuelos() {
