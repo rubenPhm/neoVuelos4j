@@ -1,11 +1,11 @@
 package Dominio
 
 import java.util.HashSet
-import java.util.List
 import java.util.Set
 import javax.persistence.CascadeType
 import javax.persistence.Column
 import javax.persistence.Entity
+import javax.persistence.FetchType
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
 import javax.persistence.OneToMany
@@ -30,11 +30,9 @@ class Usuario {
 	@Column (length = 150)
 	String nick
 	
-
-	
 	//Un usr puede tener muchas reservas y una reserva un solo usr. cascade para que se borre la reserva cuando el usuario la borra.
 	//cambio list  a set.
-	@OneToMany(cascade=CascadeType.ALL)
+	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	Set<Reserva> reservas = new HashSet
 	
 	new(){}

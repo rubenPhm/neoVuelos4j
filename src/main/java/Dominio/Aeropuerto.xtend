@@ -22,8 +22,7 @@ class Aeropuerto {
 	@Column (length = 150)
 	String pais
 	
-	//Todas las clases tienen que tener el new vacio para hibernet.
-	new(){}
+	new(){}//Todas las clases tienen que tener el new vacio para hibernet.
 	
 	new (String unNombre, String unPais){
 		nombre = unNombre

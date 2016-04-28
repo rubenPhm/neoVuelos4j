@@ -1,9 +1,9 @@
 package AppModel
 
 import Dominio.Asiento
+import Dominio.Reserva
 import Dominio.Usuario
 import Dominio.Vuelo
-import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.uqbar.commons.utils.Dependencies
 import org.uqbar.commons.utils.Observable
@@ -17,7 +17,7 @@ class ReservaAsientoAppModel {
 	Asiento asientoSeleccionado
 	String alertaReserva
 	
-	new(Usuario usr, Vuelo vuelo, List<Asiento> asientosDisponibles) {
+	new(Usuario usr, Vuelo vuelo) {
 		unUsuario = usr
 		unVuelo = vuelo
 	}
@@ -31,7 +31,7 @@ class ReservaAsientoAppModel {
 	}
 
 	def reservarAsiento() {
-		asientoSeleccionado.reservarAsiento(unUsuario)
+		unUsuario.reservar(new Reserva(asientoSeleccionado, unVuelo))
 		alertaReserva = "Se reservo con exito el asiento" + asientoSeleccionado.toString()
 	}
 
@@ -44,7 +44,7 @@ class ReservaAsientoAppModel {
 		if (asientoSeleccionado == null) {
 			return "--"
 		} else {
-			return asientoSeleccionado.precio.toString()
+			return asientoSeleccionado.getPrecio(unVuelo.fechaSalida).toString()
 		}
 	}
 

@@ -1,6 +1,5 @@
 package AppModel
 
-import Dominio.Asiento
 import Dominio.Busqueda
 import Dominio.Usuario
 import Dominio.Vuelo
@@ -28,7 +27,6 @@ class BusquedaVueloAppModel {
 		
 	Vuelo vueloSeleccionado
 	Set <Vuelo> resultados = newHashSet
-	Set<Asiento> asientosDisponibles = newHashSet
 	
 	new (Usuario unUsr){
 		usr = unUsr
@@ -39,10 +37,5 @@ class BusquedaVueloAppModel {
 	def buscar() {
 		var Busqueda busqueda = new Busqueda(origen, destino, fechaDesde, fechaHasta, tarifaMax,usr)
 		resultados = VuelosRepositorio.getInstance.buscar(busqueda)
-	}
-	
-	def separarAsientos() { 
-		asientosDisponibles = vueloSeleccionado.asientos
-		
 	}
 }

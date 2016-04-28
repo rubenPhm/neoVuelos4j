@@ -35,9 +35,10 @@ class Reserva {
 	new() {
 	}
 	
-	new(Asiento unAsiento) {
+	new(Asiento unAsiento, Vuelo unVuelo) {
+		unAsiento.reservar()
 		asiento = unAsiento
-		vuelo = asiento.vuelo
+		vuelo = unVuelo
 	}
 
 	def getTramos() {

@@ -7,6 +7,7 @@ import java.util.Set
 import javax.persistence.CascadeType
 import javax.persistence.Column
 import javax.persistence.Entity
+import javax.persistence.FetchType
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
 import javax.persistence.ManyToOne
@@ -50,10 +51,10 @@ class Vuelo {
 	@OneToMany(cascade=CascadeType.ALL)
 	Set<Escala> escalas = new HashSet
 	
-	@ManyToOne()
-	Reserva miReserva
+//	@ManyToOne()
+//	Reserva miReserva
 
-	//es necesario parsearlo??
+	//es necesario parsearlo?? RTA: no, cuando se instancia un vuelo ya se genera solo el formato
 	SimpleDateFormat dateToString = new SimpleDateFormat("dd/MM/yyyy - hh:mm 'hs'")
 
 	new() {
@@ -64,7 +65,7 @@ class Vuelo {
 	}
 
 	def getCantidadDeAsientosLibres() {
-		asientos.filter[asiento|asiento.duenio == null].toList.size()
+		asientos.filter[disponible].toList.size()
 	}
 
 	def conDestino(String destinoStr) {
@@ -80,8 +81,6 @@ class Vuelo {
 	//	}
 	def contTarifaMenorA(float valor) {
 		asientos.exists[conPrecioMaximo(valor)]
-
-	//		!asientosValorMaximo(valor).empty
 	}
 
 	def asientosValorMaximo(float valor) {

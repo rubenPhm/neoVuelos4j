@@ -3,6 +3,7 @@ package Runnable
 import Dominio.Aeropuerto
 import Dominio.Asiento
 import Dominio.Escala
+import Dominio.Reserva
 import Dominio.TarifaComun
 import Dominio.Usuario
 import Dominio.Vuelo
@@ -40,8 +41,8 @@ class AdmVuelosBootstrap implements Bootstrap{
 	override run() {
 		initAeropuertos
 		initUsuarios
-		initVuelos
-		initAsientos
+//		initVuelos
+//		initAsientos
 		crearEntidades
 	}
 	
@@ -52,14 +53,13 @@ class AdmVuelosBootstrap implements Bootstrap{
 		crearAeropuerto(brazuca)
 		crearAeropuerto(gotze)
 		crearAeropuerto(ponja)
-		
+
 		crearUsuario(gabo)
 		crearUsuario(usr)
 		crearUsuario(fede)
-				
-		crearVuelo(vueloLAN)
-		crearVuelo(vueloAA)
-
+		
+//		crearVuelo(vueloLAN)
+//		crearVuelo(vueloAA)
 	}
  
 	def initAsientos() {
@@ -109,20 +109,22 @@ class AdmVuelosBootstrap implements Bootstrap{
 			add(asiento4)
 			add(asiento6)]
 		
-		var List <Asiento> asientosAReservarUSR = new ArrayList <Asiento>
-		asientosAReservarUSR => [
-			add(asiento1)
-			add(asiento2)
-			add(asiento3)
-			add(asiento4) ]
-		asientosAReservarUSR.forEach[reservarAsiento(usr)]
+	
+		var List <Reserva> reservasParaUsr = new ArrayList <Reserva>
+		reservasParaUsr => [
+			add(new Reserva(asiento1, vueloAA))
+			add(new Reserva(asiento2, vueloLAN))
+			add(new Reserva(asiento3, vueloAA))
+			add(new Reserva(asiento4, vueloLAN))
+			]
+		reservasParaUsr.forEach[usr.reservar(it)]
 			
-		var List <Asiento> asientosAReservarGABO = new ArrayList <Asiento>
-			asientosAReservarGABO =>[
-				add(asiento5)
-				add(asiento6)
-				add(asiento7)]
-		asientosAReservarGABO.forEach[reservarAsiento(gabo)]
+		var List <Reserva> reservasParaGabo = new ArrayList <Reserva>
+			reservasParaGabo =>[
+			add(new Reserva(asiento5, vueloAA))
+			add(new Reserva(asiento6, vueloLAN))
+			add(new Reserva(asiento7, vueloAA))]
+		reservasParaGabo.forEach[gabo.reservar(it)]
 					
 		asientosAA.forEach[setVuelo(vueloAA)]
 		asientosLAN.forEach[setVuelo(vueloLAN)]
