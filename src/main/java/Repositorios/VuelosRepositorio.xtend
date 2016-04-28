@@ -74,8 +74,8 @@ class VuelosRepositorio extends RepositorioDefault<Vuelo> {
 		if (llegada != null){criteriaVuelos.add(Restrictions.le("fechaLlegada",llegada))}
 		else{criteriaVuelos}
 	}
-	
-	
+}	
+
 //	def buscar(Busqueda unaBusqueda) {
 //		val List<Vuelo> resultados = this.allInstances
 //		iniciarBusqueda()
@@ -89,7 +89,7 @@ class VuelosRepositorio extends RepositorioDefault<Vuelo> {
 //		
 //		finalizarBusqueda(unaBusqueda)
 //		return	vuelosBuffer
-	}
+//	}
 //	
 //	def iniciarBusqueda() {
 //		vuelosBuffer = todosLosVuelos
@@ -135,4 +135,3 @@ class VuelosRepositorio extends RepositorioDefault<Vuelo> {
 //	def busquedasDe(Usuario usr){
 //		busquedasRealizadas.filter[realizadoPor(usr)].toList
 //	}
-}
