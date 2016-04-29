@@ -7,6 +7,7 @@ import Dominio.Vuelo
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.uqbar.commons.utils.Dependencies
 import org.uqbar.commons.utils.Observable
+import Repositorios.UsuarioRepositorio
 
 @Observable
 @Accessors
@@ -33,6 +34,7 @@ class ReservaAsientoAppModel {
 	def reservarAsiento() {
 		unUsuario.reservar(new Reserva(asientoSeleccionado))
 		alertaReserva = "Se reservo con exito el asiento" + asientoSeleccionado.toString()
+		UsuarioRepositorio.instance.update(unUsuario)
 	}
 
 	def cantidadAsientos() {

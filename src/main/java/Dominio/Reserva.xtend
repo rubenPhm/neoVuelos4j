@@ -33,7 +33,6 @@ class Reserva {
 	new() {
 	}
 	
-	// TODO Refactorizar
 	new(Asiento unAsiento) {
 		fechaReserva = GregorianCalendar.instance.time
 		unAsiento.reservar()
