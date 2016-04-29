@@ -24,7 +24,7 @@ class BusquedaVueloAppModel {
 	Aeropuerto destino
 	Date fechaDesde
 	Date fechaHasta
-	String tarifaMax
+	float tarifaMax
 		
 	Vuelo vueloSeleccionado
 	Set <Vuelo> resultados = newHashSet

@@ -30,7 +30,6 @@ class BusquedaVuelo extends TransactionalDialog<BusquedaVueloAppModel> {
 		panelDeBusqueda(mainPanel)	
 		botoneraAcciones(mainPanel)
 		tablaResultados(mainPanel)
-//		botoneraAcciones(mainPanel) //si la pongo aca, desaparece un boton, parece ser algo grafico.
 	}
 	
 	def panelDeBusqueda(Panel mainPanel) {
@@ -48,14 +47,6 @@ class BusquedaVuelo extends TransactionalDialog<BusquedaVueloAppModel> {
 				width = 100
 			]
 			
-//			new Selector<Modelo>(form) => [
-//				allowNull(false)
-//				value <=> "modeloCelular"
-//				val propiedadModelos = bindItems(new ObservableProperty(repoModelos, "modelos"))
-//				propiedadModelos.adaptWith(typeof(Modelo), "descripcionEntera") // opción A
-//				//propiedadModelos.adapter = new PropertyAdapter(typeof(Modelo), "descripcionEntera") // opción B
-//			]
-			
 			new Selector<Aeropuerto>(it) => [
 				allowNull = true
 				bindValueToProperty = "destino"
@@ -64,8 +55,8 @@ class BusquedaVuelo extends TransactionalDialog<BusquedaVueloAppModel> {
 				width = 100
 			]
 			new TextBox(it) => [
-				bindValueToProperty("tarifaMax")
 				width = 80
+				bindValueToProperty("tarifaMax")
 			]
 			new Label(it).text = "Fecha Desde"
 			new Label(it).text = "Fecha Hasta"
