@@ -26,19 +26,16 @@ class Busqueda {
 	@Column
 	Date fechaRealizacion
 
-	//Una busqueda tiene un usr y un usr puede tener muchas busquedas.
 	@ManyToOne()
 	public Usuario quienBusca
 
-	//Una busqueda puede tener muchos resultados y un vuelo puede estar en muchas busquedas.
-	//Cambio de list a set.
 	@ManyToMany()
 	public Set<Vuelo> resultados = new HashSet
 
-	@Column(length = 150)
+	@ManyToOne
 	Aeropuerto origen
 	
-	@Column(length = 150)
+	@ManyToOne
 	Aeropuerto destino
 	
 	@Column

@@ -34,11 +34,11 @@ class Reserva {
 	}
 	
 	// TODO Refactorizar
-	new(Asiento unAsiento, Vuelo unVuelo) {
+	new(Asiento unAsiento) {
 		fechaReserva = GregorianCalendar.instance.time
 		unAsiento.reservar()
 		asiento = unAsiento
-		vuelo = unVuelo
+		vuelo = unAsiento.vuelo
 	}
 
 	def getTramos() {

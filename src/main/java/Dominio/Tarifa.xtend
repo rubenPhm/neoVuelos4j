@@ -26,9 +26,6 @@ class Tarifa {
 	@Column
 	float precio
 
-	@Column(length=150)
-	String tipo
-
 	new() {
 	}
 
@@ -44,5 +41,4 @@ class Tarifa {
 	def float precioFinal(Date salidaVuelo, Date reservaAsiento) {
 		0
 	}
-
 }

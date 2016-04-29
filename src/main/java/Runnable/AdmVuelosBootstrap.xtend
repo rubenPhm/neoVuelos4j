@@ -4,7 +4,9 @@ import Dominio.Aeropuerto
 import Dominio.Asiento
 import Dominio.Escala
 import Dominio.Reserva
+import Dominio.TarifaBandaNegativa
 import Dominio.TarifaComun
+import Dominio.TarifaEspecial
 import Dominio.Usuario
 import Dominio.Vuelo
 import Repositorios.AeropuertosRepositorio
@@ -37,13 +39,36 @@ class AdmVuelosBootstrap implements Bootstrap{
 	Vuelo vueloAA
 	Vuelo vueloLAN
 	
+	TarifaComun tarifa_1
+	TarifaComun tarifa_2
+	TarifaComun tarifa_3
+	TarifaEspecial tEspecial_1
+	TarifaEspecial tEspecial_2
+	TarifaEspecial tEspecial_3
+	TarifaBandaNegativa tBNegativa_1
+	TarifaBandaNegativa tBNegativa_2
+	TarifaBandaNegativa tBNegativa_3
 	
 	override run() {
 		initAeropuertos
 		initUsuarios
 		initVuelos
+		initTarifas
 		initAsientos
+		
 		crearEntidades
+	}
+	
+	def initTarifas() {
+		tarifa_1 = new TarifaComun(150)
+		tarifa_2 = new TarifaComun(1)
+		tarifa_3 = new TarifaComun(532)
+		tEspecial_1 = new TarifaEspecial(543,44)
+		tEspecial_2 = new TarifaEspecial(56,8)
+		tEspecial_3 = new TarifaEspecial(742,345)
+		tBNegativa_1 = new TarifaBandaNegativa(99)
+		tBNegativa_2 = new TarifaBandaNegativa(1235)
+		tBNegativa_3 = new TarifaBandaNegativa(6)	
 	}
 	
 	def crearEntidades() {
@@ -65,13 +90,13 @@ class AdmVuelosBootstrap implements Bootstrap{
 	}
  
 	def initAsientos() {
-		val Asiento asiento1 = new Asiento(1, "Pasillo", new TarifaComun(150))
-		val Asiento asiento2 = new Asiento(1, "Centro", new TarifaComun(180))
-		val Asiento asiento3 = new Asiento(1, "Ventanilla", new TarifaComun(350))
-		val Asiento asiento4 = new Asiento(2, "Pasillo", new TarifaComun(450))
-		val Asiento asiento5 = new Asiento(4, "Pasillo", new TarifaComun(150))
-		val Asiento asiento6 = new Asiento(8, "Ventanilla", new TarifaComun(350))
-		val Asiento asiento7 = new Asiento(1, "Ventanilla", new TarifaComun(350))
+		val Asiento asiento1 = new Asiento(1, "Pasillo", tarifa_1)
+		val Asiento asiento2 = new Asiento(1, "Centro", tEspecial_1)
+		val Asiento asiento3 = new Asiento(1, "Ventanilla", tBNegativa_1)
+		val Asiento asiento4 = new Asiento(2, "Pasillo", tarifa_2)
+		val Asiento asiento5 = new Asiento(4, "Pasillo", tarifa_1)
+		val Asiento asiento6 = new Asiento(8, "Ventanilla", tBNegativa_2)
+		val Asiento asiento7 = new Asiento(1, "Ventanilla", tEspecial_2)
 		
 		var Set<Asiento> asientosAA = new HashSet<Asiento>
 		asientosAA => [
@@ -79,34 +104,34 @@ class AdmVuelosBootstrap implements Bootstrap{
 			add(asiento3)
 			add(asiento5)
 			add(asiento7)
-			add(new Asiento(1, "Pasillo", new TarifaComun(150)))
-			add(new Asiento(1, "Centro", new TarifaComun(180)))
-			add(new Asiento(2, "Pasillo", new TarifaComun(450)))
-			add(new Asiento(2, "Centro", new TarifaComun(180)))
-			add(new Asiento(2, "Ventanilla", new TarifaComun(350)))
-			add(new Asiento(3, "Pasillo", new TarifaComun(190)))
-			add(new Asiento(3, "Centro", new TarifaComun(460)))
-			add(new Asiento(3, "Ventanilla", new TarifaComun(350)))
-			add(new Asiento(4, "Centro", new TarifaComun(350)))
-			add(new Asiento(4, "Ventanilla", new TarifaComun(350)))
-			add(new Asiento(5, "Pasillo", new TarifaComun(450)))
-			add(new Asiento(5, "Centro", new TarifaComun(180)))
-			add(new Asiento(5, "Ventanilla", new TarifaComun(350)))			
+			add(new Asiento(1, "Pasillo", tarifa_1))
+			add(new Asiento(1, "Centro", tBNegativa_1))
+			add(new Asiento(2, "Pasillo", tEspecial_2))
+			add(new Asiento(2, "Centro", tBNegativa_3))
+			add(new Asiento(2, "Ventanilla", tEspecial_1))
+			add(new Asiento(3, "Pasillo", tarifa_1))
+			add(new Asiento(3, "Centro", tBNegativa_2))
+			add(new Asiento(3, "Ventanilla", tEspecial_3))
+			add(new Asiento(4, "Centro", tBNegativa_1))
+			add(new Asiento(4, "Ventanilla", tarifa_2))
+			add(new Asiento(5, "Pasillo", tEspecial_1))
+			add(new Asiento(5, "Centro", tarifa_1))
+			add(new Asiento(5, "Ventanilla", tarifa_3))			
 			]
 
 		var Set<Asiento> asientosLAN = new HashSet<Asiento>
 		asientosLAN => [
-			add(new Asiento(6, "Pasillo", new TarifaComun(190)))
-			add(new Asiento(6, "Centro", new TarifaComun(460)))
-			add(new Asiento(6, "Ventanilla", new TarifaComun(350)))
-			add(new Asiento(7, "Pasillo", new TarifaComun(1)))
-			add(new Asiento(7, "Centro", new TarifaComun(350)))
-			add(new Asiento(7, "Ventanilla", new TarifaComun(350)))
-			add(new Asiento(8, "Pasillo", new TarifaComun(450)))
-			add(new Asiento(8, "Centro", new TarifaComun(180)))
-			add(new Asiento(9, "Pasillo", new TarifaComun(190)))
-			add(new Asiento(9, "Centro", new TarifaComun(460)))
-			add(new Asiento(9, "Ventanilla", new TarifaComun(350)))
+			add(new Asiento(6, "Pasillo", tarifa_3))
+			add(new Asiento(6, "Centro", tBNegativa_3))
+			add(new Asiento(6, "Ventanilla", tEspecial_2))
+			add(new Asiento(7, "Pasillo", tBNegativa_2))
+			add(new Asiento(7, "Centro", tarifa_1))
+			add(new Asiento(7, "Ventanilla", tarifa_3))
+			add(new Asiento(8, "Pasillo", tBNegativa_1))
+			add(new Asiento(8, "Centro", tEspecial_1))
+			add(new Asiento(9, "Pasillo", tarifa_2))
+			add(new Asiento(9, "Centro", tEspecial_2))
+			add(new Asiento(9, "Ventanilla", tarifa_1))
 			add(asiento2)
 			add(asiento4)
 			add(asiento6)]
@@ -114,18 +139,18 @@ class AdmVuelosBootstrap implements Bootstrap{
 	
 		var List <Reserva> reservasParaUsr = new ArrayList <Reserva>
 		reservasParaUsr => [
-			add(new Reserva(asiento1, vueloAA))
-			add(new Reserva(asiento2, vueloLAN))
-			add(new Reserva(asiento3, vueloAA))
-			add(new Reserva(asiento4, vueloLAN))
+			add(new Reserva(asiento1))
+			add(new Reserva(asiento2))
+			add(new Reserva(asiento3))
+			add(new Reserva(asiento4))
 			]
 		reservasParaUsr.forEach[usr.reservar(it)]
 			
 		var List <Reserva> reservasParaGabo = new ArrayList <Reserva>
 			reservasParaGabo =>[
-			add(new Reserva(asiento5, vueloAA))
-			add(new Reserva(asiento6, vueloLAN))
-			add(new Reserva(asiento7, vueloAA))]
+			add(new Reserva(asiento5))
+			add(new Reserva(asiento6))
+			add(new Reserva(asiento7))]
 		reservasParaGabo.forEach[gabo.reservar(it)]
 					
 		asientosAA.forEach[setVuelo(vueloAA)]

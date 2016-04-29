@@ -28,4 +28,8 @@ class Aeropuerto {
 		nombre = unNombre
 		pais = unPais
 	} 
+	
+	override toString(){
+		nombre
+	}
 }

@@ -2,6 +2,7 @@ package Vista
 
 import AppModel.BusquedaVueloAppModel
 import AppModel.ReservaAsientoAppModel
+import Dominio.Aeropuerto
 import Dominio.Vuelo
 import org.uqbar.arena.aop.windows.TransactionalDialog
 import org.uqbar.arena.bindings.NotNullObservable
@@ -31,7 +32,7 @@ class BusquedaVuelo extends TransactionalDialog<BusquedaVueloAppModel> {
 		tablaResultados(mainPanel)
 //		botoneraAcciones(mainPanel) //si la pongo aca, desaparece un boton, parece ser algo grafico.
 	}
-
+	
 	def panelDeBusqueda(Panel mainPanel) {
 		
 		new Panel(mainPanel) => [
@@ -39,24 +40,35 @@ class BusquedaVuelo extends TransactionalDialog<BusquedaVueloAppModel> {
 			new Label(it).text = "Origen"
 			new Label(it).text = "Destino"
 			new Label(it).text = "Precio maximo"
-			new Selector<String>(it) => [
+			new Selector<Aeropuerto>(it) => [
 				allowNull = true
 				bindValueToProperty = "origen"
 				bindItems(new ObservableProperty(modelObject, "todosLosAeropuertos"))
+				.adaptWith(typeof(Aeropuerto), "nombre")
 				width = 100
 			]
-			new Selector<String>(it) => [
+			
+//			new Selector<Modelo>(form) => [
+//				allowNull(false)
+//				value <=> "modeloCelular"
+//				val propiedadModelos = bindItems(new ObservableProperty(repoModelos, "modelos"))
+//				propiedadModelos.adaptWith(typeof(Modelo), "descripcionEntera") // opción A
+//				//propiedadModelos.adapter = new PropertyAdapter(typeof(Modelo), "descripcionEntera") // opción B
+//			]
+			
+			new Selector<Aeropuerto>(it) => [
 				allowNull = true
 				bindValueToProperty = "destino"
 				bindItems(new ObservableProperty(modelObject, "todosLosAeropuertos"))
+				.adaptWith(typeof(Aeropuerto), "nombre")
 				width = 100
 			]
 			new TextBox(it) => [
 				bindValueToProperty("tarifaMax")
 				width = 80
 			]
-			new Label(it).text = "(cuidado formato) Desde"
-			new Label(it).text = "(cuidado formato)"
+			new Label(it).text = "Fecha Desde"
+			new Label(it).text = "Fecha Hasta"
 			new Label(it).text = "  " //boton
 			new TextBox(it) => [
 				bindValueToProperty("fechaDesde")

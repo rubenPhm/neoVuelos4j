@@ -1,5 +1,6 @@
 package AppModel
 
+import Dominio.Aeropuerto
 import Dominio.Busqueda
 import Dominio.Usuario
 import Dominio.Vuelo
@@ -17,10 +18,10 @@ import org.uqbar.commons.utils.Observable
 class BusquedaVueloAppModel {
 	
 	Usuario usr	
-	List <String> todosLosAeropuertos = new ArrayList<String>
+	List <Aeropuerto> todosLosAeropuertos = new ArrayList<Aeropuerto>
 	
-	String origen
-	String destino
+	Aeropuerto origen
+	Aeropuerto destino
 	Date fechaDesde
 	Date fechaHasta
 	String tarifaMax
@@ -30,13 +31,12 @@ class BusquedaVueloAppModel {
 	
 	new (Usuario unUsr){
 		usr = unUsr
-		todosLosAeropuertos.add("TODOS")
-		todosLosAeropuertos.addAll(AeropuertosRepositorio.getInstance.nombreDeTodosLosAeropuertos)
+//		todosLosAeropuertos.add("TODOS") TODO: Poder poner el campo null en el widget de arena
+		todosLosAeropuertos = AeropuertosRepositorio.getInstance.allInstances
 	}
 		
 	def buscar() {
 		var Busqueda busqueda = new Busqueda(origen, destino, fechaDesde, fechaHasta, tarifaMax,usr)
-//		resultados = newHashSet(VuelosRepositorio.getInstance.buscar(busqueda))
 		resultados = newHashSet(VuelosRepositorio.getInstance.searchByBusqueda(busqueda))
 	}
 }

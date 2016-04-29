@@ -31,7 +31,7 @@ class ReservaAsientoAppModel {
 	}
 
 	def reservarAsiento() {
-		unUsuario.reservar(new Reserva(asientoSeleccionado, unVuelo))
+		unUsuario.reservar(new Reserva(asientoSeleccionado))
 		alertaReserva = "Se reservo con exito el asiento" + asientoSeleccionado.toString()
 	}
 
@@ -44,7 +44,7 @@ class ReservaAsientoAppModel {
 		if (asientoSeleccionado == null) {
 			return "--"
 		} else {
-			return asientoSeleccionado.getPrecio(unVuelo.fechaSalida).toString()
+			return asientoSeleccionado.getPrecio().toString()
 		}
 	}
 
