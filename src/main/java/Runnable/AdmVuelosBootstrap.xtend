@@ -261,10 +261,10 @@ class AdmVuelosBootstrap implements Bootstrap {
 
 	def crearTarifa(Tarifa tarifa) {
 		val repoTarifas = TarifasRepositorio.instance
-		//if (repoTarifas.searchByExample(tarifa).isEmpty) {
+		if (repoTarifas.searchByExample(tarifa).isEmpty) {
 			repoTarifas.create(tarifa)
 			println("Tarifa con valor " + tarifa.id.toString + " creada")
-		//}
+		}
 	}
 
 	override isPending() {

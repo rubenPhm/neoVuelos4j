@@ -19,8 +19,8 @@ class TarifasRepositorio extends RepositorioDefault <Tarifa> {
 	}
 
 	override addQueryByExample(Criteria criteria, Tarifa tarifa) {
-		if (tarifa.id != null) {
-			criteria.add(Restrictions.eq("id", tarifa.id))
+		if (tarifa.precio != 0) {
+			criteria.add(Restrictions.eq("precio", tarifa.precio))
 		}
 	}
 }
