@@ -8,6 +8,7 @@ import org.uqbar.commons.utils.Observable
 @Accessors
 @Observable
 @Entity
+
 class TarifaEspecial extends Tarifa {
 	
 	new(){}

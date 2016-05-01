@@ -10,7 +10,7 @@ import org.uqbar.commons.utils.Observable
 @Observable
 @Entity
 class TarifaBandaNegativa extends Tarifa {
-
+	
 	new() {
 	}
 
