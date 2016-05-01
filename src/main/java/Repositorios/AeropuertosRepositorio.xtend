@@ -11,10 +11,6 @@ import org.uqbar.commons.utils.Observable
 @Accessors
 class AeropuertosRepositorio extends RepositorioDefault<Aeropuerto> {
 	static AeropuertosRepositorio repositorio = null
-
-	def nombreDeTodosLosAeropuertos() {
-		allInstances.map[ aeropuerto | aeropuerto.nombre ].toList  // optimizar para traer solamente los nombres?
-	}
 	
 	static public def AeropuertosRepositorio getInstance() {
 		if (repositorio == null) {

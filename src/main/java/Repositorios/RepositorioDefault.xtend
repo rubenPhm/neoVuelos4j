@@ -6,6 +6,9 @@ import Dominio.Busqueda
 import Dominio.Escala
 import Dominio.Reserva
 import Dominio.Tarifa
+import Dominio.TarifaBandaNegativa
+import Dominio.TarifaComun
+import Dominio.TarifaEspecial
 import Dominio.Usuario
 import Dominio.Vuelo
 import java.util.List
@@ -23,6 +26,9 @@ abstract class RepositorioDefault<T> {
 		.addAnnotatedClass(Escala)
 		.addAnnotatedClass(Reserva)
 		.addAnnotatedClass(Tarifa)
+		.addAnnotatedClass(TarifaBandaNegativa)
+		.addAnnotatedClass(TarifaComun)
+		.addAnnotatedClass(TarifaEspecial)
 		.addAnnotatedClass(Vuelo)
 		.addAnnotatedClass(Usuario)
 		.buildSessionFactory()

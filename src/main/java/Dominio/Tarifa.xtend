@@ -14,7 +14,7 @@ import org.uqbar.commons.utils.Observable
 @Accessors
 @Entity
 @Inheritance(strategy=InheritanceType.JOINED)
-class Tarifa {
+abstract class Tarifa {
 
 	@Id
 	@GeneratedValue

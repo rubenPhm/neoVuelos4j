@@ -1,15 +1,17 @@
-package Runnable
+ 	package Runnable
 
 import Dominio.Aeropuerto
 import Dominio.Asiento
 import Dominio.Escala
 import Dominio.Reserva
+import Dominio.Tarifa
 import Dominio.TarifaBandaNegativa
 import Dominio.TarifaComun
 import Dominio.TarifaEspecial
 import Dominio.Usuario
 import Dominio.Vuelo
 import Repositorios.AeropuertosRepositorio
+import Repositorios.TarifasRepositorio
 import Repositorios.UsuarioRepositorio
 import Repositorios.VuelosRepositorio
 import java.util.ArrayList
@@ -74,6 +76,17 @@ class AdmVuelosBootstrap implements Bootstrap{
 	def crearEntidades() {
 		// TODO: Analizar qué tienen que cambiar al sacar el cascade
 		// Tarifas?
+		crearTarifa(tBNegativa_3)
+		crearTarifa(tarifa_1)
+		crearTarifa(tarifa_2)
+		crearTarifa(tarifa_3)
+		crearTarifa(tEspecial_1)
+		crearTarifa(tEspecial_2)
+		crearTarifa(tEspecial_3)
+		crearTarifa(tBNegativa_1)
+		crearTarifa(tBNegativa_2)
+		
+		
 		crearAeropuerto(ezeiza)
 		crearAeropuerto(costanera)
 		crearAeropuerto(ricafort)
@@ -238,6 +251,14 @@ class AdmVuelosBootstrap implements Bootstrap{
 		if (repoAeropuertos.searchByExample(aeropuerto).isEmpty) {
 			repoAeropuertos.create(aeropuerto)
 			println("Aeropuerto " + aeropuerto.nombre + " creado")
+		}
+	}
+		
+	def crearTarifa(Tarifa tarifa) {
+		val repoTarifas = TarifasRepositorio.instance
+		if (repoTarifas.searchByExample(tarifa).isEmpty) {
+			repoTarifas.create(tarifa)
+			println("Tarifa con valor " + tarifa.id.toString + " creada")
 		}
 	}
 	
