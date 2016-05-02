@@ -116,12 +116,19 @@ class AdmVuelosBootstrap implements Bootstrap {
 
 	def initAsientos() {
 		val Asiento asiento1 = new Asiento(1, "Pasillo", tarifa_1)
+		asiento1.vuelo = vueloLAN
 		val Asiento asiento2 = new Asiento(1, "Centro", tEspecial_1)
+		asiento2.vuelo = vueloLAN
 		val Asiento asiento3 = new Asiento(1, "Ventanilla", tBNegativa_1)
+		asiento3.vuelo = vueloLAN
 		val Asiento asiento4 = new Asiento(2, "Pasillo", tarifa_2)
+		asiento4.vuelo = vueloLAN
 		val Asiento asiento5 = new Asiento(4, "Pasillo", tarifa_1)
+		asiento5.vuelo = vueloLAN
 		val Asiento asiento6 = new Asiento(8, "Ventanilla", tBNegativa_2)
+		asiento6.vuelo = vueloLAN
 		val Asiento asiento7 = new Asiento(1, "Ventanilla", tEspecial_2)
+		asiento7.vuelo = vueloLAN
 
 		var Set<Asiento> asientosAA = new HashSet<Asiento>
 		asientosAA => [
