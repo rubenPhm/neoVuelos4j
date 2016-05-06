@@ -11,6 +11,8 @@ import javax.persistence.Id
 import javax.persistence.OneToMany
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.uqbar.commons.utils.Observable
+import static org.uqbar.commons.model.ObservableUtils.firePropertyChanged
+
 
 @Entity
 @Observable
@@ -43,10 +45,13 @@ class Usuario {
 	def void eliminarReserva(Reserva reserva){
 		reservas.remove(reserva)
 		reserva.liberarAsiento
+		firePropertyChanged(this,"reservas",reservas)		
 	}
 	
 	def reservar(Reserva reserva){
 		reservas.add(reserva)
+		firePropertyChanged(this,"reservas",reservas)		
+		
 	}
 	
 	def getAsientosReservados() {

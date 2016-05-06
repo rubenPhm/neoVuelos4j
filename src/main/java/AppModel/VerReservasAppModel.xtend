@@ -18,7 +18,7 @@ class VerReservasAppModel {
 		usuario = user
 	}
 
-	def cancelarReserva(Reserva reserva) {
+	def cancelarReserva(Reserva reserva) { 
 		usuario.eliminarReserva(reserva)
 		UsuarioRepositorio.instance.update(usuario)
 	}

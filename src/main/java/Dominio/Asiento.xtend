@@ -10,6 +10,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import org.uqbar.commons.utils.Observable
 import javax.persistence.CascadeType
 
+
 @Entity
 @Accessors
 @Observable
@@ -53,7 +54,7 @@ class Asiento {
 
 	def liberar() {
 		 disponible = true
-	}
+		 	}
 
 	def conPrecioMaximo(float valor) {
 		if (disponible){this.getPrecio() <= valor}
