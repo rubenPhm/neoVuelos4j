@@ -33,11 +33,12 @@ class ReservaAsientoAppModel {
 	}
 
 	def reservarAsiento() {
-		unUsuario.reservar(new Reserva(asientoSeleccionado))
-		alertaReserva = "Se reservo con exito el asiento" + asientoSeleccionado.toString()
-		UsuarioRepositorio.instance.update(unUsuario)
-		VuelosRepositorio.instance.update(unVuelo)
-		
+		if(asientoSeleccionado.disponible){
+		  unUsuario.reservar(new Reserva(asientoSeleccionado))
+		  alertaReserva = "Se reservo con exito el asiento" + asientoSeleccionado.toString()
+		  UsuarioRepositorio.instance.update(unUsuario)
+		  VuelosRepositorio.instance.update(unVuelo)
+		}
 	}
 
 	def cantidadAsientos() {
