@@ -15,6 +15,7 @@ import javax.persistence.OneToMany
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.uqbar.commons.utils.Observable
 
+
 @Entity
 @Accessors
 @Observable

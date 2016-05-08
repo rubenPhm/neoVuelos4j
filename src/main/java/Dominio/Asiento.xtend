@@ -9,6 +9,8 @@ import javax.persistence.ManyToOne
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.uqbar.commons.utils.Observable
 import javax.persistence.CascadeType
+import static org.uqbar.commons.model.ObservableUtils.firePropertyChanged
+
 
 
 @Entity
@@ -54,6 +56,7 @@ class Asiento {
 
 	def liberar() {
 		 disponible = true
+		 firePropertyChanged(this,"disponible",disponible)
 		 	}
 
 	def conPrecioMaximo(float valor) {
@@ -71,5 +74,6 @@ class Asiento {
 
 	def reservar() {
 		disponible = false
+		firePropertyChanged(this,"disponible",disponible)
 	}
 }
