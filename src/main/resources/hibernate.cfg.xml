@@ -4,7 +4,7 @@
 
 <hibernate-configuration>
 	<session-factory>
-		<property name="hbm2ddl.auto">update</property>
+		<property name="hbm2ddl.auto">create-drop</property>
 		<property name="hibernate.dialect">
 			org.hibernate.dialect.MySQLDialect
 		</property>
@@ -19,7 +19,7 @@
 			root
 		</property>
 		<property name="hibernate.connection.password">
-			pikeitor
+			1234
 		</property>
 
 		<property name="show_sql">true</property>

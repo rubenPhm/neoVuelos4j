@@ -56,12 +56,12 @@ class AdmVuelosBootstrap implements Bootstrap {
 		initTarifas
 		crearAeropuertosYTarifas
 
-		val repoTarifas = TarifasRepositorio.instance
-		var List<Tarifa> tarifasCreadas = repoTarifas.allInstances()
-		
-		if(tarifasCreadas.size() == 0){throw new RuntimeException("No se crearon tarifas")}else{
-			println("cantidad de tarifas creadas: " + tarifasCreadas.size())
-		}
+//		val repoTarifas = TarifasRepositorio.instance
+//		var List<Tarifa> tarifasCreadas = repoTarifas.allInstances()
+//		
+//		if(tarifasCreadas.size() == 0){throw new RuntimeException("No se crearon tarifas")}else{
+//			println("cantidad de tarifas creadas: " + tarifasCreadas.size())
+//		}
 		
 		initUsuarios
 		initVuelos
@@ -116,19 +116,12 @@ class AdmVuelosBootstrap implements Bootstrap {
 
 	def initAsientos() {
 		val Asiento asiento1 = new Asiento(1, "Pasillo", tarifa_1)
-		asiento1.vuelo = vueloLAN
 		val Asiento asiento2 = new Asiento(1, "Centro", tEspecial_1)
-		asiento2.vuelo = vueloLAN
 		val Asiento asiento3 = new Asiento(1, "Ventanilla", tBNegativa_1)
-		asiento3.vuelo = vueloLAN
 		val Asiento asiento4 = new Asiento(2, "Pasillo", tarifa_2)
-		asiento4.vuelo = vueloLAN
 		val Asiento asiento5 = new Asiento(4, "Pasillo", tarifa_1)
-		asiento5.vuelo = vueloLAN
 		val Asiento asiento6 = new Asiento(8, "Ventanilla", tBNegativa_2)
-		asiento6.vuelo = vueloLAN
 		val Asiento asiento7 = new Asiento(1, "Ventanilla", tEspecial_2)
-		asiento7.vuelo = vueloLAN
 
 		var Set<Asiento> asientosAA = new HashSet<Asiento>
 		asientosAA => [
@@ -150,21 +143,37 @@ class AdmVuelosBootstrap implements Bootstrap {
 			add(new Asiento(5, "Centro", tarifa_1))
 			add(new Asiento(5, "Ventanilla", tarifa_3))
 		]
+		asientosAA.forEach[setVuelo(vueloAA)]
+		vueloAA.asientos = asientosAA
 
+//		val repoTarifas = TarifasRepositorio.instance
+//		var List<Tarifa> tarifasCreadas = repoTarifas.allInstances()
+//		val Tarifa unaTarifa = tarifasCreadas.get(0)
+//		println(unaTarifa)
 
-		val repoTarifas = TarifasRepositorio.instance
-		var List<Tarifa> tarifasCreadas = repoTarifas.allInstances()
-		val Tarifa unaTarifa = tarifasCreadas.get(0)
-		println(unaTarifa);
+//		NO ENTIENDO QUE HACE ESTO. ?
  
 		var Set<Asiento> asientosLAN = new HashSet<Asiento>
-		asientosLAN => [add(new Asiento(6, "Pasillo", unaTarifa)) add(new Asiento(6, "Centro", tBNegativa_3))
-			add(new Asiento(6, "Ventanilla", tEspecial_2)) add(new Asiento(7, "Pasillo", tBNegativa_2))
-			add(new Asiento(7, "Centro", tarifa_1)) add(new Asiento(7, "Ventanilla", tarifa_3))
-			add(new Asiento(8, "Pasillo", tBNegativa_1)) add(new Asiento(8, "Centro", tEspecial_1))
-			add(new Asiento(9, "Pasillo", tarifa_2)) add(new Asiento(9, "Centro", tEspecial_2))
-			add(new Asiento(9, "Ventanilla", tarifa_1)) add(asiento2) add(asiento4) add(asiento6)]
-
+		asientosLAN => [
+//			add(new Asiento(6, "Pasillo", unaTarifa)) 
+			add(new Asiento(6, "Pasillo", tarifa_1)) 
+			add(new Asiento(6, "Centro", tBNegativa_3))
+			add(new Asiento(6, "Ventanilla", tEspecial_2)) 
+			add(new Asiento(7, "Pasillo", tBNegativa_2))
+			add(new Asiento(7, "Centro", tarifa_1))
+			add(new Asiento(7, "Ventanilla", tarifa_3))
+			add(new Asiento(8, "Pasillo", tBNegativa_1))
+			add(new Asiento(8, "Centro", tEspecial_1))
+			add(new Asiento(9, "Pasillo", tarifa_2))
+			add(new Asiento(9, "Centro", tEspecial_2))
+			add(new Asiento(9, "Ventanilla", tarifa_1))
+			add(asiento2)
+			add(asiento4)
+			add(asiento6)
+			]
+		asientosLAN.forEach[setVuelo(vueloLAN)]
+		vueloLAN.asientos = asientosLAN
+		
 		var List<Reserva> reservasParaUsr = new ArrayList<Reserva>
 		reservasParaUsr => [
 			add(new Reserva(asiento1))
@@ -175,13 +184,12 @@ class AdmVuelosBootstrap implements Bootstrap {
 		reservasParaUsr.forEach[usr.reservar(it)]
 
 		var List<Reserva> reservasParaGabo = new ArrayList<Reserva>
-		reservasParaGabo => [add(new Reserva(asiento5)) add(new Reserva(asiento6)) add(new Reserva(asiento7))]
+		reservasParaGabo => [
+			add(new Reserva(asiento5))
+			add(new Reserva(asiento6))
+			add(new Reserva(asiento7))
+		]
 		reservasParaGabo.forEach[gabo.reservar(it)]
-
-		asientosAA.forEach[setVuelo(vueloAA)]
-		asientosLAN.forEach[setVuelo(vueloLAN)]
-		vueloLAN.asientos = asientosLAN
-		vueloAA.asientos = asientosAA
 
 	}
 

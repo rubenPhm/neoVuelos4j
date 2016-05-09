@@ -29,8 +29,8 @@ class VuelosRepositorio extends RepositorioDefault<Vuelo> {
 		val session = openSession
 		try {
 			val criteria = session.createCriteria(entityType)
-			if(unaBusqueda.desdeFecha != null){criteria.add(Restrictions.le("fechaSalida", unaBusqueda.desdeFecha))}
-			if(unaBusqueda.hastaFecha != null){criteria.add(Restrictions.ge("fechaLlegada", unaBusqueda.hastaFecha))}
+			if(unaBusqueda.desdeFecha != null){criteria.add(Restrictions.ge("fechaSalida", unaBusqueda.desdeFecha))}// desdeBusqueda < salidaVuelo
+			if(unaBusqueda.hastaFecha != null){criteria.add(Restrictions.le("fechaLlegada", unaBusqueda.hastaFecha))}// hastaBusqueda > llegadaVuelo
 			if (unaBusqueda.origen != null) {criteria.add(Restrictions.eq("origen", unaBusqueda.origen))}
 			if (unaBusqueda.destino != null) {criteria.add(Restrictions.eq("destino", unaBusqueda.destino))}
 			
