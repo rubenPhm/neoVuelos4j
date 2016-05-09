@@ -48,7 +48,7 @@ class BusquedaVuelo extends TransactionalDialog<BusquedaVueloAppModel> {
 			]
 			
 			new Selector<Aeropuerto>(it) => [
-				allowNull = true
+				allowNull(true)
 				bindValueToProperty = "destino"
 				bindItems(new ObservableProperty(modelObject, "todosLosAeropuertos"))
 				.adaptWith(typeof(Aeropuerto), "nombre")
@@ -60,7 +60,7 @@ class BusquedaVuelo extends TransactionalDialog<BusquedaVueloAppModel> {
 			]
 			new Label(it).text = "Sale despues de:"
 			new Label(it).text = "Llega antes de:"
-			new Label(it).text = "* formato mm/dd/aaaa" //boton
+			new Label(it).text = "* formato mm/dd/aaaa"
 			new TextBox(it) => [
 				bindValueToProperty("fechaDesde")
 				width = 100

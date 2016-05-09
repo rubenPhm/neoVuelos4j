@@ -55,13 +55,6 @@ class AdmVuelosBootstrap implements Bootstrap {
 		initAeropuertos
 		initTarifas
 		crearAeropuertosYTarifas
-
-//		val repoTarifas = TarifasRepositorio.instance
-//		var List<Tarifa> tarifasCreadas = repoTarifas.allInstances()
-//		
-//		if(tarifasCreadas.size() == 0){throw new RuntimeException("No se crearon tarifas")}else{
-//			println("cantidad de tarifas creadas: " + tarifasCreadas.size())
-//		}
 		
 		initUsuarios
 		initVuelos
@@ -111,7 +104,7 @@ class AdmVuelosBootstrap implements Bootstrap {
 		tEspecial_3 = new TarifaEspecial(742, 345)
 		tBNegativa_1 = new TarifaBandaNegativa(99)
 		tBNegativa_2 = new TarifaBandaNegativa(1235)
-		tBNegativa_3 = new TarifaBandaNegativa(6)
+		tBNegativa_3 = new TarifaBandaNegativa(19)
 	}
 
 	def initAsientos() {
@@ -138,7 +131,7 @@ class AdmVuelosBootstrap implements Bootstrap {
 			add(new Asiento(3, "Centro", tBNegativa_2))
 			add(new Asiento(3, "Ventanilla", tEspecial_3))
 			add(new Asiento(4, "Centro", tBNegativa_1))
-			add(new Asiento(4, "Ventanilla", tarifa_2))
+			add(new Asiento(4, "Ventanilla", tarifa_3))
 			add(new Asiento(5, "Pasillo", tEspecial_1))
 			add(new Asiento(5, "Centro", tarifa_1))
 			add(new Asiento(5, "Ventanilla", tarifa_3))
@@ -146,16 +139,8 @@ class AdmVuelosBootstrap implements Bootstrap {
 		asientosAA.forEach[setVuelo(vueloAA)]
 		vueloAA.asientos = asientosAA
 
-//		val repoTarifas = TarifasRepositorio.instance
-//		var List<Tarifa> tarifasCreadas = repoTarifas.allInstances()
-//		val Tarifa unaTarifa = tarifasCreadas.get(0)
-//		println(unaTarifa)
-
-//		NO ENTIENDO QUE HACE ESTO. ?
- 
 		var Set<Asiento> asientosLAN = new HashSet<Asiento>
 		asientosLAN => [
-//			add(new Asiento(6, "Pasillo", unaTarifa)) 
 			add(new Asiento(6, "Pasillo", tarifa_1)) 
 			add(new Asiento(6, "Centro", tBNegativa_3))
 			add(new Asiento(6, "Ventanilla", tEspecial_2)) 
@@ -164,9 +149,9 @@ class AdmVuelosBootstrap implements Bootstrap {
 			add(new Asiento(7, "Ventanilla", tarifa_3))
 			add(new Asiento(8, "Pasillo", tBNegativa_1))
 			add(new Asiento(8, "Centro", tEspecial_1))
-			add(new Asiento(9, "Pasillo", tarifa_2))
+			add(new Asiento(9, "Pasillo", tarifa_3))
 			add(new Asiento(9, "Centro", tEspecial_2))
-			add(new Asiento(9, "Ventanilla", tarifa_1))
+			add(new Asiento(9, "Ventanilla", tarifa_2))
 			add(asiento2)
 			add(asiento4)
 			add(asiento6)
@@ -208,7 +193,6 @@ class AdmVuelosBootstrap implements Bootstrap {
 
 		vueloLAN = new Vuelo()
 		vueloLAN => [
-			//			agregarEscala(escala1)  2 vuelos no pueden tener la misma escala.(escala tiene hora de salida, podria tener pista etc)
 			agregarEscala(escala2)
 			aerolinea = "LAN Airlines"
 			origen = costanera

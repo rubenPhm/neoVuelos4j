@@ -45,11 +45,11 @@ class Busqueda {
 	Date hastaFecha
 	
 	@Column(length = 150)
-	float maxPrecio
+	Float maxPrecio
 
 	new(){}
 	
-	new(Aeropuerto inicio, Aeropuerto fin, Date desde, Date hasta, float max, Usuario usr) {
+	new(Aeropuerto inicio, Aeropuerto fin, Date desde, Date hasta, Float max, Usuario usr) {
 		origen = inicio
 		destino = fin
 		desdeFecha = desde

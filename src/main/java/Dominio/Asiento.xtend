@@ -61,7 +61,7 @@ class Asiento {
 
 	def conPrecioMaximo(float valor) {
 		if (disponible){this.getPrecio() <= valor}
-		else { true }
+		else { false }
 	}
 
 	def float getPrecio() {

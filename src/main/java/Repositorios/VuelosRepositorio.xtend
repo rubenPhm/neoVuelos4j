@@ -13,9 +13,6 @@ import org.uqbar.commons.utils.Observable
 @Observable
 class VuelosRepositorio extends RepositorioDefault<Vuelo> {
 
-//	Set<Vuelo> todosLosVuelos = newHashSet
-//	List<Busqueda> busquedasRealizadas = newArrayList
-//	Set<Vuelo> vuelosBuffer = newHashSet
 	static VuelosRepositorio repositorio = null
 
 	static public def VuelosRepositorio getInstance() {
@@ -34,13 +31,11 @@ class VuelosRepositorio extends RepositorioDefault<Vuelo> {
 			if (unaBusqueda.origen != null) {criteria.add(Restrictions.eq("origen", unaBusqueda.origen))}
 			if (unaBusqueda.destino != null) {criteria.add(Restrictions.eq("destino", unaBusqueda.destino))}
 			
-//			val aliasAsientos = criteria.createAlias("asientos", "asientos")
-//			if (unaBusqueda.maxPrecio != 0) {
-//				val aliasTarifa = aliasAsientos.createAlias("tarifa", "tarifa")
-//				aliasTarifa.add(Restrictions.lt("precio",unaBusqueda.maxPrecio))
-//				aliasAsientos.add(Restrictions.lt("tarifa.precio", unaBusqueda.maxPrecio))
-//			}
-			criteria.list.toSet
+			var Set<Vuelo> vuelosBuscados = criteria.list.toSet
+			if(unaBusqueda.maxPrecio != null){
+				vuelosBuscados = vuelosBuscados.filter[conTarifaMenorA(unaBusqueda.maxPrecio)].toSet
+			}
+			vuelosBuscados
 		} catch (HibernateException e) {
 			throw new RuntimeException(e)
 		} finally {
