@@ -28,13 +28,17 @@ class VuelosRepositorio extends RepositorioDefault<Vuelo> {
 			val criteria = session.createCriteria(entityType)
 			if(unaBusqueda.desdeFecha != null){criteria.add(Restrictions.ge("fechaSalida", unaBusqueda.desdeFecha))}// desdeBusqueda < salidaVuelo
 			if(unaBusqueda.hastaFecha != null){criteria.add(Restrictions.le("fechaLlegada", unaBusqueda.hastaFecha))}// hastaBusqueda > llegadaVuelo
-			if (unaBusqueda.origen != null) {criteria.add(Restrictions.eq("origen", unaBusqueda.origen))}
-			if (unaBusqueda.destino != null) {criteria.add(Restrictions.eq("destino", unaBusqueda.destino))}
+			if(unaBusqueda.origen != null) {criteria.add(Restrictions.eq("origen", unaBusqueda.origen))}
+			if(unaBusqueda.destino != null) {criteria.add(Restrictions.eq("destino", unaBusqueda.destino))}
+			if(unaBusqueda.maxPrecio != null){ criteria.createAlias("asientos", "asiento") // Por precio base
+															.createAlias("asiento.tarifa", "tarifa")
+															.add(Restrictions.le("tarifa.precio", unaBusqueda.maxPrecio))
+			}
 			
 			var Set<Vuelo> vuelosBuscados = criteria.list.toSet
-			if(unaBusqueda.maxPrecio != null){
-				vuelosBuscados = vuelosBuscados.filter[conTarifaMenorA(unaBusqueda.maxPrecio)].toSet
-			}
+//			if(unaBusqueda.maxPrecio != null){ // por precio final
+//				vuelosBuscados = vuelosBuscados.filter[conTarifaMenorA(unaBusqueda.maxPrecio)].toSet
+//			}
 			vuelosBuscados
 		} catch (HibernateException e) {
 			throw new RuntimeException(e)

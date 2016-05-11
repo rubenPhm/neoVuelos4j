@@ -42,7 +42,7 @@ class AdmVuelosBootstrap implements Bootstrap {
 	Vuelo vueloLAN
 
 	TarifaComun tarifa_1
-	TarifaComun tarifa_2
+	TarifaComun tarifaComunUnPeso
 	TarifaComun tarifa_3
 	TarifaEspecial tEspecial_1
 	TarifaEspecial tEspecial_2
@@ -62,7 +62,6 @@ class AdmVuelosBootstrap implements Bootstrap {
 		crearVuelos
 
 		crearUsuarios
-
 	}
 
 	def crearUsuarios() {
@@ -79,7 +78,7 @@ class AdmVuelosBootstrap implements Bootstrap {
 	def crearAeropuertosYTarifas() {
 		crearTarifa(tBNegativa_3)
 		crearTarifa(tarifa_1)
-		crearTarifa(tarifa_2)
+		crearTarifa(tarifaComunUnPeso)
 		crearTarifa(tarifa_3)
 		crearTarifa(tEspecial_1)
 		crearTarifa(tEspecial_2)
@@ -97,21 +96,21 @@ class AdmVuelosBootstrap implements Bootstrap {
 
 	def initTarifas() {
 		tarifa_1 = new TarifaComun(150.0)
-		tarifa_2 = new TarifaComun(1.0)
+		tarifaComunUnPeso = new TarifaComun(1.0)
 		tarifa_3 = new TarifaComun(532.0)
 		tEspecial_1 = new TarifaEspecial(543.0, 44.0)
 		tEspecial_2 = new TarifaEspecial(56.0, 8.0)
 		tEspecial_3 = new TarifaEspecial(742.0, 345.0)
 		tBNegativa_1 = new TarifaBandaNegativa(99.0)
 		tBNegativa_2 = new TarifaBandaNegativa(1235.0)
-		tBNegativa_3 = new TarifaBandaNegativa(19.0)
+		tBNegativa_3 = new TarifaBandaNegativa(15.0)
 	}
 
 	def initAsientos() {
 		val Asiento asiento1 = new Asiento(1, "Pasillo", tarifa_1)
 		val Asiento asiento2 = new Asiento(1, "Centro", tEspecial_1)
 		val Asiento asiento3 = new Asiento(1, "Ventanilla", tBNegativa_1)
-		val Asiento asiento4 = new Asiento(2, "Pasillo", tarifa_2)
+		val Asiento asiento4 = new Asiento(2, "Pasillo", tarifaComunUnPeso)
 		val Asiento asiento5 = new Asiento(4, "Pasillo", tarifa_1)
 		val Asiento asiento6 = new Asiento(8, "Ventanilla", tBNegativa_2)
 		val Asiento asiento7 = new Asiento(1, "Ventanilla", tEspecial_2)
@@ -151,7 +150,7 @@ class AdmVuelosBootstrap implements Bootstrap {
 			add(new Asiento(8, "Centro", tEspecial_1))
 			add(new Asiento(9, "Pasillo", tarifa_3))
 			add(new Asiento(9, "Centro", tEspecial_2))
-			add(new Asiento(9, "Ventanilla", tarifa_2))
+			add(new Asiento(9, "Ventanilla", tarifaComunUnPeso))
 			add(asiento2)
 			add(asiento4)
 			add(asiento6)
