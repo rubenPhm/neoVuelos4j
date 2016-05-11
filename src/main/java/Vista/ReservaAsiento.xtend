@@ -150,9 +150,7 @@ class ReservaAsiento extends TransactionalDialog<ReservaAsientoAppModel> {
 	
 	def refresh() { 
 		modelObject.reservarAsiento
-		val proxModel = new ReservaAsientoAppModel(modelObject.unUsuario, modelObject.unVuelo)
-		proxModel.setAlertaReserva(modelObject.alertaReserva)
 		this.accept
-		new ReservaAsiento(this, proxModel).open
+		new ReservaAsiento(this, modelObject).open
 	}
 }
