@@ -14,7 +14,7 @@ class TarifaBandaNegativa extends Tarifa {
 	new() {
 	}
 
-	new(float unValor) {
+	new(Double unValor) {
 		super(unValor)
 	}
 
@@ -22,9 +22,9 @@ class TarifaBandaNegativa extends Tarifa {
 
 		//20% si se reserva 72 horas antes o 10% en caso contrario
 		if (fechaReserva <= sumarDiasFecha(fechaVuelo, -3)) {
-			precio * new Float(0.2)
+			precio * 0.2
 		} else {
-			precio * new Float(0.1)
+			precio * 0.1
 		}
 	}
 

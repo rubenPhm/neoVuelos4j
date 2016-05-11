@@ -68,11 +68,11 @@ class Vuelo {
 		origen.nombre.equals(origenStr)
 	}
 
-	def conTarifaMenorA(float valor) {
+	def conTarifaMenorA(Double valor) {
 		asientos.exists[conPrecioMaximo(valor)]
 	}
 
-	def asientosValorMaximo(float valor) {
+	def asientosValorMaximo(Double valor) {
 		asientos.filter[conPrecioMaximo(valor)].toList
 	}
 

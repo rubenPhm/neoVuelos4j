@@ -13,7 +13,7 @@ class TarifaComun extends Tarifa {
 	
 	new(){}
 		
-	new(float unValor) {
+	new(Double unValor) {
 		super(unValor)
 	}
 	

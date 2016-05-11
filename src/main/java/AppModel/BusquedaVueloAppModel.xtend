@@ -24,19 +24,28 @@ class BusquedaVueloAppModel {
 	Aeropuerto destino
 	Date fechaDesde
 	Date fechaHasta
-	Float tarifaMax
-		
+	Integer tarifaMax
+	
 	Vuelo vueloSeleccionado
 	Set <Vuelo> resultados = newHashSet
 	
 	new (Usuario unUsr){
 		usr = unUsr
-//		todosLosAeropuertos.add("TODOS") TODO: Poder poner el campo null en el widget de arena
 		todosLosAeropuertos = AeropuertosRepositorio.getInstance.allInstances
 	}
-		
+
 	def buscar() {
-		var Busqueda busqueda = new Busqueda(origen, destino, fechaDesde, fechaHasta, tarifaMax,usr)
+		var Double precioMaximo = null
+		if(tarifaMax != null){precioMaximo = new Double(tarifaMax)} // para poder limpiar el campo
+		var Busqueda busqueda = new Busqueda(origen, destino, fechaDesde, fechaHasta, precioMaximo ,usr)
 		resultados = newHashSet(VuelosRepositorio.getInstance.searchByBusqueda(busqueda))
+	}
+	
+	def clear(){
+		origen = null
+		destino = null
+		fechaDesde = null
+		fechaHasta = null
+		tarifaMax = null
 	}
 }

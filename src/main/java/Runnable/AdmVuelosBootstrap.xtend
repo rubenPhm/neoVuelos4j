@@ -96,15 +96,15 @@ class AdmVuelosBootstrap implements Bootstrap {
 	}
 
 	def initTarifas() {
-		tarifa_1 = new TarifaComun(150)
-		tarifa_2 = new TarifaComun(1)
-		tarifa_3 = new TarifaComun(532)
-		tEspecial_1 = new TarifaEspecial(543, 44)
-		tEspecial_2 = new TarifaEspecial(56, 8)
-		tEspecial_3 = new TarifaEspecial(742, 345)
-		tBNegativa_1 = new TarifaBandaNegativa(99)
-		tBNegativa_2 = new TarifaBandaNegativa(1235)
-		tBNegativa_3 = new TarifaBandaNegativa(19)
+		tarifa_1 = new TarifaComun(150.0)
+		tarifa_2 = new TarifaComun(1.0)
+		tarifa_3 = new TarifaComun(532.0)
+		tEspecial_1 = new TarifaEspecial(543.0, 44.0)
+		tEspecial_2 = new TarifaEspecial(56.0, 8.0)
+		tEspecial_3 = new TarifaEspecial(742.0, 345.0)
+		tBNegativa_1 = new TarifaBandaNegativa(99.0)
+		tBNegativa_2 = new TarifaBandaNegativa(1235.0)
+		tBNegativa_3 = new TarifaBandaNegativa(19.0)
 	}
 
 	def initAsientos() {

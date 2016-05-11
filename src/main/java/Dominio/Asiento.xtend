@@ -42,7 +42,7 @@ class Asiento {
 	new(int fila, String ubicacion, Tarifa unaTarifa) {
 		this.fila = fila
 		this.ubicacion = ubicacion
-		setTarifa(unaTarifa)
+		setTarifa(unaTarifa)	
 	}
 
 	new(int fila, String ubicacion) {
@@ -59,12 +59,14 @@ class Asiento {
 		 firePropertyChanged(this,"disponible",disponible)
 		 	}
 
-	def conPrecioMaximo(float valor) {
-		if (disponible){this.getPrecio() <= valor}
+	def conPrecioMaximo(Double valor) {
+		if (disponible){
+			this.getPrecio() <= valor
+		}
 		else { false }
 	}
 
-	def float getPrecio() {
+	def Double getPrecio() {
 		tarifa.precioFinal(vuelo.fechaSalida, Calendar.getInstance.time)
 	}
 	

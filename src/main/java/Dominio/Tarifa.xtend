@@ -21,24 +21,24 @@ abstract class Tarifa {
 	private Long id
 
 	@Column
-	float descuento
+	Double descuento
 
 	@Column
-	float precio
+	Double precio
 
 	new() {
 	}
 
-	new(float unValor) {
+	new(Double unValor) {
 		precio = unValor
 	}
 
-	new(float unValor, float otroValor) {
+	new(Double unValor, Double otroValor) {
 		precio = unValor
 		descuento = otroValor
 	}
 
-	def float precioFinal(Date salidaVuelo, Date reservaAsiento) {
-		0
+	def Double precioFinal(Date salidaVuelo, Date reservaAsiento) {
+		0.0
 	}
 }
