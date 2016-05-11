@@ -59,8 +59,8 @@ class ReservaAsiento extends TransactionalDialog<ReservaAsientoAppModel> {
 
 		new Button(columna3) => [
 			caption = "Reservar"
-			onClick [|
-				modelObject.reservarAsiento
+			onClick [| this.refresh // para que cambie el color del asiento verde o rojo.
+//				modelObject.reservarAsiento
 			]
 			setAsDefault
 			disableOnError
@@ -147,5 +147,12 @@ class ReservaAsiento extends TransactionalDialog<ReservaAsientoAppModel> {
 		new Label(columna3).value <=> "unVuelo.fechaLlegadaStr"
 		linea
 	}
-
+	
+	def refresh() { 
+		modelObject.reservarAsiento
+		val proxModel = new ReservaAsientoAppModel(modelObject.unUsuario, modelObject.unVuelo)
+		proxModel.setAlertaReserva(modelObject.alertaReserva)
+		this.accept
+		new ReservaAsiento(this, proxModel).open
+	}
 }

@@ -26,4 +26,5 @@ class VerReservasAppModel {
 		
 	}
 	
+	def refresh(){}
 }

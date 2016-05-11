@@ -55,7 +55,7 @@ class Asiento {
 	def liberar() {
 		 disponible = true
 		 firePropertyChanged(this,"disponible",disponible)
-		 	}
+	}
 
 	def conPrecioMaximo(Double valor) {
 		if (disponible){
