@@ -44,6 +44,10 @@ class ReservaAsientoAppModel {
 	def cantidadAsientos() {
 		asientos.size
 	}
+	
+	def filas(){
+		asientos.map[fila].toSet.sort
+	}
 
 	@Dependencies("asientoSeleccionado")
 	def getAsientoSeleccionadoPrecio() {

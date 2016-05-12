@@ -1,8 +1,10 @@
 package Vista
 
 import AppModel.ReservaAsientoAppModel
+import Dominio.Asiento
 import Dominio.Escala
 import java.awt.Color
+import java.util.List
 import org.uqbar.arena.aop.windows.TransactionalDialog
 import org.uqbar.arena.layout.HorizontalLayout
 import org.uqbar.arena.layout.VerticalLayout
@@ -81,11 +83,12 @@ class ReservaAsiento extends TransactionalDialog<ReservaAsientoAppModel> {
 	protected def asientos(Panel mainPanel) {
 		val columna = new Panel(mainPanel).layout = new VerticalLayout
 
-		new Label(columna) => [text = "Asientos"
-			(1 .. this.modelObject.cantidadAsientos).forEach [ i |
+		new Label(columna) => [
+			text = "Asientos"
+			modelObject.filas.forEach [ fila |
 				val filaPanel = new Panel(mainPanel)
 				filaPanel.layout = new HorizontalLayout
-				modelObject.asientosDeFila(i).forEach [ asiento |
+				sortUbicacion(modelObject.asientosDeFila(fila)).forEach [ asiento |
 					new Button(filaPanel) => [
 						if (asiento.disponible) {
 							background = Color.GREEN
@@ -96,7 +99,8 @@ class ReservaAsiento extends TransactionalDialog<ReservaAsientoAppModel> {
 						onClick [|modelObject.asientoSeleccionado = asiento]
 					]
 				]
-			]]
+			]
+		]
 	}
 
 	protected def tablaTramosYAerolinea(Panel mainPanel) {
@@ -153,4 +157,15 @@ class ReservaAsiento extends TransactionalDialog<ReservaAsientoAppModel> {
 		this.accept
 		new ReservaAsiento(this, modelObject).open
 	}
+	
+	def sortUbicacion(Iterable<Asiento> asientos){
+		var List<Asiento> asientosOrdenados =  newArrayList
+		asientosOrdenados =>[
+			add(0,asientos.findFirst[ubicacion.equals("Ventanilla")])
+			add(1,asientos.findFirst[ubicacion.equals("Centro")])
+			add(2,asientos.findFirst[ubicacion.equals("Pasillo")])
+		]
+		asientosOrdenados
+	}
+	
 }
