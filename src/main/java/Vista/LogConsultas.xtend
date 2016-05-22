@@ -1,5 +1,6 @@
 package Vista
 
+import AppModel.DetalleDeBusquedaAppModel
 import AppModel.LogConsultasAppModel
 import Dominio.Busqueda
 import org.uqbar.arena.aop.windows.TransactionalDialog
@@ -12,6 +13,7 @@ import org.uqbar.arena.widgets.Panel
 import org.uqbar.arena.widgets.TextBox
 import org.uqbar.arena.widgets.tables.Column
 import org.uqbar.arena.widgets.tables.Table
+import org.uqbar.arena.windows.Dialog
 import org.uqbar.arena.windows.WindowOwner
 
 class LogConsultas extends TransactionalDialog<LogConsultasAppModel> {
@@ -83,9 +85,9 @@ class LogConsultas extends TransactionalDialog<LogConsultasAppModel> {
 	}
 
 	def botoneraAcciones(Panel mainPanel) {
-		
+
 		val Panel panel = new Panel(mainPanel).layout = new HorizontalLayout()
-		
+
 		new Button(panel) => [
 			caption = "Detalles de la Busqueda"
 			width = 150
@@ -101,7 +103,10 @@ class LogConsultas extends TransactionalDialog<LogConsultasAppModel> {
 	}
 
 	def resultadosDeLaBusqueda() {
-		//val proxModel = new ReservaAsientoAppModel(modelObject.usr, modelObject.vueloSeleccionado)
-		//this.openDialog(new ReservaAsiento(this, proxModel))
+		this.openDialog(new DetalleDeBusqueda(this, new DetalleDeBusquedaAppModel(modelObject.busquedaSeleccionada)))
+	}
+
+	def openDialog(Dialog<?> dialog) {
+		dialog.open
 	}
 }
