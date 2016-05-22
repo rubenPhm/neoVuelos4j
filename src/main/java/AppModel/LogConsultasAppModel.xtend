@@ -32,5 +32,6 @@ class LogConsultasAppModel {
 	
 	def buscar(){
 		resultados = BusquedasRepositorio.getInstance.buscar(usr, fechaDesde, fechaHasta)
+		println(resultados.get(0).resultados.size())
 	}
 }

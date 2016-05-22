@@ -40,7 +40,9 @@ class BusquedaVueloAppModel {
 		if(tarifaMax != null){precioMaximo = new Double(tarifaMax)} // para poder limpiar el campo
 		var Busqueda busqueda = new Busqueda(origen, destino, fechaDesde, fechaHasta, precioMaximo ,usr)
 		resultados = newHashSet(VuelosRepositorio.getInstance.searchByBusqueda(busqueda))
-		
+		println(resultados.size())
+		busqueda.resultados.addAll(resultados)
+		println(busqueda.resultados.size())
 		//Agregado para entrega 3 Mongo
 		BusquedasRepositorio.getInstance.guardarBusquedas(busqueda)
 		

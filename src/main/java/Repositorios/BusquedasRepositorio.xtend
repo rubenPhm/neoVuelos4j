@@ -23,6 +23,7 @@ class BusquedasRepositorio {
 	}
 
 	def guardarBusquedas(Busqueda busqueda) {
+		println(busqueda.resultados.size())
 		todasLasBusquedas.add(busqueda)
 	}
 

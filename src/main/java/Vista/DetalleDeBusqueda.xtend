@@ -32,9 +32,8 @@ class DetalleDeBusqueda extends TransactionalDialog<DetalleDeBusquedaAppModel>{
 			new Label(it).text = "Horario de la Consulta"
 			new Label(it).text = "Criterio"
 
-			//new Label(it).value <=> "horarioConsulta"
-
-			//new Label(it).value <=> "criterio"
+			new Label(it).bindValueToProperty("horarioConsulta")
+			new Label(it).bindValueToProperty("criterio")
 			
 		]
 	}

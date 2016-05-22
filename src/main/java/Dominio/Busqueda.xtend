@@ -86,7 +86,7 @@ class Busqueda {
 		if(desdeFecha != null){criterio += " salir despues del " + desdeFecha}
 		if(hastaFecha != null){criterio += " llegar antes del " + hastaFecha}
 		if(maxPrecio != null){criterio += " pagar menos que " + maxPrecio}
-		
+		if(criterio == "Se buscaron vuelos que cumplan con"){criterio = "Se buscaron todos los vuelos"}
 		criterio
 	}
 	
