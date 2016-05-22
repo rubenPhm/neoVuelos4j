@@ -326,10 +326,10 @@ class AdmVuelosBootstrap implements Bootstrap {
 
 	def persistirVuelosYUsrs() {
 		crearVuelo(aeroArgVuelo)
-		crearVuelo(emiratesVuelo)
-		crearVuelo(malasyaVuelo)
-		crearVuelo(peruvianVuelo)
-		crearVuelo(lanVuelo)
+		//crearVuelo(emiratesVuelo)
+		//crearVuelo(malasyaVuelo)
+		//crearVuelo(peruvianVuelo)
+		//crearVuelo(lanVuelo)
 		
 		crearUsuario(usr)
 		crearUsuario(gabo)

@@ -2,6 +2,8 @@ package Repositorios
 
 import Dominio.Busqueda
 import Dominio.Vuelo
+import java.util.Calendar
+import java.util.GregorianCalendar
 import java.util.Set
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.hibernate.Criteria
@@ -39,6 +41,9 @@ class VuelosRepositorio extends RepositorioDefault<Vuelo> {
 //			if(unaBusqueda.maxPrecio != null){ // por precio final
 //				vuelosBuscados = vuelosBuscados.filter[conTarifaMenorA(unaBusqueda.maxPrecio)].toSet
 //			}
+			//le asigno el resultado a la busqueda
+			unaBusqueda.fechaRealizacion =  Calendar.getInstance().getTime();
+			unaBusqueda.resultados = vuelosBuscados
 			vuelosBuscados
 		} catch (HibernateException e) {
 			throw new RuntimeException(e)

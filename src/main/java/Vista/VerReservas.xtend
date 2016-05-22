@@ -16,6 +16,7 @@ import org.uqbar.arena.windows.Dialog
 import org.uqbar.arena.windows.WindowOwner
 
 import static extension org.uqbar.arena.xtend.ArenaXtendExtensions.*
+import AppModel.LogConsultasAppModel
 
 class VerReservas extends TransactionalDialog<VerReservasAppModel>{
 	
@@ -94,6 +95,7 @@ class VerReservas extends TransactionalDialog<VerReservasAppModel>{
         new Button(botonera2) => [
 		    setCaption = "Log de Consultas Hechas"
 			width = 150
+			onClick[|this.consultas]
 		] 
 		
 		new Button(botonera2) => [
@@ -101,6 +103,10 @@ class VerReservas extends TransactionalDialog<VerReservasAppModel>{
 			caption = "Salir"
 			onClick [| this.accept]
 		]       					
+	}
+	
+	def consultas() {
+		this.openDialog(new LogConsultas(this, new LogConsultasAppModel(modelObject.usuario)))
 	}
 	
 	def busqueda(){
