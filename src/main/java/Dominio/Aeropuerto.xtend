@@ -5,12 +5,15 @@ import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
 import org.eclipse.xtend.lib.annotations.Accessors
+import org.mongodb.morphia.annotations.Embedded
 import org.uqbar.commons.utils.Observable
 
 @Entity
+@Embedded
 @Accessors
 @Observable 
 class Aeropuerto {
+	
 	
 	@Id
 	@GeneratedValue

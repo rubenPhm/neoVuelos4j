@@ -13,13 +13,15 @@ import javax.persistence.Id
 import javax.persistence.ManyToOne
 import javax.persistence.OneToMany
 import org.eclipse.xtend.lib.annotations.Accessors
+import org.mongodb.morphia.annotations.Embedded
 import org.uqbar.commons.utils.Observable
-
 
 @Entity
 @Accessors
 @Observable
+@Embedded	
 class Vuelo {
+	
 	
 	@Id
 	@GeneratedValue

@@ -9,16 +9,20 @@ import javax.persistence.FetchType
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
 import javax.persistence.OneToMany
+import org.bson.types.ObjectId
 import org.eclipse.xtend.lib.annotations.Accessors
+import org.mongodb.morphia.annotations.Embedded
+import org.mongodb.morphia.annotations.Transient
 import org.uqbar.commons.utils.Observable
-import static org.uqbar.commons.model.ObservableUtils.firePropertyChanged
 
+import static org.uqbar.commons.model.ObservableUtils.firePropertyChanged
 
 @Entity
 @Observable
 @Accessors
+@Embedded
 class Usuario {
-	
+		
 	@Id
 	@GeneratedValue
 	private Long id
@@ -32,6 +36,7 @@ class Usuario {
 	@Column (length = 150)
 	String nick
 	
+	@Transient
 	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	Set<Reserva> reservas = new HashSet
 	

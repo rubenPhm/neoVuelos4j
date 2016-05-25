@@ -7,34 +7,45 @@ import java.util.Set
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
-import javax.persistence.Id
 import javax.persistence.ManyToMany
 import javax.persistence.ManyToOne
+import org.bson.types.ObjectId
+import org.mongodb.morphia.annotations.Property
 import org.eclipse.xtend.lib.annotations.Accessors
+import org.mongodb.morphia.annotations.Id
 import org.uqbar.commons.model.UserException
 import org.uqbar.commons.utils.Observable
+import org.mongodb.morphia.annotations.Embedded
 
 @Entity
+@org.mongodb.morphia.annotations.Entity(value="Busquedas")
 @Observable
 @Accessors
 class Busqueda {
 
-	@Id
+	@Id ObjectId idMongo
+
+	@javax.persistence.Id
 	@GeneratedValue
 	private Long id
 
 	@Column
+	@Property("fechaRealizacion")
 	Date fechaRealizacion
 
+	@Embedded
 	@ManyToOne()
 	public Usuario quienBusca
 
+	@Embedded
 	@ManyToMany()
 	public Set<Vuelo> resultados = new HashSet
 
+	@Embedded
 	@ManyToOne
 	Aeropuerto origen
 
+	@Embedded
 	@ManyToOne
 	Aeropuerto destino
 
