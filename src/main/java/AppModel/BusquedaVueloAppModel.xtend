@@ -5,7 +5,6 @@ import Dominio.Busqueda
 import Dominio.Usuario
 import Dominio.Vuelo
 import Repositorios.AeropuertosRepositorio
-import Repositorios.BusquedaRepositorioMongo
 import Repositorios.BusquedasRepositorio
 import Repositorios.VuelosRepositorio
 import java.util.ArrayList
@@ -29,7 +28,7 @@ class BusquedaVueloAppModel {
 	Integer tarifaMax
 	
 	Vuelo vueloSeleccionado
-	Set <Vuelo> resultados = newHashSet
+	Set <Vuelo> resultados = null
 	
 	new (Usuario unUsr){
 		usr = unUsr
@@ -37,17 +36,20 @@ class BusquedaVueloAppModel {
 	}
 
 	def buscar() {
+		resultados = newHashSet
 		var Double precioMaximo = null
 		if(tarifaMax != null){precioMaximo = new Double(tarifaMax)} // para poder limpiar el campo
 		var Busqueda busqueda = new Busqueda(origen, destino, fechaDesde, fechaHasta, precioMaximo ,usr)
-		resultados = newHashSet(VuelosRepositorio.getInstance.searchByBusqueda(busqueda))
-		busqueda.resultados.addAll(resultados)
-		//Agregado para entrega 3 Mongo
+		VuelosRepositorio.getInstance.searchByBusqueda(busqueda)
+		resultados = busqueda.resultados
 		BusquedasRepositorio.getInstance.guardarBusquedas(busqueda)
+		if(resultados.isEmpty){resultados = null} // para la vista
+		
+		//Agregado para entrega 3 Mongo
 		
 		//creo la busqueda con mongo
-		var BusquedaRepositorioMongo repoBusqueda = new BusquedaRepositorioMongo()
-		repoBusqueda.createWhenNew(busqueda)	
+//		var BusquedaRepositorioMongo repoBusqueda = new BusquedaRepositorioMongo()
+//		repoBusqueda.createWhenNew(busqueda)	
 	}
 	
 	def clear(){

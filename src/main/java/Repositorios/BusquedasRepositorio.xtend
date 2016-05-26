@@ -23,11 +23,10 @@ class BusquedasRepositorio {
 	}
 
 	def guardarBusquedas(Busqueda busqueda) {
-		println(busqueda.resultados.size())
 		todasLasBusquedas.add(busqueda)
 	}
 
-	def buscar(Usuario usr, Date fechaDesde, Date fechaHasta) {
+	def buscarPor(Usuario usr, Date fechaDesde, Date fechaHasta) {
 
 		var List<Busqueda> busquedasAFiltrar = newArrayList
 
