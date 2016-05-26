@@ -3,65 +3,56 @@ package Dominio
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
-import java.util.HashSet
-import java.util.Set
-import org.bson.types.ObjectId
+import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
-import org.mongodb.morphia.annotations.Embedded
-import org.mongodb.morphia.annotations.Entity
-import org.mongodb.morphia.annotations.Id
-import org.mongodb.morphia.annotations.Property
-import org.mongodb.morphia.annotations.Transient
 import org.uqbar.commons.model.UserException
 import org.uqbar.commons.utils.Observable
 
-@Entity(value="Busquedas")
 @Observable
 @Accessors
 class Busqueda {
 
-	@Id ObjectId idMongo
 	
-	@Property("fecha")
 	Date fechaRealizacion
 
-	@Transient
-	public Usuario quienBusca
-
-	@Embedded
-	public Set<Vuelo> resultados = new HashSet
-
-	@Embedded
 	Aeropuerto origen
 
-	@Embedded
 	Aeropuerto destino
 
-	@Property
 	Date desdeFecha
 
-	@Property
 	Date hastaFecha
 
-	@Property
 	Double maxPrecio
 
-	@Property("usuario")
 	String nickUsuario
 	
-	@Transient
+	public List<VueloPersistenteArena> resultados = newArrayList
+	
+	Usuario quienBusca
+	
 	transient static SimpleDateFormat dateToString = new SimpleDateFormat("dd/MM/yyyy - hh:mm 'hs'")
 	
 	new() {
 	}
 
+	new(BusquedaNoArena busquedaPersist){
+		origen = busquedaPersist.origen
+		destino = busquedaPersist.destino
+		desdeFecha = busquedaPersist.desdeFecha
+		hastaFecha = busquedaPersist.hastaFecha
+		maxPrecio = busquedaPersist.maxPrecio
+		nickUsuario = busquedaPersist.nickUsuario
+		fechaRealizacion = busquedaPersist.fechaRealizacion
+		busquedaPersist.resultados.forEach[resultados.add(new VueloPersistenteArena(it))]
+	}
+	
 	new(Aeropuerto inicio, Aeropuerto fin, Date desde, Date hasta, Double max, Usuario usr) {
 		origen = inicio
 		destino = fin
 		desdeFecha = desde
 		hastaFecha = hasta
 		maxPrecio = max
-		quienBusca = usr
 		nickUsuario = usr.nick
 		fechaRealizacion = Calendar.getInstance.getTime
 	}

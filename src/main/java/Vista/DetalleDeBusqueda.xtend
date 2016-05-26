@@ -1,7 +1,7 @@
 package Vista
 
 import Dominio.Busqueda
-import Dominio.Vuelo
+import Dominio.VueloPersistenteArena
 import org.uqbar.arena.aop.windows.TransactionalDialog
 import org.uqbar.arena.layout.ColumnLayout
 import org.uqbar.arena.layout.HorizontalLayout
@@ -49,36 +49,36 @@ class DetalleDeBusqueda extends TransactionalDialog<Busqueda>{
 	}
 	
 		def tablaResultados(Panel mainPanel) {
-		new Table<Vuelo>(mainPanel, typeof(Vuelo)) => [
+		new Table<VueloPersistenteArena>(mainPanel, typeof(VueloPersistenteArena)) => [
 			bindItemsToProperty("resultados")
 			height = 250
 			numberVisibleRows = 8
-			new Column<Vuelo>(it) => [
+			new Column<VueloPersistenteArena>(it) => [
 				title = "Origen"
 				fixedSize = 100
 				bindContentsToProperty("nombreOrigen")
 			]
-			new Column<Vuelo>(it) => [
+			new Column<VueloPersistenteArena>(it) => [
 				title = "Destino"
 				fixedSize = 100
 				bindContentsToProperty("nombreDestino")
 			]
-			new Column<Vuelo>(it) => [
+			new Column<VueloPersistenteArena>(it) => [
 				title = "Salida"
 				fixedSize = 128
 				bindContentsToProperty("fechaSalidaStr")
 			]
-			new Column<Vuelo>(it) => [
+			new Column<VueloPersistenteArena>(it) => [
 				title = "Llegada"
 				fixedSize = 128
 				bindContentsToProperty("fechaLlegadaStr")
 			]
-			new Column<Vuelo>(it) => [
+			new Column<VueloPersistenteArena>(it) => [
 				title = "Escalas"
 				fixedSize = 54
 				bindContentsToProperty("cantidadEscalas")
 			]
-			new Column<Vuelo>(it) => [
+			new Column<VueloPersistenteArena>(it) => [
 				title = "Asientos Libres"
 				fixedSize = 100
 				bindContentsToProperty("cantidadDeAsientosLibres")

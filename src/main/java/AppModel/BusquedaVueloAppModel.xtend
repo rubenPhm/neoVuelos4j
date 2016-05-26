@@ -5,7 +5,7 @@ import Dominio.Busqueda
 import Dominio.Usuario
 import Dominio.Vuelo
 import Repositorios.AeropuertosRepositorio
-import Repositorios.BusquedasRepositorio
+import Repositorios.BusquedaRepositorioMongo
 import Repositorios.VuelosRepositorio
 import java.util.ArrayList
 import java.util.Date
@@ -40,16 +40,18 @@ class BusquedaVueloAppModel {
 		var Double precioMaximo = null
 		if(tarifaMax != null){precioMaximo = new Double(tarifaMax)} // para poder limpiar el campo
 		var Busqueda busqueda = new Busqueda(origen, destino, fechaDesde, fechaHasta, precioMaximo ,usr)
-		VuelosRepositorio.getInstance.searchByBusqueda(busqueda)
-		resultados = busqueda.resultados
-		BusquedasRepositorio.getInstance.guardarBusquedas(busqueda)
+		resultados = VuelosRepositorio.getInstance.searchByBusqueda(busqueda)
 		if(resultados.isEmpty){resultados = null} // para la vista
 		
-		//Agregado para entrega 3 Mongo
+//		SIN PERSISTIR, TRABAJANDO EN MEMORIA
+//		BusquedasRepositorio.getInstance.guardarBusquedas(busqueda)
 		
-		//creo la busqueda con mongo
-//		var BusquedaRepositorioMongo repoBusqueda = new BusquedaRepositorioMongo()
-//		repoBusqueda.createWhenNew(busqueda)	
+		
+//		MONGO		
+		var BusquedaRepositorioMongo repoBusqueda = new BusquedaRepositorioMongo()
+		repoBusqueda.createWhenNew(busqueda)
+
+	
 	}
 	
 	def clear(){

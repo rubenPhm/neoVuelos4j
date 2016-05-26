@@ -2,7 +2,7 @@ package AppModel
 
 import Dominio.Busqueda
 import Dominio.Usuario
-import Repositorios.BusquedasRepositorio
+import Repositorios.BusquedaRepositorioMongo
 import java.util.Date
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
@@ -32,11 +32,14 @@ class LogConsultasAppModel {
 	
 	def buscar(){
 		resultados = newArrayList
+
+//		MONGO
+		var BusquedaRepositorioMongo repoBusqueda = new BusquedaRepositorioMongo()
+
+//		SIN PERSISTIR, TRABAJANDO EN MEMORIA
+//		var BusquedasRepositorio repoBusqueda = BusquedasRepositorio.instance
 		
-//		var BusquedaRepositorioMongo repoBusqueda = new BusquedaRepositorioMongo()
-		var BusquedasRepositorio repoBusqueda = BusquedasRepositorio.instance
 		resultados = repoBusqueda.buscarPor(usr, fechaDesde, fechaHasta)
 		if (resultados.isEmpty){resultados = null} // para la vista
-		println(resultados.get(0).resultados.size())
 	}
 }
