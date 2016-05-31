@@ -1,23 +1,27 @@
 package Repositorios
 
 import Dominio.Busqueda
-import Dominio.BusquedaNoArena
 import Dominio.Usuario
 import java.util.Date
-import java.util.List
 
-class BusquedaRepositorioMongo extends RepositorioDefaultMongo<BusquedaNoArena>{
+class BusquedaRepositorioMongo extends RepositorioDefaultMongo<Busqueda>{
+	static BusquedaRepositorioMongo repositorio = null
+	
+	static public def BusquedaRepositorioMongo getInstance() {
+		if (repositorio == null) {
+			repositorio = new BusquedaRepositorioMongo()
+		}
+		repositorio
+	}
+	
+	private new(){}
 	
 	override getEntityType() {
-		typeof(BusquedaNoArena)
+		typeof(Busqueda)
 	}
 	
 	def createWhenNew(Busqueda busqueda) {
-		//if (searchByExample(busqueda).isEmpty) {
-			
-//			this.create(new BusquedaNoArena(busqueda))
-			ds.save(new BusquedaNoArena(busqueda))
-		//}
+			this.create(busqueda)
 	}
 	
 	def buscarPor (Usuario usr,Date fechaDesde,Date fechaHasta){
@@ -29,26 +33,21 @@ class BusquedaRepositorioMongo extends RepositorioDefaultMongo<BusquedaNoArena>{
 			query.field("fecha").lessThanOrEq(fechaHasta)
 		}
 		if (usr != null) {
-			query.field("usuario").equal(usr.nick)
-		}
-		val List <Busqueda> busquedasRealizadas = newArrayList
-		query.asList.forEach[
-			busquedasRealizadas.add(new Busqueda(it))
-		]
-		
-		busquedasRealizadas
-	}
-	
-	override searchByExample(BusquedaNoArena example) {
-		val query = ds.createQuery(entityType)
-		//voy a tener que definir esto para las fechas desde y la fecha hasta
-		if (example.nickUsuario != null) {
-			query.field("usuario").equal(example.nickUsuario)
+			query.field("quienBusca.nick").equal(usr.nick)
 		}
 		query.asList
 	}
 	
-	override defineUpdateOperations(BusquedaNoArena busqueda) {
+	override searchByExample(Busqueda example) {
+		val query = ds.createQuery(entityType)
+		//voy a tener que definir esto para las fechas desde y la fecha hasta
+		if (example.quienBusca.nick != null) {
+			query.field("quienBusca.nick").equal(example.quienBusca.nick)
+		}
+		query.asList
+	}
+	
+	override defineUpdateOperations(Busqueda busqueda) {
 		ds.createUpdateOperations(entityType)
 			// las busquedas nunca se updatean, es por eso que no defino una forma de updatearlas por ahora.
 	}

@@ -9,6 +9,7 @@ import javax.persistence.FetchType
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
 import javax.persistence.OneToMany
+import org.bson.types.ObjectId
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.mongodb.morphia.annotations.Embedded
 import org.mongodb.morphia.annotations.Transient
@@ -22,13 +23,17 @@ import static org.uqbar.commons.model.ObservableUtils.firePropertyChanged
 @Embedded
 class Usuario {
 		
-	@Id
+	@org.mongodb.morphia.annotations.Id ObjectId 
+	idMongo
+	
+	@javax.persistence.Id
 	@GeneratedValue
 	private Long id
 	
 	@Column (length = 150) 
 	String nombre
 	
+	@Transient
 	@Column (length = 150)
 	String contrasenia
 	

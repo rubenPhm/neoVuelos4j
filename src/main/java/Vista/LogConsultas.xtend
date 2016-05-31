@@ -32,8 +32,8 @@ class LogConsultas extends TransactionalDialog<LogConsultasAppModel> {
 
 		new Panel(mainPanel) => [
 			layout = new ColumnLayout(3)
-			new Label(it).text = "Sale despues de:"
-			new Label(it).text = "Llega antes de:"
+			new Label(it).text = "Busquedas posteriores a:"
+			new Label(it).text = "Busquedas anteriores a:"
 			new Label(it).text = "* formato mm/dd/aaaa"
 			new TextBox(it) => [
 				bindValueToProperty("fechaDesde")
@@ -72,12 +72,12 @@ class LogConsultas extends TransactionalDialog<LogConsultasAppModel> {
 			]
 			new Column<Busqueda>(it) => [
 				title = "Criterio de Busqueda"
-				fixedSize = 100
+				fixedSize = 400
 				bindContentsToProperty("criterioDeBusqueda")
 			]
 			new Column<Busqueda>(it) => [
 				title = "Vuelos"
-				fixedSize = 128
+				fixedSize = 100
 				bindContentsToProperty("cantidadDeResultados")
 			]
 		]

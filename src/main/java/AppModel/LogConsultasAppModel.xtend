@@ -12,6 +12,12 @@ import org.uqbar.commons.utils.Observable
 @Accessors
 class LogConsultasAppModel {
 
+//		MONGO
+		val BusquedaRepositorioMongo repoBusqueda = BusquedaRepositorioMongo.instance
+
+//		SIN PERSISTIR, TRABAJANDO EN MEMORIA
+//		val BusquedasRepositorio repoBusqueda = BusquedasRepositorio.instance
+
 	Date fechaDesde
 	Date fechaHasta
 
@@ -32,13 +38,6 @@ class LogConsultasAppModel {
 	
 	def buscar(){
 		resultados = newArrayList
-
-//		MONGO
-		var BusquedaRepositorioMongo repoBusqueda = new BusquedaRepositorioMongo()
-
-//		SIN PERSISTIR, TRABAJANDO EN MEMORIA
-//		var BusquedasRepositorio repoBusqueda = BusquedasRepositorio.instance
-		
 		resultados = repoBusqueda.buscarPor(usr, fechaDesde, fechaHasta)
 		if (resultados.isEmpty){resultados = null} // para la vista
 	}

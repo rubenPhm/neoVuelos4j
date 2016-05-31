@@ -48,7 +48,7 @@ class BusquedaVueloAppModel {
 		
 		
 //		MONGO		
-		var BusquedaRepositorioMongo repoBusqueda = new BusquedaRepositorioMongo()
+		var BusquedaRepositorioMongo repoBusqueda = BusquedaRepositorioMongo.instance
 		repoBusqueda.createWhenNew(busqueda)
 
 	

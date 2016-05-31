@@ -2,7 +2,7 @@ package Vista
 
 import AppModel.LoginAppModel
 import AppModel.VerReservasAppModel
-import org.uqbar.arena.layout.HorizontalLayout
+import org.uqbar.arena.layout.ColumnLayout
 import org.uqbar.arena.widgets.Button
 import org.uqbar.arena.widgets.Label
 import org.uqbar.arena.widgets.Panel
@@ -33,27 +33,31 @@ class Login extends SimpleWindow<LoginAppModel> {
 		new Label(panelTexto).text = "Usuario"
 		new TextBox(panelTexto) => [
 			bindValueToProperty("nick")
-			width = 150
+			width = 180
 		]
 
 		new Label(panelTexto).text = "Contraseña"
 		new PasswordField(panelTexto) => [
 			bindValueToProperty("contrasenia")
-			width = 150
+			width = 180
 		]
 	}
 
 	def botonera(Panel mainPanel) {
-		val panel = new Panel(mainPanel).layout = new HorizontalLayout
-
-		new Button(panel) => [
-			caption = "Iniciar Sesíon"
-			onClick [|
+		new Panel(mainPanel) => [
+			layout = new ColumnLayout(3)
+			new Label(it).text = ""	
+			new Button(it) => [
+				caption = "Iniciar"
+				onClick [|
 				modelObject.autorizarLogin
 				this.verReservas
 				//this.loguear
+				]
+				width = 60
+				setAsDefault
 			]
-			setAsDefault
+			new Label(it).text = ""
 		]
 	}
 
