@@ -21,8 +21,6 @@ import org.uqbar.commons.utils.Observable
 @Observable
 @Embedded	
 class Vuelo {
-	
-	
 	@Id
 	@GeneratedValue
 	private Long id
