@@ -26,7 +26,7 @@ class Usuario {
 	@org.mongodb.morphia.annotations.Id ObjectId 
 	idMongo
 	
-	@javax.persistence.Id
+	@Id
 	@GeneratedValue
 	private Long id
 	

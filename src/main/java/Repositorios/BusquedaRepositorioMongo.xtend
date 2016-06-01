@@ -21,7 +21,8 @@ class BusquedaRepositorioMongo extends RepositorioDefaultMongo<Busqueda>{
 	}
 	
 	def createWhenNew(Busqueda busqueda) {
-			this.create(busqueda)
+		busqueda.persistirResultados
+		create(busqueda)
 	}
 	
 	def buscarPor (Usuario usr,Date fechaDesde,Date fechaHasta){
@@ -40,7 +41,6 @@ class BusquedaRepositorioMongo extends RepositorioDefaultMongo<Busqueda>{
 	
 	override searchByExample(Busqueda example) {
 		val query = ds.createQuery(entityType)
-		//voy a tener que definir esto para las fechas desde y la fecha hasta
 		if (example.quienBusca.nick != null) {
 			query.field("quienBusca.nick").equal(example.quienBusca.nick)
 		}

@@ -1,7 +1,6 @@
 package Repositorios
 
 import Dominio.Busqueda
-import Dominio.VueloPersistente
 import com.mongodb.MongoClient
 import java.lang.reflect.Array
 import java.lang.reflect.Field
@@ -22,8 +21,7 @@ abstract class RepositorioDefaultMongo<T> {
 		if (ds == null) {
 			val mongo = new MongoClient("localhost", 27017)
 			morphia = new Morphia => [
-				map(typeof(Busqueda))
-				.map(typeof(VueloPersistente))
+				map(typeof(Busqueda)) //todo embebido lo demas.
 				ds = createDatastore(mongo, "local")
 				ds.ensureIndexes
 			]

@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.List
+import java.util.Set
 import org.bson.types.ObjectId
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.mongodb.morphia.annotations.Embedded
@@ -34,7 +35,9 @@ class Busqueda {
 
 	Double maxPrecio
 	
-	public List<VueloPersistenteArena> resultados = newArrayList
+	public List<Vuelo> resultados = newArrayList
+	
+//	public Set<Vuelo> resultados = newHashSet // el despejarCampos con este, rompe.
 	
 	@Embedded
 	Usuario quienBusca
@@ -86,4 +89,18 @@ class Busqueda {
 	def getCantidadDeResultados(){
 		resultados.size()
 	}
+	
+	def persistirResultados() { 
+		//le dice a cada vuelo que complete los acumuladores para poder persistirlos
+		
+		val Set<Vuelo> aux = resultados.toSet
+		aux.forEach[
+			calcularAsientosDisponibles
+			calcularEscalas
+		]
+		//se generan duplicados si hago el forEach sobre el List.
+		// no mapea sets el famoso despejarCampos.
+		resultados = aux.toList 
+	}
+	
 }

@@ -2,9 +2,6 @@ package Repositorios
 
 import Dominio.Busqueda
 import Dominio.Vuelo
-import Dominio.VueloPersistenteArena
-import java.util.Calendar
-import java.util.Set
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.hibernate.Criteria
 import org.hibernate.HibernateException
@@ -24,7 +21,7 @@ class VuelosRepositorio extends RepositorioDefault<Vuelo> {
 		repositorio
 	}
 
-	def Set <Vuelo> searchByBusqueda(Busqueda unaBusqueda) {
+	def searchByBusqueda(Busqueda unaBusqueda) {
 		val session = openSession
 		try {
 			val criteria = session.createCriteria(entityType)
@@ -33,16 +30,10 @@ class VuelosRepositorio extends RepositorioDefault<Vuelo> {
 			if(unaBusqueda.origen != null) {criteria.add(Restrictions.eq("origen", unaBusqueda.origen))}
 			if(unaBusqueda.destino != null) {criteria.add(Restrictions.eq("destino", unaBusqueda.destino))}
 			if(unaBusqueda.maxPrecio != null){ criteria.createAlias("asientos", "asiento") // Por precio base
-															.createAlias("asiento.tarifa", "tarifa")
-															.add(Restrictions.le("tarifa.precio", unaBusqueda.maxPrecio))
+														.createAlias("asiento.tarifa", "tarifa")
+														.add(Restrictions.le("tarifa.precio", unaBusqueda.maxPrecio))
 			}
-			var Set<Vuelo> vuelosBuscados = criteria.list.toSet
-			
-			//le asigno el resultado a la busqueda
-			unaBusqueda.fechaRealizacion =  Calendar.getInstance().getTime();
-			vuelosBuscados.forEach[	unaBusqueda.resultados.add(new VueloPersistenteArena(it))]
-			
-			vuelosBuscados
+			unaBusqueda.resultados = criteria.list
 			
 		} catch (HibernateException e) {
 			throw new RuntimeException(e)

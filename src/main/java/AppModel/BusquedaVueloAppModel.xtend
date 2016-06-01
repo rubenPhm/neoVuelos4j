@@ -30,6 +30,9 @@ class BusquedaVueloAppModel {
 	Vuelo vueloSeleccionado
 	Set <Vuelo> resultados = null
 	
+	VuelosRepositorio vuelosRepo = VuelosRepositorio.instance
+	BusquedaRepositorioMongo repoBusqueda = BusquedaRepositorioMongo.instance
+	
 	new (Usuario unUsr){
 		usr = unUsr
 		todosLosAeropuertos = AeropuertosRepositorio.getInstance.allInstances
@@ -40,18 +43,11 @@ class BusquedaVueloAppModel {
 		var Double precioMaximo = null
 		if(tarifaMax != null){precioMaximo = new Double(tarifaMax)} // para poder limpiar el campo
 		var Busqueda busqueda = new Busqueda(origen, destino, fechaDesde, fechaHasta, precioMaximo ,usr)
-		resultados = VuelosRepositorio.getInstance.searchByBusqueda(busqueda)
-		if(resultados.isEmpty){resultados = null} // para la vista
+		vuelosRepo.searchByBusqueda(busqueda)
+		resultados = busqueda.resultados.toSet
+		if(resultados.isEmpty){resultados = null} // para apagar boton en vista, TODO: arena tiene una mejor solucion
 		
-//		SIN PERSISTIR, TRABAJANDO EN MEMORIA
-//		BusquedasRepositorio.getInstance.guardarBusquedas(busqueda)
-		
-		
-//		MONGO		
-		var BusquedaRepositorioMongo repoBusqueda = BusquedaRepositorioMongo.instance
 		repoBusqueda.createWhenNew(busqueda)
-
-	
 	}
 	
 	def clear(){
