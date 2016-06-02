@@ -1,0 +1,32 @@
+1) Saber que usuarios consultaron vuelos a Mar del Plata:
+
+
+var mapDestinos = function() {
+                           emit(this.quienBusca.nombre , this.destino);
+                       };
+                       
+var reduceVuelos = function(nombre, destino) {
+				return { destino: destino};
+                    };
+                    
+db.Busqueda.mapReduce(mapDestinos, reduceVuelos, { out: 'nombresConDestino' });
+
+db.nombresConDestino.find({'value.destino.pais' : 'Mar del Plata'},{value:0});
+
+-----------------------------------------------------------------------------------------------------------------
+2) Saber cual fue el vuelo con mas consultas:
+
+
+db.Busqueda.aggregate([{$project: { resultados: 1}},
+{$unwind: "$resultados"},{$group:{ _id: "$resultados", count: {$sum: 1}}}, 
+{$out: "listaDeVuelos"}
+]);
+
+db.listaDeVuelos.find().sort({count:-1}).limit(1)
+
+
+-----------------------------------------------------------------------------------------------------------------
+3) Saber cuantos usuarios hicieron consultas por monto:
+
+
+db.Busqueda.find( { maxPrecio: { $exists: true } } ).count();
