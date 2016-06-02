@@ -28,7 +28,7 @@ class AdmVuelosBootstrap implements Bootstrap {
 	Aeropuerto costanera
 	Aeropuerto ricafort
 	Aeropuerto brazuca
-	Aeropuerto gotze
+	Aeropuerto marPla
 	Aeropuerto ponja
 
 	Usuario usr
@@ -82,14 +82,14 @@ class AdmVuelosBootstrap implements Bootstrap {
 		costanera = new Aeropuerto("Aeroparque", "Buenos Aires")
 		ricafort = new Aeropuerto("Miami International Airport", "Miami")
 		brazuca = new Aeropuerto("Aeroporto Internacional de São Paulo", "San Pablo")
-		gotze = new Aeropuerto("Aeropuerto Internacional de Múnich", "Munich")
+		marPla = new Aeropuerto("MDQ", "Mar del Plata")
 		ponja = new Aeropuerto("Aeropuerto Internacional Haneda", "Tokio")
 		
 		crearAeropuerto(ezeiza)
 		crearAeropuerto(costanera)
 		crearAeropuerto(ricafort)
 		crearAeropuerto(brazuca)
-		crearAeropuerto(gotze)
+		crearAeropuerto(marPla)
 		crearAeropuerto(ponja)
 	}
 	
@@ -130,7 +130,7 @@ class AdmVuelosBootstrap implements Bootstrap {
 		]
 		escala2 => [
 			horaLlegada = new GregorianCalendar(2016, Calendar.MARCH, 8).getTime();
-			destino = gotze
+			destino = marPla
 		]
 		escala3 => [
 			horaLlegada = new GregorianCalendar(2016, Calendar.MARCH, 6).getTime();
@@ -189,8 +189,8 @@ class AdmVuelosBootstrap implements Bootstrap {
 		malasyaVuelo =>[
 			agregarEscala(escala5)
 			aerolinea = "Malasya Airlines"
-			origen = gotze
-			destino = ezeiza
+			origen = ezeiza
+			destino = marPla
 			fechaSalida = new GregorianCalendar(2016, Calendar.MARCH, 3).getTime();
 			fechaLlegada = new GregorianCalendar(2016, Calendar.MARCH, 6).getTime();
 		]

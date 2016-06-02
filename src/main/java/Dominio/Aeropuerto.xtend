@@ -3,7 +3,6 @@ package Dominio
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
-import javax.persistence.Id
 import org.bson.types.ObjectId
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.mongodb.morphia.annotations.Embedded

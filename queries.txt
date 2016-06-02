@@ -1,6 +1,5 @@
 1) Saber que usuarios consultaron vuelos a Mar del Plata:
 
-
 var mapDestinos = function() {
                            emit(this.quienBusca.nombre , this.destino);
                        };
@@ -28,5 +27,13 @@ db.listaDeVuelos.find().sort({count:-1}).limit(1)
 -----------------------------------------------------------------------------------------------------------------
 3) Saber cuantos usuarios hicieron consultas por monto:
 
-
-db.Busqueda.find( { maxPrecio: { $exists: true } } ).count();
+var mapPrecios = function() {
+                           emit(this.quienBusca.nombre , this.maxPrecio);
+                       };
+var reducePrecios = function(nombre, precio) {
+				return { maxPrecio: precio};
+                    };
+                    db.Busqueda.mapReduce(mapPrecios, reducePrecios, { 
+                        query: { "maxPrecio": { $exists: true }},
+                        out: 'listaDeUsuarios' });
+db.listaDeUsuarios.find().count();
