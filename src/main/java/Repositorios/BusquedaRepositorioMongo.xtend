@@ -27,6 +27,11 @@ class BusquedaRepositorioMongo extends RepositorioDefaultMongo<Busqueda>{
 	
 	def buscarPor (Usuario usr,Date fechaDesde,Date fechaHasta){
 		val query = ds.createQuery(entityType)
+		fechaHasta => [
+			hours = 23
+			minutes = 59
+			seconds = 59
+		]
 		if (fechaDesde != null) {
 			query.field("fecha").greaterThanOrEq(fechaDesde)
 		}

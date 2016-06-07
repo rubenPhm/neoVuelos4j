@@ -1,17 +1,18 @@
 1) Saber que usuarios consultaron vuelos a Mar del Plata:
 
-var mapDestinos = function() {
-                           emit(this.quienBusca.nombre , this.destino);
-                       };
-                       
-var reduceVuelos = function(nombre, destino) {
-				return { destino: destino};
-                    };
-                    
-db.Busqueda.mapReduce(mapDestinos, reduceVuelos, { out: 'nombresConDestino' });
-
-db.nombresConDestino.find({'value.destino.pais' : 'Mar del Plata'},{value:0});
-
+	var mapDestinos = function() {
+	    if (this.destino.pais == 'Mar del Plata') {
+	            emit(this.quienBusca.nombre , this.destino);
+	    }
+	};
+	var reduceVuelos = function(nombre, destino) {
+					return { nombre: nombre};
+	                    };
+	db.Busqueda.mapReduce(mapDestinos, reduceVuelos, { 
+            query: { "destino.pais": { $exists: true }},
+            out: 'nombresConDestino' });
+	
+	db.nombresConDestino.find();
 -----------------------------------------------------------------------------------------------------------------
 2) Saber cual fue el vuelo con mas consultas:
 
