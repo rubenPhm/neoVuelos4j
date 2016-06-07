@@ -12,11 +12,7 @@ import org.uqbar.commons.utils.Observable
 @Accessors
 class LogConsultasAppModel {
 
-//		MONGO
-		val BusquedaRepositorioMongo repoBusqueda = BusquedaRepositorioMongo.instance
-
-//		SIN PERSISTIR, TRABAJANDO EN MEMORIA
-//		val BusquedasRepositorio repoBusqueda = BusquedasRepositorio.instance
+	val BusquedaRepositorioMongo repoBusqueda = BusquedaRepositorioMongo.instance
 
 	Date fechaDesde
 	Date fechaHasta
