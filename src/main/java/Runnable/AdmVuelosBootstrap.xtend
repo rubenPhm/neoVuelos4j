@@ -21,6 +21,8 @@ import java.util.HashSet
 import java.util.List
 import java.util.Set
 import org.uqbar.arena.bootstrap.Bootstrap
+import Repositorios.RepoUsuariosNeo4j
+import Repositorios.GraphDatabaseProvider
 
 class AdmVuelosBootstrap implements Bootstrap {
 
@@ -68,15 +70,32 @@ class AdmVuelosBootstrap implements Bootstrap {
 	TarifaBandaNegativa tBNegativa_3
 
 	override run() {
-		initAeropuertos
+		/*initAeropuertos
 		initTarifas
 		initEscalas
 		initVuelos
 		initAsientos
 		initUsuarios
-		persistirVuelosYUsrs
+		persistirVuelosYUsrs*/
+		initNeo4j
 	}
 	
+	def initNeo4j(){
+		gabo = new Usuario("gabo", "gabo")
+		gabo.nombre = "Gabriel Perez"
+		usr = new Usuario("adrian", "adrian")
+		usr.nombre = "Adrian Barbani"
+		fede = new Usuario("fede", "fede")
+		fede.nombre = "Federico Peña"
+		GraphDatabaseProvider.instance
+		val repo = RepoUsuariosNeo4j.instance
+		repo.saveOrUpdateUsuario(gabo)
+		repo.saveOrUpdateUsuario(usr)
+		repo.saveOrUpdateUsuario(fede)
+		
+		
+		
+	}
 	def initAeropuertos() {
 		ezeiza = new Aeropuerto("Ezeiza", "Buenos Aires")
 		costanera = new Aeropuerto("Aeroparque", "Buenos Aires")
@@ -92,6 +111,8 @@ class AdmVuelosBootstrap implements Bootstrap {
 		crearAeropuerto(marPla)
 		crearAeropuerto(ponja)
 	}
+	
+	
 	
 	def initTarifas() {
 		tarifa_1 = new TarifaComun(150.0)
