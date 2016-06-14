@@ -34,7 +34,7 @@ class RepoVuelosNeo4j extends AbstractRepoNeo4j {
 	
 	def convertToVuelo(Node nodeVuelo, boolean deep) {
 		new Vuelo => [
-			id = nodeVuelo.id
+			idNeo = nodeVuelo.id
 			origen = nodeVuelo.getProperty("origen") as Aeropuerto
 			destino = nodeVuelo.getProperty("destino") as Aeropuerto
 			aerolinea = nodeVuelo.getProperty("aerolinea") as String
@@ -42,7 +42,7 @@ class RepoVuelosNeo4j extends AbstractRepoNeo4j {
 			fechaLlegada = nodeVuelo.getProperty("fechaLlegada") as Date
 			
 			if (deep) { 
-				val rel_asientos = nodeVuelo.getRelationships(RelacionesVuelos.ASIENTO_RESERVADO)
+				val rel_asientos = nodeVuelo.getRelationships(RelacionVueloAsiento.ASIENTO_RESERVADO)
 				asientos = rel_asientos.map [
 					rel | new Asiento => [
 						id = rel.id
@@ -54,7 +54,7 @@ class RepoVuelosNeo4j extends AbstractRepoNeo4j {
 					]
 				].toSet
 				
-				val rel_escala = nodeVuelo.getRelationships(RelacionesVuelos.ESCALA_EN)
+				val rel_escala = nodeVuelo.getRelationships(RelacionVueloEscala.ESCALA_EN)
 				escalas = rel_escala.map [
 					rel | new Escala => [
 						id = rel.id
@@ -79,7 +79,6 @@ class RepoVuelosNeo4j extends AbstractRepoNeo4j {
 
 	def void saveOrUpdateVuelo (Vuelo vuelo) {
 		
-		// falta validar el vuelo para que no se repita
 		 
 		val transaction = graphDb.beginTx
 		try {
@@ -116,19 +115,16 @@ class RepoVuelosNeo4j extends AbstractRepoNeo4j {
 			setProperty("fechaSalida",vuelo.fechaSalida)
 			setProperty("fechaLlegada",vuelo.fechaLlegada)
 						
-			// Borro las relaciones que tenga ese nodo
 			relationships.forEach [it.delete]
 			
-			// Creo relaciones nuevas
 			vuelo.asientos.forEach [ asiento |
-				val Node nodoAsiento = RepoAsientos.instance.getNodoAsientoById(asiento.id)
-				val relAsiento = nodoAsiento.createRelationshipTo(it, RelacionesVuelos.ASIENTO_RESERVADO)
+				val Node nodoAsiento = RepoAsientosNeo4j.instance.getNodoAsientoById(asiento.id)
+				val relAsiento = nodoAsiento.createRelationshipTo(it, RelacionVueloAsiento.ASIENTO_RESERVADO)
 				
 			vuelo.escalas.forEach [ escala |
-				val Node nodoEscala = RepoEscalas.instance.getNodoEscalaById(escala.id)
-				val relEscala = nodoEscala.createRelationshipTo(it, RelacionesVuelos.ESCALA_EN)
+				val Node nodoEscala = RepositorioEscalasNeo4j.instance.getNodoEscalaById(escala.id)
+				val relEscala = nodoEscala.createRelationshipTo(it, RelacionVueloEscala.ESCALA_EN)
 				
-			// Manganeta para usar arrays porque el [] se confunde con el bloque
 				val asientos = vuelo.asientos		
 				var String[] _asientos = #[]
 				_asientos = asientos.toArray(_asientos)
