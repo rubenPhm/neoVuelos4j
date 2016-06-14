@@ -8,6 +8,7 @@ import java.util.Iterator
 import org.neo4j.graphdb.GraphDatabaseService
 import Dominio.Reserva
 import org.neo4j.graphdb.Label
+import org.neo4j.kernel.api.proc.Neo4jTypes.RelationshipType
 
 class RepoUsuariosNeo4j extends AbstractRepoNeo4j {
 	
@@ -27,59 +28,61 @@ class RepoUsuariosNeo4j extends AbstractRepoNeo4j {
 		]
 	}*/
 
-	/*def List<Reserva> getReservas(String valor) {
+	def List<Usuario> getUsuarios(String valor) {
 		val transaction = graphDb.beginTx
 		try {
-			getNodosPeliculas(valor).map [ Node node |
-				convertToPelicula(node, false)
+			getNodosUsuarios(valor).map [ Node node |
+				convertToUsuario(node, false)
 			].toList
 		} finally {
 			cerrarTransaccion(transaction)
 		}
 	}
 
-	def Pelicula getPelicula(Long id) {
+	def Usuario getUsuario(Long id) {
 		val transaction = graphDb.beginTx
 		try {
-			convertToPelicula(getNodoPelicula(id), true)
+			convertToUsuario(getNodoUsuarioById(id), true)
 		} finally {
 			cerrarTransaccion(transaction)
 		}
 	}
 	
-	def convertToPelicula(Node nodePelicula, boolean deep) {
-		new Pelicula => [
-			id = nodePelicula.id
-			titulo = nodePelicula.getProperty("title") as String
-			frase = nodePelicula.getProperty("tagline", "") as String
-			val released = nodePelicula.getProperty("released", null) as Long
-			if (released != null) {
-				anio = released.intValue
-			}
+	def convertToUsuario(Node nodeUsuario, boolean deep) {
+		new Usuario => [
+			id = nodeUsuario.id
+			nick = nodeUsuario.getProperty("nick") as String
+			contrasenia = nodeUsuario.getProperty("contrasenia") as String
+			nombre = nodeUsuario.getProperty("nombre") as String
+			val released = nodeUsuario.getProperty("released", null) as Long
+			//if (released != null) {
+			//	anio = released.intValue
+			//}
 			if (deep) { 
-				val rel_actuaron = nodePelicula.getRelationships(RelacionesPelicula.ACTED_IN)
-				personajes = rel_actuaron.map [
-					rel | new Personaje => [
-						id = rel.id
-						val rolesPersonaje = rel.getProperty("roles", []) as String[]
-						roles = new ArrayList(rolesPersonaje)
-						val nodeActor = rel.startNode // hay que saber como navegar
-						actor = nodeActor.convertToActor
-					]
-				].toList
+				//val rel_reservas = nodeUsuario.getRelationships(RelacionesPelicula.ACTED_IN)
+				//reservas = rel_reservas.map [
+					//rel | new Reserva => [
+					//	id = rel.id
+						//val rolesPersonaje = rel.getProperty("roles", []) as String[]
+						//roles = new ArrayList(rolesPersonaje)
+					//	rel.startNode
+						//nodeUsuario = rel.startNode // hay que saber como navegar
+						//usuario = nodeUsuario.convertToUsuario
+				//	]
+			//	].toSet
 			}			
 		]
 	}
 
-	def void eliminarPelicula(Pelicula pelicula) {
+	def void eliminarUsuario(Usuario usuario) {
 		val transaction = graphDb.beginTx
 		try {
-			getNodoPelicula(pelicula.id).delete
+			getNodoUsuarioById(usuario.id).delete
 			transaction.success
 		} finally {
 			cerrarTransaccion(transaction)
 		}
-	}*/
+	}
 
 	def void saveOrUpdateUsuario (Usuario usuario) {
 		
@@ -92,7 +95,7 @@ class RepoUsuariosNeo4j extends AbstractRepoNeo4j {
 				nodoUsuario = graphDb.createNode
 				nodoUsuario.addLabel(labelUsuario)
 			} else {
-				nodoUsuario = getNodoUsuario(usuario.id)
+				nodoUsuario = getNodoUsuarioById(usuario.id)
 			}
 			actualizarUsuario(usuario, nodoUsuario)
 			transaction.success
@@ -102,11 +105,11 @@ class RepoUsuariosNeo4j extends AbstractRepoNeo4j {
 		}
 	}
 
-	/*private def getNodosUsuarios(String valor) {
-		basicSearch("peli.title =~ '(?i).*" + valor + ".*'")
-	}*/
+	private def getNodosUsuarios(String valor) {//completar con la busqueda propia para un usuario
+		basicSearch("")//"peli.title =~ '(?i).*" + valor + ".*'"
+	}
 
-	private def Node getNodoUsuario(Long id) {
+	private def Node getNodoUsuarioById(Long id) {
 		basicSearch("ID(user) = " + id).head
 	}
 	
@@ -124,16 +127,18 @@ class RepoUsuariosNeo4j extends AbstractRepoNeo4j {
 			// Borro las relaciones que tenga ese nodo
 			relationships.forEach [it.delete ]
 			// Creo relaciones nuevas
-		/* 	usuario.personajes.forEach [ personaje |
-				val Node nodoActor = RepoActores.instance.getNodoActorById(personaje.actor.id)
-				val relPersonaje = nodoActor.createRelationshipTo(it, RelacionesPelicula.ACTED_IN)
+			usuario.reservas.forEach [ reserva |
+				val Node nodoUsuario = RepoUsuariosNeo4j.instance.getNodoUsuarioById(usuario.id)
+			/* 	val relVuelo = nodoUsuario.createRelationshipTo(it, Relaciones.RESERVA )
 				
 				// Manganeta para usar arrays porque el [] se confunde con el bloque
 				val roles = personaje.roles		
 				var String[] _roles = #[]
 				_roles = roles.toArray(_roles)
 				relPersonaje.setProperty("roles", _roles)	
-			]*/
+				
+				*/
+			]
 		]
 	}
 
