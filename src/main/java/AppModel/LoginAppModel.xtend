@@ -5,6 +5,7 @@ import Repositorios.UsuarioRepositorio
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.uqbar.commons.model.UserException
 import org.uqbar.commons.utils.Observable
+import Repositorios.RepoUsuariosNeo4j
 
 @Observable
 @Accessors
@@ -18,7 +19,8 @@ class LoginAppModel {
 	}
 	
 	def autorizarLogin() {
-		usuario = UsuarioRepositorio.getInstance.searchByNickContrasenia(nick, contrasenia)
+		//usuario = UsuarioRepositorio.getInstance.searchByNickContrasenia(nick, contrasenia)
+		usuario = RepoUsuariosNeo4j.getInstance.searchByNickContrasenia(nick, contrasenia)
 		if(usuario == null){
 			throw new UserException ("El Usuario o Contraseña ingresados no son correctos")
 		}	

@@ -9,6 +9,8 @@ import org.neo4j.graphdb.GraphDatabaseService
 import Dominio.Reserva
 import org.neo4j.graphdb.Label
 import org.neo4j.kernel.api.proc.Neo4jTypes.RelationshipType
+import org.neo4j.graphdb.Transaction
+import org.neo4j.graphdb.schema.IndexDefinition
 
 class RepoUsuariosNeo4j extends AbstractRepoNeo4j {
 	
@@ -27,11 +29,19 @@ class RepoUsuariosNeo4j extends AbstractRepoNeo4j {
 			//getPeliculas("Fros")
 		]
 	}*/
+	
+	def Usuario searchByNickContrasenia(String xNick,String xContrasenia){
+		 getUsuarios(xNick,xContrasenia).toSet.head
+		 //getNodosUsuarios(xNick,xContrasenia)
+		 
+		 }
+	
+	
 
-	def List<Usuario> getUsuarios(String valor) {
+	def List<Usuario> getUsuarios(String valor,String valor2) {
 		val transaction = graphDb.beginTx
 		try {
-			getNodosUsuarios(valor).map [ Node node |
+			getNodosUsuarios(valor,valor2).map [ Node node |
 				convertToUsuario(node, false)
 			].toList
 		} finally {
@@ -59,7 +69,7 @@ class RepoUsuariosNeo4j extends AbstractRepoNeo4j {
 			//	anio = released.intValue
 			//}
 			if (deep) { 
-				//val rel_reservas = nodeUsuario.getRelationships(RelacionesPelicula.ACTED_IN)
+				//val rel_reservas = nodeUsuario.getRelationships()
 				//reservas = rel_reservas.map [
 					//rel | new Reserva => [
 					//	id = rel.id
@@ -87,6 +97,10 @@ class RepoUsuariosNeo4j extends AbstractRepoNeo4j {
 	def void saveOrUpdateUsuario (Usuario usuario) {
 		
 		// falta validar el usuario para que no se repita
+		/*val users = getUsuarios(usuario.nick)
+		if (users.contains(usuario)){
+			throw new RuntimeException("El usuario ya existe") 
+		}*/
 		 
 		val transaction = graphDb.beginTx
 		try {
@@ -105,16 +119,29 @@ class RepoUsuariosNeo4j extends AbstractRepoNeo4j {
 		}
 	}
 
-	private def getNodosUsuarios(String valor) {//completar con la busqueda propia para un usuario
-		basicSearch("")//"peli.title =~ '(?i).*" + valor + ".*'"
-	}
+	
 
 	private def Node getNodoUsuarioById(Long id) {
 		basicSearch("ID(user) = " + id).head
 	}
 	
+	private def getNodosUsuarios(String nick,String contrasenia) {
+		basicSearch("u.nick =~ '(?i).*" + nick + ".*'" )//'nick'"
+	}
+	
 	private def basicSearch(String where) {
-		val Result result = graphDb.execute("match (user:Usuario) where " + where + " return user")
+		val Result result = graphDb.execute("match (u:Usuario) where " + where   + " return u")//CREATE UNIQUE (user)
+		val Iterator<Node> user_column = result.columnAs("u")// user.nick = {where}
+		return user_column
+	}
+	
+    def search(Usuario usuario) {
+	val nick = usuario.nick
+	val Result result = graphDb.execute("match (user:Usuario)" + "where nick(user) = nick"  + "CREATE UNIQUE (user) return user")//+ "and user.contrasenia = " + usuario.contrasenia  + "and user.nombre = " + usuario.nombre + " 	
+		//val Result result = graphDb.execute("MATCH (a {nombre: '' + where }) 
+// CREATE UNIQUE (a)")
+ 
+ 
 		val Iterator<Node> user_column = result.columnAs("user")
 		return user_column
 	}
@@ -127,23 +154,38 @@ class RepoUsuariosNeo4j extends AbstractRepoNeo4j {
 			// Borro las relaciones que tenga ese nodo
 			relationships.forEach [it.delete ]
 			// Creo relaciones nuevas
-			usuario.reservas.forEach [ reserva |
-				val Node nodoUsuario = RepoUsuariosNeo4j.instance.getNodoUsuarioById(usuario.id)
-			/* 	val relVuelo = nodoUsuario.createRelationshipTo(it, Relaciones.RESERVA )
-				
-				// Manganeta para usar arrays porque el [] se confunde con el bloque
-				val roles = personaje.roles		
-				var String[] _roles = #[]
-				_roles = roles.toArray(_roles)
-				relPersonaje.setProperty("roles", _roles)	
-				
-				*/
-			]
+			//if(usuario.reservas != null){
+			//usuario.reservas.forEach [ reserva |
+			//	val Node nodoUsuario = RepoUsuariosNeo4j.instance.getNodoUsuarioById(usuario.id)
+				//val Node nodoUsuario = RepoUsuariosNeo4j.instance.getUsuarios()
+			//	val relVuelo = nodoUsuario.createRelationshipTo(it,RelacionVueloAsiento.ASIENTO_RESERVADO)		
+			//]			
+		//}
 		]
+		
+		
+		
 	}
 
 	private def Label labelUsuario() {
 		Label.label("Usuario")
 	}
+	
+	/*def eliminarTodos(){
+//		try {
+    
+    	val tx = graphDb.beginTx()   
+    //Label label = Label.label( "User" );
+    var label = this.labelUsuario
+    for ( IndexDefinition indexDefinition : graphDb.schema()
+            .getIndexes( label ) )
+    {
+        // There is only one index
+        indexDefinition.drop();
+    }
+
+    tx.success();
+}*/
+	
 	
 }

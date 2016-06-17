@@ -23,6 +23,7 @@ import java.util.Set
 import org.uqbar.arena.bootstrap.Bootstrap
 import Repositorios.RepoUsuariosNeo4j
 import Repositorios.GraphDatabaseProvider
+import Repositorios.RepoAsientosNeo4j
 
 class AdmVuelosBootstrap implements Bootstrap {
 
@@ -87,11 +88,19 @@ class AdmVuelosBootstrap implements Bootstrap {
 		usr.nombre = "Adrian Barbani"
 		fede = new Usuario("fede", "fede")
 		fede.nombre = "Federico Peña"
+		
 		GraphDatabaseProvider.instance
 		val repo = RepoUsuariosNeo4j.instance
+		//repo.search(fede)
+		//repo.eliminarTodos
+		val repoAsientos = RepoAsientosNeo4j.instance
+		
+		asiento1 = new Asiento(1, "Pasillo",new TarifaComun)
+		repoAsientos.saveOrUpdateUsuario(asiento1)
+		fede.reservas.add(new Reserva(asiento1))
 		repo.saveOrUpdateUsuario(gabo)
 		repo.saveOrUpdateUsuario(usr)
-		repo.saveOrUpdateUsuario(fede)
+		repo.saveOrUpdateUsuario(fede)		
 		
 		
 		
