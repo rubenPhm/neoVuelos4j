@@ -69,30 +69,18 @@ class RepoUsuariosNeo4j extends AbstractRepoNeo4j {
 			nick = nodeUsuario.getProperty("nick") as String
 			contrasenia = nodeUsuario.getProperty("contrasenia") as String
 			nombre = nodeUsuario.getProperty("nombre") as String
-			//val released = nodeUsuario.getProperty("released", null) as Long
-			//if (released != null) {
-			//	anio = released.intValue
-			//}
+			
 			if (deep) { 
 				val rel_reservas = nodeUsuario.getRelationships(RelacionUsuarioReservas.RESERVA_USUARIO)
 				reservas= rel_reservas.map [
 					rel | new Reserva => [
-					//rel.startNode
 					id = rel.id
 					val nodoAsiento = rel.endNode 
-					//fechaReserva = new Date (nodoAsiento.getProperty("fechaReserva") as Long)//new Date (new Long(nodoAsiento.getProperty("fechaReserva")as Long))
-					//fechaReserva = rel.getProperty("fechaReserva")as Date
-					 
-						//val rolesPersonaje = rel.getProperty("roles", []) as String[]
-						//roles = new ArrayList(rolesPersonaje).
-					//rel.startNode
-				   //val relacion= rel.startNode // hay que saber como navegar
-						
-						//val reservas =ArrayList
-						
+					// no castea a Date ->
+					//fechaReserva = rel.getProperty("fechaReserva")as Date					
 					]
 				].toSet
-		//user.reservas.addAll(reservas)
+		
 			}			
 		]
 	}
@@ -170,8 +158,11 @@ class RepoUsuariosNeo4j extends AbstractRepoNeo4j {
 			//if(usuario.reservas != null){
 			usuario.reservas.forEach [ reserva |
 		val Node nodoAsiento = graphDb.createNode(Label.label( "Asiento" ))
-		nodoAsiento.setProperty("fechaReserva",(new Date).toString)
-		it.createRelationshipTo(nodoAsiento,RelacionUsuarioReservas.RESERVA_USUARIO)
+		nodoAsiento.setProperty("fila",reserva.asiento.fila)
+		nodoAsiento.setProperty("disponible",reserva.asiento.disponible)
+		nodoAsiento.setProperty("ubicacion",reserva.asiento.ubicacion)
+		var relacion = it.createRelationshipTo(nodoAsiento,RelacionUsuarioReservas.RESERVA_USUARIO)
+		relacion.setProperty("fechaReserva",(new Date).toString)//System.currentTimeMillis()
 			]
 			  //val Node nodoUsuario = RepoUsuariosNeo4j.instance.getNodoUsuarioById(usuario.id)
 			  		
