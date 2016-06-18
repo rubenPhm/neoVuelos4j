@@ -168,17 +168,22 @@ class RepoUsuariosNeo4j extends AbstractRepoNeo4j {
 			relationships.forEach [it.delete ]
 			// Creo relaciones nuevas
 			//if(usuario.reservas != null){
-			//usuario.reservas.forEach [ reserva |
+			usuario.reservas.forEach [ reserva |
+		val Node nodoAsiento = graphDb.createNode(Label.label( "Asiento" ))
+		nodoAsiento.setProperty("fechaReserva",(new Date).toString)
+		it.createRelationshipTo(nodoAsiento,RelacionUsuarioReservas.RESERVA_USUARIO)
+			]
 			  //val Node nodoUsuario = RepoUsuariosNeo4j.instance.getNodoUsuarioById(usuario.id)
 			  		
 			//]			
 		//}
 		]
-		
+		/* 
 		val Node nodoAsiento = graphDb.createNode(Label.label( "Asiento" ))
 		nodoAsiento.setProperty("fechaReserva",(new Date).toString)
 		user.createRelationshipTo(nodoAsiento,RelacionUsuarioReservas.RESERVA_USUARIO)
-				
+		user.
+		*/		
 	}
 
     /*def crearRelaciones(Usuario usuario){

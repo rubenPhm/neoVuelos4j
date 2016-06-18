@@ -95,9 +95,12 @@ class AdmVuelosBootstrap implements Bootstrap {
 		//repo.eliminarTodos
 		val repoAsientos = RepoAsientosNeo4j.instance
 		
-		//asiento1 = new Asiento(1, "Pasillo",new TarifaComun)
-		//repoAsientos.saveOrUpdateUsuario(asiento1)
-		//fede.reservas.add(new Reserva(asiento1))
+		asiento1 = new Asiento(1, "Pasillo",new TarifaComun)
+		asiento2 = new Asiento(2, "Ventana",new TarifaComun)
+		repoAsientos.saveOrUpdateUsuario(asiento1)
+		repoAsientos.saveOrUpdateUsuario(asiento2)
+		fede.reservas.add(new Reserva(asiento1))
+		fede.reservas.add(new Reserva(asiento2))
 		repo.saveOrUpdateUsuario(gabo)
 		repo.saveOrUpdateUsuario(usr)
 		repo.saveOrUpdateUsuario(fede)		
