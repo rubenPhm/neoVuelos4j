@@ -11,6 +11,10 @@ import org.neo4j.graphdb.Label
 import org.neo4j.kernel.api.proc.Neo4jTypes.RelationshipType
 import org.neo4j.graphdb.Transaction
 import org.neo4j.graphdb.schema.IndexDefinition
+import java.util.ArrayList
+import java.util.Date
+import java.security.Timestamp
+import java.util.GregorianCalendar
 
 class RepoUsuariosNeo4j extends AbstractRepoNeo4j {
 	
@@ -59,27 +63,36 @@ class RepoUsuariosNeo4j extends AbstractRepoNeo4j {
 	}
 	
 	def convertToUsuario(Node nodeUsuario, boolean deep) {
-		new Usuario => [
+		var user = new Usuario 
+		user => [
 			id = nodeUsuario.id
 			nick = nodeUsuario.getProperty("nick") as String
 			contrasenia = nodeUsuario.getProperty("contrasenia") as String
 			nombre = nodeUsuario.getProperty("nombre") as String
-			val released = nodeUsuario.getProperty("released", null) as Long
+			//val released = nodeUsuario.getProperty("released", null) as Long
 			//if (released != null) {
 			//	anio = released.intValue
 			//}
 			if (deep) { 
-				//val rel_reservas = nodeUsuario.getRelationships()
-				//reservas = rel_reservas.map [
-					//rel | new Reserva => [
-					//	id = rel.id
+				val rel_reservas = nodeUsuario.getRelationships(RelacionUsuarioReservas.RESERVA_USUARIO)
+				reservas= rel_reservas.map [
+					rel | new Reserva => [
+					//rel.startNode
+					id = rel.id
+					val nodoAsiento = rel.endNode 
+					//fechaReserva = new Date (nodoAsiento.getProperty("fechaReserva") as Long)//new Date (new Long(nodoAsiento.getProperty("fechaReserva")as Long))
+					//fechaReserva = rel.getProperty("fechaReserva")as Date
+					 
 						//val rolesPersonaje = rel.getProperty("roles", []) as String[]
-						//roles = new ArrayList(rolesPersonaje)
-					//	rel.startNode
-						//nodeUsuario = rel.startNode // hay que saber como navegar
-						//usuario = nodeUsuario.convertToUsuario
-				//	]
-			//	].toSet
+						//roles = new ArrayList(rolesPersonaje).
+					//rel.startNode
+				   //val relacion= rel.startNode // hay que saber como navegar
+						
+						//val reservas =ArrayList
+						
+					]
+				].toSet
+		//user.reservas.addAll(reservas)
 			}			
 		]
 	}
@@ -122,7 +135,7 @@ class RepoUsuariosNeo4j extends AbstractRepoNeo4j {
 	
 
 	private def Node getNodoUsuarioById(Long id) {
-		basicSearch("ID(user) = " + id).head
+		basicSearch("ID(u) = " + id).head
 	}
 	
 	private def getNodosUsuarios(String nick,String contrasenia) {
@@ -147,7 +160,7 @@ class RepoUsuariosNeo4j extends AbstractRepoNeo4j {
 	}
 
 	private def void actualizarUsuario(Usuario usuario, Node nodeUsuario) {
-		nodeUsuario => [
+		val user = nodeUsuario => [
 			setProperty("nombre", usuario.nombre)
 			setProperty("nick", usuario.nick)
 			setProperty("contrasenia",usuario.contrasenia)
@@ -156,17 +169,27 @@ class RepoUsuariosNeo4j extends AbstractRepoNeo4j {
 			// Creo relaciones nuevas
 			//if(usuario.reservas != null){
 			//usuario.reservas.forEach [ reserva |
-			//	val Node nodoUsuario = RepoUsuariosNeo4j.instance.getNodoUsuarioById(usuario.id)
-				//val Node nodoUsuario = RepoUsuariosNeo4j.instance.getUsuarios()
-			//	val relVuelo = nodoUsuario.createRelationshipTo(it,RelacionVueloAsiento.ASIENTO_RESERVADO)		
+			  //val Node nodoUsuario = RepoUsuariosNeo4j.instance.getNodoUsuarioById(usuario.id)
+			  		
 			//]			
 		//}
 		]
 		
-		
-		
+		val Node nodoAsiento = graphDb.createNode(Label.label( "Asiento" ))
+		nodoAsiento.setProperty("fechaReserva",(new Date).toString)
+		user.createRelationshipTo(nodoAsiento,RelacionUsuarioReservas.RESERVA_USUARIO)
+				
 	}
 
+    /*def crearRelaciones(Usuario usuario){
+    	val Node user = RepoUsuariosNeo4j.instance.getNodoUsuarioById(usuario.id)
+    	val Node asiento = RepoAsientosNeo4j.instance.getNodoAsientoById(new Long(10))
+    	user.createRelationshipTo(asiento,RelacionUsuarioReservas.RESERVA_USUARIO)
+    	
+    }*/
+    
+    
+    
 	private def Label labelUsuario() {
 		Label.label("Usuario")
 	}
