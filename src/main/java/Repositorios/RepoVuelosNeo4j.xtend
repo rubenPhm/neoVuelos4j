@@ -2,15 +2,16 @@ package Repositorios
 
 import Dominio.Aeropuerto
 import Dominio.Asiento
+import Dominio.Busqueda
 import Dominio.Escala
 import Dominio.Tarifa
 import Dominio.Vuelo
+import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Iterator
 import org.neo4j.graphdb.Label
 import org.neo4j.graphdb.Node
 import org.neo4j.graphdb.Result
-import Dominio.Busqueda
 
 class RepoVuelosNeo4j extends AbstractRepoNeo4j {
 
@@ -36,10 +37,12 @@ class RepoVuelosNeo4j extends AbstractRepoNeo4j {
 	def convertToVuelo(Node nodeVuelo, boolean deep) {
 		new Vuelo => [
 			idNeo = nodeVuelo.id
-			destino = nodeVuelo.getProperty("destino") as Aeropuerto
 			aerolinea = nodeVuelo.getProperty("aerolinea") as String
-			fechaSalida = nodeVuelo.getProperty("fechaSalida") as Date
-			fechaLlegada = nodeVuelo.getProperty("fechaLlegada") as Date
+			
+			val salida = nodeVuelo.getProperty("fechaSalida") as String
+			val llegada = nodeVuelo.getProperty("fechaLlegada") as String
+			fechaSalida = new SimpleDateFormat("E MMM dd HH:mm:ss Z yyyy").parse(salida);
+			fechaLlegada = new SimpleDateFormat("E MMM dd HH:mm:ss Z yyyy").parse(llegada);
 			if (deep) {
 
 				val rel_origen = nodeVuelo.getRelationships(RelacionVueloAeropuertoOrigen.AEROPUERTO_ORIGEN)
