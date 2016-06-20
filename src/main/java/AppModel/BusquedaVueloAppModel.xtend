@@ -6,7 +6,7 @@ import Dominio.Usuario
 import Dominio.Vuelo
 import Repositorios.AeropuertosRepositorio
 import Repositorios.BusquedaRepositorioMongo
-import Repositorios.VuelosRepositorio
+import Repositorios.RepoVuelosNeo4j
 import java.util.ArrayList
 import java.util.Date
 import java.util.List
@@ -30,7 +30,10 @@ class BusquedaVueloAppModel {
 	Vuelo vueloSeleccionado
 	Set <Vuelo> resultados = null
 	
-	VuelosRepositorio vuelosRepo = VuelosRepositorio.instance
+	RepoVuelosNeo4j vuelosRepo = RepoVuelosNeo4j.instance
+	
+	//Hibernate	
+	//VuelosRepositorio vuelosRepo = VuelosRepositorio.instance
 	BusquedaRepositorioMongo repoBusqueda = BusquedaRepositorioMongo.instance
 	
 	new (Usuario unUsr){

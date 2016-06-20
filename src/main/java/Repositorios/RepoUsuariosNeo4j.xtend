@@ -1,21 +1,14 @@
 package Repositorios
 
-import java.util.List
+import Dominio.Asiento
+import Dominio.Reserva
 import Dominio.Usuario
+import java.util.Date
+import java.util.Iterator
+import java.util.List
+import org.neo4j.graphdb.Label
 import org.neo4j.graphdb.Node
 import org.neo4j.graphdb.Result
-import java.util.Iterator
-import org.neo4j.graphdb.GraphDatabaseService
-import Dominio.Reserva
-import org.neo4j.graphdb.Label
-import org.neo4j.kernel.api.proc.Neo4jTypes.RelationshipType
-import org.neo4j.graphdb.Transaction
-import org.neo4j.graphdb.schema.IndexDefinition
-import java.util.ArrayList
-import java.util.Date
-import java.security.Timestamp
-import java.util.GregorianCalendar
-import Dominio.Asiento
 
 class RepoUsuariosNeo4j extends AbstractRepoNeo4j {
 	
@@ -157,7 +150,7 @@ class RepoUsuariosNeo4j extends AbstractRepoNeo4j {
 	}
 
     
-	private def Label labelUsuario() {
+	public def labelUsuario() {
 		Label.label("Usuario")
 	}
 	

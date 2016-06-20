@@ -11,6 +11,11 @@ import Dominio.TarifaEspecial
 import Dominio.Usuario
 import Dominio.Vuelo
 import Repositorios.AeropuertosRepositorio
+import Repositorios.GraphDatabaseProvider
+import Repositorios.RepoAeropuertoNeo4j
+import Repositorios.RepoAsientosNeo4j
+import Repositorios.RepoUsuariosNeo4j
+import Repositorios.RepoVuelosNeo4j
 import Repositorios.TarifasRepositorio
 import Repositorios.UsuarioRepositorio
 import Repositorios.VuelosRepositorio
@@ -21,10 +26,6 @@ import java.util.HashSet
 import java.util.List
 import java.util.Set
 import org.uqbar.arena.bootstrap.Bootstrap
-import Repositorios.RepoUsuariosNeo4j
-import Repositorios.GraphDatabaseProvider
-import Repositorios.RepoAsientosNeo4j
-import Repositorios.RepoVuelosNeo4j
 
 class AdmVuelosBootstrap implements Bootstrap {
 
@@ -52,7 +53,7 @@ class AdmVuelosBootstrap implements Bootstrap {
 	Vuelo emiratesVuelo
 	Vuelo malasyaVuelo
 	Vuelo peruvianVuelo
-	
+
 	Asiento asiento1
 	Asiento asiento2
 	Asiento asiento3
@@ -72,6 +73,7 @@ class AdmVuelosBootstrap implements Bootstrap {
 	TarifaBandaNegativa tBNegativa_3
 
 	override run() {
+
 		/*initAeropuertos
 		initTarifas
 		initEscalas
@@ -81,29 +83,63 @@ class AdmVuelosBootstrap implements Bootstrap {
 		persistirVuelosYUsrs*/
 		initNeo4j
 	}
-	
-	def initNeo4j(){
+
+	def initNeo4j() {
 		gabo = new Usuario("gabo", "gabo")
 		gabo.nombre = "Gabriel Perez"
 		usr = new Usuario("adrian", "adrian")
 		usr.nombre = "Adrian Barbani"
 		fede = new Usuario("fede", "fede")
 		fede.nombre = "Federico Peña"
-		
+
 		GraphDatabaseProvider.instance
+
 		val repo = RepoUsuariosNeo4j.instance
 		val repoAsientos = RepoAsientosNeo4j.instance
-		asiento1 = new Asiento(1, "Pasillo",new TarifaComun)
-		asiento2 = new Asiento(2, "Ventana",new TarifaComun)
+
+		asiento1 = new Asiento(1, "Pasillo", new TarifaComun)
+		asiento2 = new Asiento(2, "Ventana", new TarifaComun)
 		repoAsientos.saveOrUpdateUsuario(asiento1)
 		repoAsientos.saveOrUpdateUsuario(asiento2)
+
 		fede.reservas.add(new Reserva(asiento1))
 		fede.reservas.add(new Reserva(asiento2))
+
 		repo.saveOrUpdateUsuario(gabo)
 		repo.saveOrUpdateUsuario(usr)
-		repo.saveOrUpdateUsuario(fede)	
-		//
-		/* 
+		repo.saveOrUpdateUsuario(fede)
+
+		val repoVuelos = RepoVuelosNeo4j.instance
+		val repoAeropuerto = RepoAeropuertoNeo4j.instance
+		
+		ezeiza = new Aeropuerto("Ezeiza", "Buenos Aires")
+		ricafort = new Aeropuerto("Miami International Airport", "Miami")
+		brazuca = new Aeropuerto("Aeroporto Internacional de São Paulo", "San Pablo")
+		
+		repoAeropuerto.saveOrUpdateAeropuerto(ezeiza)
+		repoAeropuerto.saveOrUpdateAeropuerto(ricafort)
+		repoAeropuerto.saveOrUpdateAeropuerto(brazuca)
+		
+		escala1 = new Escala()
+		escala1 => [
+			horaLlegada = new GregorianCalendar(2016, Calendar.MARCH, 7).getTime();
+			destino = brazuca
+		]
+
+		aeroArgVuelo = new Vuelo()
+		aeroArgVuelo => [
+			agregarEscala(escala1)
+			aerolinea = "Aerolineas Argentinas"
+			origen = ezeiza
+			destino = ricafort
+			fechaSalida = new GregorianCalendar(2016, Calendar.MARCH, 21).getTime();
+			fechaLlegada = new GregorianCalendar(2016, Calendar.MARCH, 23).getTime();
+		]
+		
+		repoVuelos.saveOrUpdateVuelo(aeroArgVuelo)
+
+	//
+	/* 
 		ezeiza = new Aeropuerto("Ezeiza", "Buenos Aires")
 		costanera = new Aeropuerto("Aeroparque", "Buenos Aires")
 		tarifa_1 = new TarifaComun(150.0)
@@ -192,10 +228,8 @@ class AdmVuelosBootstrap implements Bootstrap {
 		
 		*/
 	}
-	    //repo.crearRelacion
-		
-		
-	
+
+	//repo.crearRelacion
 	def initAeropuertos() {
 		ezeiza = new Aeropuerto("Ezeiza", "Buenos Aires")
 		costanera = new Aeropuerto("Aeroparque", "Buenos Aires")
@@ -203,7 +237,7 @@ class AdmVuelosBootstrap implements Bootstrap {
 		brazuca = new Aeropuerto("Aeroporto Internacional de São Paulo", "San Pablo")
 		marPla = new Aeropuerto("MDQ", "Mar del Plata")
 		ponja = new Aeropuerto("Aeropuerto Internacional Haneda", "Tokio")
-		
+
 		crearAeropuerto(ezeiza)
 		crearAeropuerto(costanera)
 		crearAeropuerto(ricafort)
@@ -211,9 +245,7 @@ class AdmVuelosBootstrap implements Bootstrap {
 		crearAeropuerto(marPla)
 		crearAeropuerto(ponja)
 	}
-	
-	
-	
+
 	def initTarifas() {
 		tarifa_1 = new TarifaComun(150.0)
 		tarifaComunUnPeso = new TarifaComun(1.0)
@@ -224,7 +256,7 @@ class AdmVuelosBootstrap implements Bootstrap {
 		tBNegativa_1 = new TarifaBandaNegativa(99.0)
 		tBNegativa_2 = new TarifaBandaNegativa(1235.0)
 		tBNegativa_3 = new TarifaBandaNegativa(15.0)
-		
+
 		crearTarifa(tBNegativa_3)
 		crearTarifa(tarifa_1)
 		crearTarifa(tarifaComunUnPeso)
@@ -235,7 +267,7 @@ class AdmVuelosBootstrap implements Bootstrap {
 		crearTarifa(tBNegativa_1)
 		crearTarifa(tBNegativa_2)
 	}
-	
+
 	def initEscalas() {
 		escala1 = new Escala()
 		escala2 = new Escala()
@@ -274,7 +306,7 @@ class AdmVuelosBootstrap implements Bootstrap {
 			destino = costanera
 		]
 	}
-	
+
 	def initVuelos() {
 		aeroArgVuelo = new Vuelo()
 		aeroArgVuelo => [
@@ -295,9 +327,9 @@ class AdmVuelosBootstrap implements Bootstrap {
 			fechaSalida = new GregorianCalendar(2016, Calendar.MARCH, 7).getTime();
 			fechaLlegada = new GregorianCalendar(2016, Calendar.MARCH, 15).getTime();
 		]
-		
+
 		emiratesVuelo = new Vuelo()
-		emiratesVuelo =>[
+		emiratesVuelo => [
 			agregarEscala(escala3)
 			agregarEscala(escala4)
 			aerolinea = "Fly Emirates"
@@ -307,7 +339,7 @@ class AdmVuelosBootstrap implements Bootstrap {
 			fechaLlegada = new GregorianCalendar(2016, Calendar.MARCH, 22).getTime();
 		]
 		malasyaVuelo = new Vuelo()
-		malasyaVuelo =>[
+		malasyaVuelo => [
 			agregarEscala(escala5)
 			aerolinea = "Malasya Airlines"
 			origen = ezeiza
@@ -316,7 +348,7 @@ class AdmVuelosBootstrap implements Bootstrap {
 			fechaLlegada = new GregorianCalendar(2016, Calendar.MARCH, 6).getTime();
 		]
 		peruvianVuelo = new Vuelo()
-		peruvianVuelo =>[
+		peruvianVuelo => [
 			agregarEscala(escala6)
 			agregarEscala(escala7)
 			aerolinea = "Peruvian Airlines"
@@ -356,7 +388,7 @@ class AdmVuelosBootstrap implements Bootstrap {
 		]
 		asientosAA.forEach[setVuelo(aeroArgVuelo)]
 		aeroArgVuelo.asientos = asientosAA
-		
+
 		var Set<Asiento> asientosLAN = new HashSet<Asiento>
 		asientosLAN => [
 			add(asiento4)
@@ -367,9 +399,9 @@ class AdmVuelosBootstrap implements Bootstrap {
 			add(new Asiento(3, "Pasillo", tarifa_1))
 			add(new Asiento(3, "Centro", tBNegativa_2))
 			add(new Asiento(3, "Ventanilla", tEspecial_3))
-			add(new Asiento(6, "Pasillo", tarifa_1)) 
+			add(new Asiento(6, "Pasillo", tarifa_1))
 			add(new Asiento(6, "Centro", tBNegativa_3))
-			add(new Asiento(6, "Ventanilla", tEspecial_2)) 
+			add(new Asiento(6, "Ventanilla", tEspecial_2))
 			add(new Asiento(7, "Pasillo", tBNegativa_2))
 			add(new Asiento(7, "Centro", tarifa_1))
 			add(new Asiento(7, "Ventanilla", tarifa_3))
@@ -377,10 +409,10 @@ class AdmVuelosBootstrap implements Bootstrap {
 			add(new Asiento(8, "Centro", tEspecial_1))
 			add(new Asiento(8, "Ventanilla", tarifaComunUnPeso))
 			add(new Asiento(9, "Centro", tEspecial_2))
-			]
+		]
 		asientosLAN.forEach[setVuelo(lanVuelo)]
 		lanVuelo.asientos = asientosLAN
-		
+
 		var Set<Asiento> asientosEmirates = new HashSet<Asiento>
 		asientosEmirates => [
 			add(asiento5)
@@ -404,7 +436,7 @@ class AdmVuelosBootstrap implements Bootstrap {
 		]
 		asientosEmirates.forEach[setVuelo(emiratesVuelo)]
 		emiratesVuelo.asientos = asientosEmirates
-		
+
 		var Set<Asiento> asientosMalasya = new HashSet<Asiento>
 		asientosMalasya => [
 			add(asiento2)
@@ -413,34 +445,34 @@ class AdmVuelosBootstrap implements Bootstrap {
 			add(new Asiento(3, "Pasillo", tarifa_1))
 			add(new Asiento(3, "Centro", tBNegativa_2))
 			add(new Asiento(3, "Ventanilla", tEspecial_3))
-			add(new Asiento(6, "Pasillo", tarifa_1)) 
+			add(new Asiento(6, "Pasillo", tarifa_1))
 			add(new Asiento(6, "Centro", tBNegativa_3))
-			add(new Asiento(6, "Ventanilla", tEspecial_2)) 
+			add(new Asiento(6, "Ventanilla", tEspecial_2))
 			add(new Asiento(7, "Pasillo", tBNegativa_2))
 			add(new Asiento(7, "Centro", tarifa_1))
 			add(new Asiento(7, "Ventanilla", tarifa_3))
 			add(new Asiento(9, "Pasillo", tBNegativa_3))
 			add(new Asiento(9, "Centro", tEspecial_2))
 			add(new Asiento(9, "Ventanilla", tarifaComunUnPeso))
-			]
+		]
 		asientosMalasya.forEach[setVuelo(malasyaVuelo)]
 		malasyaVuelo.asientos = asientosMalasya
-		
+
 		var Set<Asiento> asientosPeruv = new HashSet<Asiento>
 		asientosPeruv => [
 			add(new Asiento(3, "Pasillo", tarifa_1))
 			add(new Asiento(3, "Centro", tBNegativa_2))
 			add(new Asiento(3, "Ventanilla", tEspecial_3))
-			add(new Asiento(6, "Pasillo", tarifa_1)) 
+			add(new Asiento(6, "Pasillo", tarifa_1))
 			add(new Asiento(6, "Centro", tBNegativa_3))
-			add(new Asiento(6, "Ventanilla", tEspecial_2)) 
+			add(new Asiento(6, "Ventanilla", tEspecial_2))
 			add(new Asiento(7, "Pasillo", tBNegativa_2))
 			add(new Asiento(7, "Centro", tarifa_1))
 			add(new Asiento(7, "Ventanilla", tarifa_3))
 			add(new Asiento(8, "Pasillo", tBNegativa_1))
 			add(new Asiento(8, "Centro", tEspecial_1))
 			add(new Asiento(8, "Ventanilla", tarifaComunUnPeso))
-			]
+		]
 		asientosPeruv.forEach[setVuelo(peruvianVuelo)]
 		peruvianVuelo.asientos = asientosPeruv
 	}
@@ -451,12 +483,12 @@ class AdmVuelosBootstrap implements Bootstrap {
 		crearVuelo(malasyaVuelo)
 		crearVuelo(peruvianVuelo)
 		crearVuelo(lanVuelo)
-		
+
 		crearUsuario(usr)
 		crearUsuario(gabo)
 		crearUsuario(fede)
 	}
-	
+
 	def initUsuarios() {
 		gabo = new Usuario("gabo", "gabo")
 		gabo.nombre = "Gabriel Perez"
@@ -464,7 +496,7 @@ class AdmVuelosBootstrap implements Bootstrap {
 		usr.nombre = "Adrian Barbani"
 		fede = new Usuario("fede", "fede")
 		fede.nombre = "Federico Peña"
-		
+
 		var List<Reserva> reservasParaUsr = new ArrayList<Reserva>
 		reservasParaUsr => [
 			add(new Reserva(asiento1))
@@ -479,7 +511,7 @@ class AdmVuelosBootstrap implements Bootstrap {
 			add(new Reserva(asiento6))
 		]
 		reservasParaGabo.forEach[gabo.reservar(it)]
-		
+
 		var List<Reserva> reservasParaFede = new ArrayList<Reserva>
 		reservasParaFede => [
 			add(new Reserva(asiento4))

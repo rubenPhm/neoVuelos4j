@@ -17,6 +17,8 @@ class Aeropuerto {
 	@org.mongodb.morphia.annotations.Id ObjectId 
 	idMongo
 	
+	Long idNeo
+	
 	@javax.persistence.Id
 	@GeneratedValue
 	private Long id
