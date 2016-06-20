@@ -15,6 +15,7 @@ import java.util.ArrayList
 import java.util.Date
 import java.security.Timestamp
 import java.util.GregorianCalendar
+import Dominio.Asiento
 
 class RepoUsuariosNeo4j extends AbstractRepoNeo4j {
 	
@@ -28,16 +29,10 @@ class RepoUsuariosNeo4j extends AbstractRepoNeo4j {
 		instance
 	}
 	
-	/*def static void main(String[] args) {
-		new RepoUsuariosNeo4j => [
-			//getPeliculas("Fros")
-		]
-	}*/
+	
 	
 	def Usuario searchByNickContrasenia(String xNick,String xContrasenia){
-		 getUsuarios(xNick,xContrasenia).toSet.head
-		 //getNodosUsuarios(xNick,xContrasenia)
-		 
+		 getUsuarios(xNick,xContrasenia).toSet.head 
 		 }
 	
 	
@@ -75,9 +70,14 @@ class RepoUsuariosNeo4j extends AbstractRepoNeo4j {
 				reservas= rel_reservas.map [
 					rel | new Reserva => [
 					id = rel.id
-					val nodoAsiento = rel.endNode 
-					// no castea a Date ->
-					//fechaReserva = rel.getProperty("fechaReserva")as Date					
+					var a = new Asiento
+					a.id = rel.endNode.getProperty("asientoId") as Long
+					a.disponible = rel.endNode.getProperty("disponible") as Boolean	
+					a.fila = rel.endNode.getProperty("fila") as Integer
+					a.ubicacion = rel.endNode.getProperty("ubicacion") as String
+					asiento = a
+					//fechaReserva = new Date(Long.parseLong(rel.getProperty("fechaReserva").toString))
+					//new Date((long)nodo.getProperty("fecha", 0))				
 					]
 				].toSet
 		
@@ -95,18 +95,16 @@ class RepoUsuariosNeo4j extends AbstractRepoNeo4j {
 		}
 	}
 
+	private def noExiste(Usuario usuario){
+		getNodosUsuarios(usuario.nick,usuario.contrasenia).empty
+	}
+	
 	def void saveOrUpdateUsuario (Usuario usuario) {
-		
-		// falta validar el usuario para que no se repita
-		/*val users = getUsuarios(usuario.nick)
-		if (users.contains(usuario)){
-			throw new RuntimeException("El usuario ya existe") 
-		}*/
-		 
+
 		val transaction = graphDb.beginTx
 		try {
 			var Node nodoUsuario = null
-			if (usuario.id == null) {
+			if (usuario.id == null) {// noExiste(usuario)|| 
 				nodoUsuario = graphDb.createNode
 				nodoUsuario.addLabel(labelUsuario)
 			} else {
@@ -127,84 +125,43 @@ class RepoUsuariosNeo4j extends AbstractRepoNeo4j {
 	}
 	
 	private def getNodosUsuarios(String nick,String contrasenia) {
-		basicSearch("u.nick =~ '(?i).*" + nick + ".*'" )//'nick'"
+		basicSearch("u.nick =~ '(?i).*" + nick + ".*'" + " and u.contrasenia =~ '(?i).*" + contrasenia + ".*'")
 	}
 	
 	private def basicSearch(String where) {
-		val Result result = graphDb.execute("match (u:Usuario) where " + where   + " return u")//CREATE UNIQUE (user)
-		val Iterator<Node> user_column = result.columnAs("u")// user.nick = {where}
+		val Result result = graphDb.execute("match (u:Usuario) where " + where   + " return u")
+		val Iterator<Node> user_column = result.columnAs("u")
 		return user_column
 	}
 	
-    def search(Usuario usuario) {
-	val nick = usuario.nick
-	val Result result = graphDb.execute("match (user:Usuario)" + "where nick(user) = nick"  + "CREATE UNIQUE (user) return user")//+ "and user.contrasenia = " + usuario.contrasenia  + "and user.nombre = " + usuario.nombre + " 	
-		//val Result result = graphDb.execute("MATCH (a {nombre: '' + where }) 
-// CREATE UNIQUE (a)")
- 
- 
-		val Iterator<Node> user_column = result.columnAs("user")
-		return user_column
-	}
+
 
 	private def void actualizarUsuario(Usuario usuario, Node nodeUsuario) {
-		val user = nodeUsuario => [
+		nodeUsuario => [
 			setProperty("nombre", usuario.nombre)
 			setProperty("nick", usuario.nick)
 			setProperty("contrasenia",usuario.contrasenia)
 			// Borro las relaciones que tenga ese nodo
 			relationships.forEach [it.delete ]
 			// Creo relaciones nuevas
-			//if(usuario.reservas != null){
 			usuario.reservas.forEach [ reserva |
 		val Node nodoAsiento = graphDb.createNode(Label.label( "Asiento" ))
+		nodoAsiento.setProperty("asientoId",reserva.asiento.id)
 		nodoAsiento.setProperty("fila",reserva.asiento.fila)
 		nodoAsiento.setProperty("disponible",reserva.asiento.disponible)
 		nodoAsiento.setProperty("ubicacion",reserva.asiento.ubicacion)
-		var relacion = it.createRelationshipTo(nodoAsiento,RelacionUsuarioReservas.RESERVA_USUARIO)
-		relacion.setProperty("fechaReserva",(new Date).toString)//System.currentTimeMillis()
-			]
-			  //val Node nodoUsuario = RepoUsuariosNeo4j.instance.getNodoUsuarioById(usuario.id)
-			  		
-			//]			
-		//}
-		]
-		/* 
-		val Node nodoAsiento = graphDb.createNode(Label.label( "Asiento" ))
-		nodoAsiento.setProperty("fechaReserva",(new Date).toString)
-		user.createRelationshipTo(nodoAsiento,RelacionUsuarioReservas.RESERVA_USUARIO)
-		user.
-		*/		
+		val relacion = it.createRelationshipTo(nodoAsiento,RelacionUsuarioReservas.RESERVA_USUARIO)
+		relacion.setProperty("fechaReserva",(new Date).toString)
+			]			  
+		]	
 	}
 
-    /*def crearRelaciones(Usuario usuario){
-    	val Node user = RepoUsuariosNeo4j.instance.getNodoUsuarioById(usuario.id)
-    	val Node asiento = RepoAsientosNeo4j.instance.getNodoAsientoById(new Long(10))
-    	user.createRelationshipTo(asiento,RelacionUsuarioReservas.RESERVA_USUARIO)
-    	
-    }*/
-    
-    
     
 	private def Label labelUsuario() {
 		Label.label("Usuario")
 	}
 	
-	/*def eliminarTodos(){
-//		try {
-    
-    	val tx = graphDb.beginTx()   
-    //Label label = Label.label( "User" );
-    var label = this.labelUsuario
-    for ( IndexDefinition indexDefinition : graphDb.schema()
-            .getIndexes( label ) )
-    {
-        // There is only one index
-        indexDefinition.drop();
-    }
-
-    tx.success();
-}*/
+	
 	
 	
 }

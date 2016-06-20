@@ -6,6 +6,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import org.uqbar.commons.utils.Observable
 import Repositorios.UsuarioRepositorio
 import Repositorios.VuelosRepositorio
+import Repositorios.RepoUsuariosNeo4j
 
 @Observable
 @Accessors
@@ -21,7 +22,8 @@ class VerReservasAppModel {
 
 	def cancelarReserva(Reserva reserva) { 
 		usuario.eliminarReserva(reserva)
-		UsuarioRepositorio.instance.update(usuario)
+		//UsuarioRepositorio.instance.update(usuario)
+		RepoUsuariosNeo4j.instance.saveOrUpdateUsuario(usuario)
 		VuelosRepositorio.instance.update(reserva.vuelo)
 		
 	}
