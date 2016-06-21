@@ -40,7 +40,7 @@ class RepoVuelosNeo4j extends AbstractRepoNeo4j {
 			val Vuelo este = it
 			id = nodeVuelo.id
 			aerolinea = nodeVuelo.getProperty("aerolinea") as String
-			fechaSalida = new Date(nodeVuelo.getProperty("fechaSalida") as String)
+			fechaSalida = new SimpleDateFormat( "EEE MMM dd HH:mm:ss zzz yyyy").parse( (nodeVuelo.getProperty("fechaSalida") as String) )
 			fechaLlegada = new Date(nodeVuelo.getProperty("fechaLlegada") as String)
 			if (deep) {
 
