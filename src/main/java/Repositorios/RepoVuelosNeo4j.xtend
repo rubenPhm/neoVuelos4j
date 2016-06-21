@@ -1,7 +1,5 @@
 package Repositorios
 
-
-
 import Dominio.Aeropuerto
 import Dominio.Asiento
 import Dominio.Busqueda
@@ -14,6 +12,7 @@ import java.util.Iterator
 import org.neo4j.graphdb.Label
 import org.neo4j.graphdb.Node
 import org.neo4j.graphdb.Result
+import java.util.List
 
 class RepoVuelosNeo4j extends AbstractRepoNeo4j {
 
@@ -43,7 +42,6 @@ class RepoVuelosNeo4j extends AbstractRepoNeo4j {
 			aerolinea = nodeVuelo.getProperty("aerolinea") as String
 			fechaSalida = new Date(nodeVuelo.getProperty("fechaSalida") as String)
 			fechaLlegada = new Date(nodeVuelo.getProperty("fechaLlegada") as String)
-			
 			if (deep) {
 
 				val rel_origen = nodeVuelo.getRelationships(RelacionVueloAeropuertoOrigen.AEROPUERTO_ORIGEN)
@@ -72,7 +70,7 @@ class RepoVuelosNeo4j extends AbstractRepoNeo4j {
 						ubicacion = rel.getProperty("ubicacion") as String
 						disponible = rel.getProperty("disponible") as Boolean
 						vuelo = este
-//						tarifa = rel.getProperty("tarifa") as Tarifa
+					//						tarifa = rel.getProperty("tarifa") as Tarifa
 					]
 				].toSet
 
@@ -81,8 +79,8 @@ class RepoVuelosNeo4j extends AbstractRepoNeo4j {
 					new Escala => [
 						id = rel.id
 						destino = RepoAeropuertoNeo4j.instance.convertToAeropuerto(rel.endNode)
-						horaLlegada = new Date (rel.getProperty("horaLlegada")as String)
-						horaSalida = new Date (rel.getProperty("horaSalida") as String)
+						horaLlegada = new Date(rel.getProperty("horaLlegada")as String)
+						horaSalida = new Date(rel.getProperty("horaSalida") as String)
 					]
 				].toSet
 			}
@@ -129,32 +127,33 @@ class RepoVuelosNeo4j extends AbstractRepoNeo4j {
 	}
 
 	private def void actualizarVuelo(Vuelo vuelo, Node nodeVuelo) {
-		
+
 		val RepoAeropuertoNeo4j repoAeropuertos = RepoAeropuertoNeo4j.instance
 		val RepoAsientosNeo4j repoAsientos = RepoAsientosNeo4j.instance
-		
+
 		nodeVuelo => [
 			val este = it
 			setProperty("aerolinea", vuelo.aerolinea)
 			setProperty("fechaSalida", vuelo.fechaSalida.toString)
 			setProperty("fechaLlegada", vuelo.fechaLlegada.toString)
-			
 			relationships.forEach[it.delete]
-			
 			val nodeOrigen = repoAeropuertos.getNodoAeropuertoById(vuelo.origen.id)
 			createRelationshipTo(nodeOrigen, RelacionVueloAeropuertoOrigen.AEROPUERTO_ORIGEN)
-
 			val nodeDestino = repoAeropuertos.getNodoAeropuertoById(vuelo.destino.id)
 			createRelationshipTo(nodeDestino, RelacionVueloAeropuertoDestino.AEROPUERTO_DESTINO)
-			
 			vuelo.escalas.forEach [ escala |
-				val nodoEscala = repoAeropuertos.getNodoAeropuertoById(escala.destino.id) 
+				val nodoEscala = repoAeropuertos.getNodoAeropuertoById(escala.destino.id)
 				var rel_escala = este.createRelationshipTo(nodoEscala, RelacionVueloEscala.ESCALA_EN)
-				if (escala.id != null){rel_escala.setProperty("id", escala.id)}
-				if (escala.horaSalida != null) {rel_escala.setProperty("horaSalida", escala.horaSalida.toString)}
-				if (escala.horaLlegada != null) {rel_escala.setProperty("horaLlegada", escala.horaLlegada.toString)}
+				if (escala.id != null) {
+					rel_escala.setProperty("id", escala.id)
+				}
+				if (escala.horaSalida != null) {
+					rel_escala.setProperty("horaSalida", escala.horaSalida.toString)
+				}
+				if (escala.horaLlegada != null) {
+					rel_escala.setProperty("horaLlegada", escala.horaLlegada.toString)
+				}
 			]
-				
 			vuelo.asientos.forEach [ asiento |
 				val Node nodoAsiento = repoAsientos.getNodoAsientoById(asiento.id)
 				nodoAsiento.createRelationshipTo(este, RelacionVueloAsiento.EN_VUELO)
@@ -167,9 +166,49 @@ class RepoVuelosNeo4j extends AbstractRepoNeo4j {
 	}
 
 	def searchByBusqueda(Busqueda busqueda) {
-		val Result result = graphDb.execute("match (vuelo:Vuelo) return vuelo")
-		val Iterator<Node> user_column = result.columnAs("vuelo")
-		user_column.forEach[vuelo|busqueda.resultados.add(convertToVuelo(vuelo, true))]
+
+		var List <String> condiciones = newArrayList
+		
+		if(busqueda.origen != null){
+			condiciones.add("ID(origen) = "+busqueda.origen.id)	
+		}
+		if(busqueda.destino != null){
+			condiciones.add("ID(destino) = "+busqueda.destino.id)
+		}
+		//ver lo de las tarifas
+//		if(busqueda.maxPrecio != null){
+//			condiciones.add("")
+//		}
+		//ver como comparar las fechas al ser strings.
+		if(busqueda.desdeFecha != null){
+			//condiciones.add("")
+		}
+		if(busqueda.hastaFecha != null){
+			//condiciones.add("")
+		}
+		
+		var String query = ""
+		var String where = ""
+		if(busqueda.origen == null && busqueda.destino == null && busqueda.maxPrecio == null && busqueda.desdeFecha == null && busqueda.hastaFecha == null){
+				query = "match (vuelo:Vuelo)-[:AEROPUERTO_ORIGEN]-(origen:Aeropuerto), (vuelo)-[:AEROPUERTO_DESTINO]-(destino:Aeropuerto) return vuelo"
+		}else{
+			for(var Integer i=0; i<condiciones.size; i++){
+				
+				if(i == 0){
+					where = condiciones.get(i)
+				}else{
+					where = "and " + condiciones.get(i)
+				}	
+
+			}
+			
+			query = "match (vuelo:Vuelo)-[:AEROPUERTO_ORIGEN]-(origen:Aeropuerto), (vuelo)-[:AEROPUERTO_DESTINO]-(destino:Aeropuerto) where"+where+" return vuelo"
+		}
+		
+		val Result result = graphDb.execute(query)
+
+		val Iterator<Node> vuelos_column = result.columnAs("vuelo")
+		vuelos_column.forEach[vuelo|busqueda.resultados.add(convertToVuelo(vuelo, true))]
 	}
 
 }
