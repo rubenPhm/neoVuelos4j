@@ -67,7 +67,7 @@ class RepoAsientosNeo4j extends AbstractRepoNeo4j {
 			id = nodoAsiento.id
 			fila = nodoAsiento.getProperty("fila") as Integer
 			ubicacion = nodoAsiento.getProperty("ubicacion") as String
-			disponible = ((nodoAsiento.getProperty("disponible") as String) == "true")
+			disponible = nodoAsiento.getProperty("disponible") as Boolean
 			
 			if(deep){
 				val rel_vuelo = nodoAsiento.getRelationships(RelacionVueloAsiento.EN_VUELO)

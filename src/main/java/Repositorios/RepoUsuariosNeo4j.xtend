@@ -23,7 +23,14 @@ class RepoUsuariosNeo4j extends AbstractRepoNeo4j {
 	
 	def Usuario searchByNickContrasenia(String xNick,String xContrasenia){
 		val Node nodoUsuario = basicSearch("u.nick = '" + xNick + "' and u.contrasenia = '" + xContrasenia + "'").last
-		convertToUsuario( nodoUsuario, true)
+		
+		val transaction = graphDb.beginTx
+		try {
+			convertToUsuario( nodoUsuario, true)
+		} finally {
+			cerrarTransaccion(transaction)
+		}
+		
 	}
 	
 	def List<Usuario> getUsuarios(String valor,String valor2) {
@@ -47,6 +54,7 @@ class RepoUsuariosNeo4j extends AbstractRepoNeo4j {
 	}
 	
 	def convertToUsuario(Node nodeUsuario, boolean deep) {
+		
 		new Usuario => [
 			id = nodeUsuario.id
 			nick = nodeUsuario.getProperty("nick") as String
