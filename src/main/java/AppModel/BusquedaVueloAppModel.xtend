@@ -13,6 +13,7 @@ import java.util.List
 import java.util.Set
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.uqbar.commons.utils.Observable
+import Repositorios.RepoAeropuertoNeo4j
 
 @Accessors
 @Observable	
@@ -31,6 +32,8 @@ class BusquedaVueloAppModel {
 	Set <Vuelo> resultados = null
 	
 	RepoVuelosNeo4j vuelosRepo = RepoVuelosNeo4j.instance
+	RepoAeropuertoNeo4j repoAeropuertos = RepoAeropuertoNeo4j.instance
+	
 	
 	//Hibernate	
 	//VuelosRepositorio vuelosRepo = VuelosRepositorio.instance
@@ -38,7 +41,7 @@ class BusquedaVueloAppModel {
 	
 	new (Usuario unUsr){
 		usr = unUsr
-		todosLosAeropuertos = AeropuertosRepositorio.getInstance.allInstances
+		todosLosAeropuertos = repoAeropuertos.allInstances
 	}
 
 	def buscar() {

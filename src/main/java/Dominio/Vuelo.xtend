@@ -26,8 +26,6 @@ class Vuelo {
 	@org.mongodb.morphia.annotations.Id ObjectId 
 	idMongo
 	
-	Long idNeo
-	
 	@Id
 	@GeneratedValue
 	private Long id

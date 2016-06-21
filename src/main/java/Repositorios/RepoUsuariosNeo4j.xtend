@@ -1,6 +1,5 @@
 package Repositorios
 
-import Dominio.Asiento
 import Dominio.Reserva
 import Dominio.Usuario
 import java.util.Date
@@ -22,14 +21,11 @@ class RepoUsuariosNeo4j extends AbstractRepoNeo4j {
 		instance
 	}
 	
-	
-	
 	def Usuario searchByNickContrasenia(String xNick,String xContrasenia){
-		 getUsuarios(xNick,xContrasenia).toSet.head 
-		 }
+		val Node nodoUsuario = basicSearch("u.nick = '" + xNick + "' and u.contrasenia = '" + xContrasenia + "'").last
+		convertToUsuario( nodoUsuario, true)
+	}
 	
-	
-
 	def List<Usuario> getUsuarios(String valor,String valor2) {
 		val transaction = graphDb.beginTx
 		try {
@@ -51,8 +47,7 @@ class RepoUsuariosNeo4j extends AbstractRepoNeo4j {
 	}
 	
 	def convertToUsuario(Node nodeUsuario, boolean deep) {
-		var user = new Usuario 
-		user => [
+		new Usuario => [
 			id = nodeUsuario.id
 			nick = nodeUsuario.getProperty("nick") as String
 			contrasenia = nodeUsuario.getProperty("contrasenia") as String
@@ -60,20 +55,15 @@ class RepoUsuariosNeo4j extends AbstractRepoNeo4j {
 			
 			if (deep) { 
 				val rel_reservas = nodeUsuario.getRelationships(RelacionUsuarioReservas.RESERVA_USUARIO)
-				reservas= rel_reservas.map [
+				reservas = rel_reservas.map [
 					rel | new Reserva => [
 					id = rel.id
-					var a = new Asiento
-					a.id = rel.endNode.getProperty("asientoId") as Long
-					a.disponible = rel.endNode.getProperty("disponible") as Boolean	
-					a.fila = rel.endNode.getProperty("fila") as Integer
-					a.ubicacion = rel.endNode.getProperty("ubicacion") as String
-					asiento = a
-					//fechaReserva = new Date(Long.parseLong(rel.getProperty("fechaReserva").toString))
-					//new Date((long)nodo.getProperty("fecha", 0))				
+					asiento = RepoAsientosNeo4j.instance.convertToAsiento(rel.endNode, true)
+					vuelo = asiento.vuelo
+					fechaReserva = new Date(rel.getProperty("fechaReserva") as String)
+					//esta deprecated, pero debiera funcionar si es guardado en el mismo formato... ?
 					]
 				].toSet
-		
 			}			
 		]
 	}
@@ -130,7 +120,11 @@ class RepoUsuariosNeo4j extends AbstractRepoNeo4j {
 
 
 	private def void actualizarUsuario(Usuario usuario, Node nodeUsuario) {
+		
+		val RepoAsientosNeo4j repoAsientos = RepoAsientosNeo4j.instance
+		
 		nodeUsuario => [
+			val este = it
 			setProperty("nombre", usuario.nombre)
 			setProperty("nick", usuario.nick)
 			setProperty("contrasenia",usuario.contrasenia)
@@ -138,17 +132,16 @@ class RepoUsuariosNeo4j extends AbstractRepoNeo4j {
 			relationships.forEach [it.delete ]
 			// Creo relaciones nuevas
 			usuario.reservas.forEach [ reserva |
-		val Node nodoAsiento = graphDb.createNode(Label.label( "Asiento" ))
-		nodoAsiento.setProperty("asientoId",reserva.asiento.id)
-		nodoAsiento.setProperty("fila",reserva.asiento.fila)
-		nodoAsiento.setProperty("disponible",reserva.asiento.disponible)
-		nodoAsiento.setProperty("ubicacion",reserva.asiento.ubicacion)
-		val relacion = it.createRelationshipTo(nodoAsiento,RelacionUsuarioReservas.RESERVA_USUARIO)
-		relacion.setProperty("fechaReserva",(new Date).toString)
+				val Node nodoAsiento = repoAsientos.getNodoAsientoById(reserva.asiento.id)
+				val relacion = este.createRelationshipTo(nodoAsiento,RelacionUsuarioReservas.RESERVA_USUARIO)
+				relacion.setProperty("fechaReserva",(reserva.fechaReserva).toString)
 			]			  
 		]	
 	}
-
+	
+//	def Date test(){
+//		new Date((new Date).toString)
+//	}
     
 	public def labelUsuario() {
 		Label.label("Usuario")

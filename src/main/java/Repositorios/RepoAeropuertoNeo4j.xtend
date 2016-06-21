@@ -2,9 +2,11 @@ package Repositorios
 
 import Dominio.Aeropuerto
 import java.util.Iterator
+import java.util.List
 import org.neo4j.graphdb.Label
 import org.neo4j.graphdb.Node
 import org.neo4j.graphdb.Result
+import org.bson.types.ObjectId
 
 class RepoAeropuertoNeo4j extends AbstractRepoNeo4j {
 	
@@ -61,4 +63,21 @@ class RepoAeropuertoNeo4j extends AbstractRepoNeo4j {
 		Label.label("Aeropuerto")
 	}
 	
+	def convertToAeropuerto(Node nodoAeropuerto){
+		new Aeropuerto =>[
+			idNeo = nodoAeropuerto.id
+			idMongo = nodoAeropuerto.getProperty("idMongo") as ObjectId // se necesita?
+			id = nodoAeropuerto.getProperty("id") as Long //no se si se levanta este.
+			pais = nodoAeropuerto.getProperty("pais") as String
+			nombre = nodoAeropuerto.getProperty("nombre") as String			
+		]
+	}
+	
+	def List<Aeropuerto> allInstances(){
+		//acá no se como usar el basic search sin condicion
+		graphDb.execute("match (a:Aeropuerto) return (a)") 
+			.columnAs("a")
+				.map [ Node node | convertToAeropuerto(node)]
+					.toList
+	}
 }

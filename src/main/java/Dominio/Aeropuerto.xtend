@@ -17,8 +17,6 @@ class Aeropuerto {
 	@org.mongodb.morphia.annotations.Id ObjectId 
 	idMongo
 	
-	Long idNeo
-	
 	@javax.persistence.Id
 	@GeneratedValue
 	private Long id
@@ -38,5 +36,9 @@ class Aeropuerto {
 	
 	override toString(){
 		nombre
+	}
+	
+	def setIdNeo(Long id){ // tiraba un error
+		idNeo = id
 	}
 }

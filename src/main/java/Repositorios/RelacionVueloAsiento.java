@@ -4,5 +4,5 @@ import org.neo4j.graphdb.RelationshipType;
 
 public enum RelacionVueloAsiento implements RelationshipType  {
 		
-	ASIENTO_RESERVADO
+	EN_VUELO
 }

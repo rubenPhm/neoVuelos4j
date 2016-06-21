@@ -7,6 +7,8 @@ import org.uqbar.commons.utils.Observable
 import Repositorios.UsuarioRepositorio
 import Repositorios.VuelosRepositorio
 import Repositorios.RepoUsuariosNeo4j
+import Repositorios.RepoAeropuertoNeo4j
+import Repositorios.RepoVuelosNeo4j
 
 @Observable
 @Accessors
@@ -15,6 +17,9 @@ class VerReservasAppModel {
 	Usuario usuario
 
 	Reserva reservaSeleccionada = null
+
+	RepoAeropuertoNeo4j repoAeropuertos = RepoAeropuertoNeo4j.instance
+	RepoVuelosNeo4j repoVuelos = RepoVuelosNeo4j.instance
 
 	new(Usuario user) {
 		usuario = user

@@ -21,15 +21,13 @@ class LoginAppModel {
 	String nick
 	Usuario usuario
 	
+	RepoUsuariosNeo4j repoUsuarios = RepoUsuariosNeo4j.instance
+	
 	new (){
 	}
 	
 	def autorizarLogin() {
-		//UsuarioRepositorio.getInstance.searchByNickContrasenia(nick, contrasenia)
-		usuario = RepoUsuariosNeo4j.getInstance.searchByNickContrasenia(nick, contrasenia)
-		//val user = RepoUsuariosNeo4j.getInstance.getUsuario(usuario.id)
-	    usuario = RepoUsuariosNeo4j.getInstance.getUsuario(usuario.id)
-		//RepoUsuariosNeo4j.getInstance.crearRelaciones(usuario)
+		usuario = repoUsuarios.searchByNickContrasenia(nick, contrasenia)
 		if(usuario == null){
 			throw new UserException ("El Usuario o Contraseña ingresados no son correctos")
 		}	

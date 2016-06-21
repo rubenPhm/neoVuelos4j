@@ -21,7 +21,6 @@ class Escala {
 	@GeneratedValue
 	private Long id
 	
-	
 	//una escala tiene un aeropueto, pero un aeropueto puede tener muchas escalas
 	@ManyToOne
 	Aeropuerto destino
@@ -32,7 +31,6 @@ class Escala {
 	@Column
 	Date horaSalida
 	
-//	transient static String formatoVerFechas = "dd/MM/yyyy - hh:mm 'hs'"
 	transient static SimpleDateFormat dateToString = new SimpleDateFormat("dd/MM/yyyy - hh:mm 'hs'")
 
 	new(){}

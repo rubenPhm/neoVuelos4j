@@ -27,10 +27,8 @@ class RepoAsientosNeo4j extends AbstractRepoNeo4j {
 		return asiento_column
 	}
 	
-	def void saveOrUpdateUsuario (Asiento asiento) {
-		
+	def void saveOrUpdateAsiento (Asiento asiento) {
 		// falta validar el usuario para que no se repita
-		 
 		val transaction = graphDb.beginTx
 		try {
 			var Node nodoAsiento = null
@@ -62,4 +60,23 @@ class RepoAsientosNeo4j extends AbstractRepoNeo4j {
 	private def Label labelAsiento() {
 		Label.label("Asiento")
 	}
+	
+	def Asiento convertToAsiento(Node nodoAsiento, boolean deep) {
+		var asiento = new Asiento
+		asiento => [
+			id = nodoAsiento.id
+			fila = nodoAsiento.getProperty("fila") as Integer
+			ubicacion = nodoAsiento.getProperty("ubicacion") as String
+			disponible = ((nodoAsiento.getProperty("disponible") as String) == "true")
+			
+			if(deep){
+				val rel_vuelo = nodoAsiento.getRelationships(RelacionVueloAsiento.EN_VUELO)
+				vuelo = RepoVuelosNeo4j.instance.convertToVuelo(rel_vuelo.last.endNode, true)
+				
+//				val rel_tarifa = nodoAsiento.getRelationships(RelacionAsientoTarifa.CUESTA)
+//				tarifa = repoTarifasNeo4j.instance.convertToTarifa(rel_tarifa.last.endNode, true)
+			}
+		]
+	}
+	
 }
