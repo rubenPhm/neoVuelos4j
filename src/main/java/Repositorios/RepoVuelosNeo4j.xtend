@@ -176,14 +176,10 @@ class RepoVuelosNeo4j extends AbstractRepoNeo4j {
 			query += " AND ID(destino) = " + busqueda.destino.id
 		}
 		if(busqueda.desdeFecha != null){
-			//val fecha = new SimpleDateFormat( "yyyyMMdd HH:mm" ).format(busqueda.desdeFecha)
-			//query += " AND (vuelo.fechaSalida <= '" + fecha + "')"
-			query += " AND (vuelo.fechaSalida >= '" + busqueda.desdeFecha + "')"
+			query += " AND (vuelo.fechaSalida >= " + busqueda.desdeFecha.getTime + ")"
 		}
 		if(busqueda.hastaFecha != null){
-			//val fecha = new SimpleDateFormat( "yyyyMMdd HH:mm" ).format(busqueda.hastaFecha)
-			//query += " AND (vuelo.fechaLlegada <= '" + fecha + "')"
-			query += " AND (vuelo.fechaLlegada <= '" + busqueda.hastaFecha + "')"
+			query += " AND (vuelo.fechaLlegada <= " + busqueda.hastaFecha.getTime + ")"
 		}
 		
 		//if(busqueda.origen == null && busqueda.destino == null && busqueda.maxPrecio == null && busqueda.desdeFecha == null && busqueda.hastaFecha == null){
