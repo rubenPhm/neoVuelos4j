@@ -203,4 +203,10 @@ class RepoVuelosNeo4j extends AbstractRepoNeo4j {
 		return resultadosConsulta
 	}
 
+
+	def update(Vuelo vuelo){
+		saveOrUpdateVuelo(vuelo)
+	}
+
+
 }

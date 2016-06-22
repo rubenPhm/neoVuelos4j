@@ -1,17 +1,10 @@
 package AppModel
 
 import Dominio.Usuario
-import Repositorios.UsuarioRepositorio
+import Repositorios.RepoUsuariosNeo4j
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.uqbar.commons.model.UserException
 import org.uqbar.commons.utils.Observable
-import Repositorios.RepoUsuariosNeo4j
-import Repositorios.UsuarioToNodeConverter
-import org.neo4j.graphdb.Node
-import Repositorios.GraphDatabaseProvider
-import org.neo4j.kernel.impl.factory.GraphDatabaseFacade
-import org.neo4j.kernel.impl.factory.GraphDatabaseFacadeFactory
-import org.neo4j.graphdb.factory.GraphDatabaseFactory
 
 @Observable
 @Accessors

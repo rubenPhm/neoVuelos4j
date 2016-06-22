@@ -4,8 +4,8 @@ import Dominio.Aeropuerto
 import Dominio.Busqueda
 import Dominio.Usuario
 import Dominio.Vuelo
-import Repositorios.AeropuertosRepositorio
 import Repositorios.BusquedaRepositorioMongo
+import Repositorios.RepoAeropuertoNeo4j
 import Repositorios.RepoVuelosNeo4j
 import java.util.ArrayList
 import java.util.Date
@@ -13,7 +13,6 @@ import java.util.List
 import java.util.Set
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.uqbar.commons.utils.Observable
-import Repositorios.RepoAeropuertoNeo4j
 
 @Accessors
 @Observable	

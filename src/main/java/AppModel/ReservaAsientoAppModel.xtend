@@ -4,11 +4,11 @@ import Dominio.Asiento
 import Dominio.Reserva
 import Dominio.Usuario
 import Dominio.Vuelo
+import Repositorios.RepoUsuariosNeo4j
+import Repositorios.RepoVuelosNeo4j
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.uqbar.commons.utils.Dependencies
 import org.uqbar.commons.utils.Observable
-import Repositorios.UsuarioRepositorio
-import Repositorios.VuelosRepositorio
 
 @Observable
 @Accessors
@@ -18,6 +18,9 @@ class ReservaAsientoAppModel {
 	Usuario unUsuario
 	Asiento asientoSeleccionado
 	String alertaReserva
+	
+	RepoUsuariosNeo4j repoUsuarios = RepoUsuariosNeo4j.instance
+	RepoVuelosNeo4j repoVuelos = RepoVuelosNeo4j.instance
 	
 	new(Usuario usr, Vuelo vuelo) {
 		unUsuario = usr
@@ -34,10 +37,10 @@ class ReservaAsientoAppModel {
 
 	def reservarAsiento() {
 		if(asientoSeleccionado.disponible){
-		  unUsuario.reservar(new Reserva(asientoSeleccionado))
-		  alertaReserva = "Se reservo con exito el asiento" + asientoSeleccionado.toString()
-		  UsuarioRepositorio.instance.update(unUsuario)
-		  VuelosRepositorio.instance.update(unVuelo)
+			unUsuario.reservar(new Reserva(asientoSeleccionado))
+			alertaReserva = "Se reservo con exito el asiento" + asientoSeleccionado.toString()
+			repoUsuarios.update(unUsuario)
+			repoVuelos.update(unVuelo)
 		}
 	}
 

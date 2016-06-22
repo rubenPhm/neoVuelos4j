@@ -110,7 +110,9 @@ class RepoUsuariosNeo4j extends AbstractRepoNeo4j {
 		}
 	}
 
-	
+	def update(Usuario usr){
+		saveOrUpdateUsuario(usr)
+	}
 
 	private def Node getNodoUsuarioById(Long id) {
 		basicSearch("ID(u) = " + id).head

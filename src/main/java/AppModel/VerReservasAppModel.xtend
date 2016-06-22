@@ -17,6 +17,7 @@ class VerReservasAppModel {
 
 	Reserva reservaSeleccionada = null
 
+	RepoUsuariosNeo4j repoUsuarios = RepoUsuariosNeo4j.instance
 	RepoAeropuertoNeo4j repoAeropuertos = RepoAeropuertoNeo4j.instance
 	RepoVuelosNeo4j repoVuelos = RepoVuelosNeo4j.instance
 
@@ -24,11 +25,10 @@ class VerReservasAppModel {
 		usuario = user
 	}
 
-	def cancelarReserva(Reserva reserva) { 
+	def cancelarReserva(Reserva reserva) {
 		usuario.eliminarReserva(reserva)
-		//UsuarioRepositorio.instance.update(usuario)
-		RepoUsuariosNeo4j.instance.saveOrUpdateUsuario(usuario)
-		VuelosRepositorio.instance.update(reserva.vuelo)
+		repoUsuarios.saveOrUpdateUsuario(usuario)
+		repoVuelos.update(reserva.vuelo)
 		
 	}
 	
