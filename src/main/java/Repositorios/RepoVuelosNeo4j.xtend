@@ -1,24 +1,20 @@
 package Repositorios
 
-import Dominio.Aeropuerto
-import Dominio.Asiento
 import Dominio.Busqueda
 import Dominio.Escala
-import Dominio.Tarifa
 import Dominio.Vuelo
-import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Iterator
+import java.util.List
+import java.util.Set
 import org.neo4j.graphdb.Label
 import org.neo4j.graphdb.Node
 import org.neo4j.graphdb.Result
-import java.util.List
 
 class RepoVuelosNeo4j extends AbstractRepoNeo4j {
 
 	private static RepoVuelosNeo4j instance
 
-	//public GraphDatabaseService graphDb
 	def static RepoVuelosNeo4j getInstance() {
 		if (instance == null) {
 			instance = new RepoVuelosNeo4j
@@ -191,6 +187,20 @@ class RepoVuelosNeo4j extends AbstractRepoNeo4j {
 
 		val Iterator<Node> vuelos_column = result.columnAs("vuelo")
 		vuelos_column.forEach[vuelo|busqueda.resultados.add(convertToVuelo(vuelo, true))]
+	}
+	
+	def searchByExample(Vuelo vuelo){
+		val transaction = graphDb.beginTx
+		var Set<Object> resultadosConsulta = newHashSet
+		try {
+			resultadosConsulta = basicSearch("vuelo.aerolinea = '"+ vuelo.aerolinea + "'").toSet
+		}catch(Exception e){
+			resultadosConsulta = newHashSet
+		}
+		finally {
+			cerrarTransaccion(transaction)
+		}
+		return resultadosConsulta
 	}
 
 }

@@ -1,10 +1,12 @@
 package Repositorios
 
-import org.neo4j.graphdb.Node
-import org.neo4j.graphdb.Result
-import java.util.Iterator
 import Dominio.Asiento
+import java.util.Iterator
+import java.util.Set
 import org.neo4j.graphdb.Label
+import org.neo4j.graphdb.Node
+import org.neo4j.graphdb.QueryExecutionException
+import org.neo4j.graphdb.Result
 
 class RepoAsientosNeo4j extends AbstractRepoNeo4j {
 	
@@ -28,7 +30,6 @@ class RepoAsientosNeo4j extends AbstractRepoNeo4j {
 	}
 	
 	def void saveOrUpdateAsiento (Asiento asiento) {
-		// falta validar el usuario para que no se repita
 		val transaction = graphDb.beginTx
 		try {
 			var Node nodoAsiento = null
@@ -84,4 +85,21 @@ class RepoAsientosNeo4j extends AbstractRepoNeo4j {
 		]
 	}
 	
+	private def busquedaRelacionada(String whereAsiento, String whereVuelo) {
+		val Result result = graphDb.execute("match (a:Asiento)-[EN_VUELO]->(v:Vuelo) where " + whereAsiento + " and "+ whereVuelo + " return a")
+		val Iterator<Node> asiento_column = result.columnAs("a")
+		return asiento_column
+	}
+	
+	def searchByExample(Asiento asiento){
+		val transaction = graphDb.beginTx
+		var Set<Object> resultadosConsulta = newHashSet
+		try {
+			resultadosConsulta = busquedaRelacionada("a.fila = "+ asiento.fila + " and a.ubicacion = '"+ asiento.ubicacion + "'", "v.aerolinea = '" + asiento.vuelo.aerolinea + "'" ).toSet
+		}catch(Exception e){resultadosConsulta = newHashSet	}
+		finally {
+			cerrarTransaccion(transaction)
+		}
+		return resultadosConsulta
+	}
 }

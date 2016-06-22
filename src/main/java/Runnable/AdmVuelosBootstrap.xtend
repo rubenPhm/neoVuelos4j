@@ -67,7 +67,6 @@ class AdmVuelosBootstrap implements Bootstrap {
 	TarifaBandaNegativa tBNegativa_2
 	TarifaBandaNegativa tBNegativa_3
 
-
 	RepoAeropuertoNeo4j repoAeropuertos = RepoAeropuertoNeo4j.instance
 	RepoUsuariosNeo4j repoUsuarios = RepoUsuariosNeo4j.instance
 	RepoVuelosNeo4j repoVuelos = RepoVuelosNeo4j.instance
@@ -83,64 +82,7 @@ class AdmVuelosBootstrap implements Bootstrap {
 		initAsientos
 		initUsuarios
 		persistirVuelosYUsrs
-//		initNeo4j
 	}
-
-//	def initNeo4j() {
-//		gabo = new Usuario("gabo", "gabo")
-//		gabo.nombre = "Gabriel Perez"
-//		usr = new Usuario("adrian", "adrian")
-//		usr.nombre = "Adrian Barbani"
-//		fede = new Usuario("fede", "fede")
-//		fede.nombre = "Federico Peña"
-//
-//		GraphDatabaseProvider.instance
-//
-//		val repo = RepoUsuariosNeo4j.instance
-//		val repoAsientos = RepoAsientosNeo4j.instance
-//
-//		asiento1 = new Asiento(1, "Pasillo", new TarifaComun)
-//		asiento2 = new Asiento(2, "Ventana", new TarifaComun)
-//		repoAsientos.saveOrUpdateAsiento(asiento1)
-//		repoAsientos.saveOrUpdateAsiento(asiento2)
-//
-//		fede.reservas.add(new Reserva(asiento1))
-//		fede.reservas.add(new Reserva(asiento2))
-//
-//		repo.saveOrUpdateUsuario(gabo)
-//		repo.saveOrUpdateUsuario(usr)
-//		repo.saveOrUpdateUsuario(fede)
-//
-//		val repoVuelos = RepoVuelosNeo4j.instance
-//		val repoAeropuerto = RepoAeropuertoNeo4j.instance
-//		
-//		ezeiza = new Aeropuerto("Ezeiza", "Buenos Aires")
-//		ricafort = new Aeropuerto("Miami International Airport", "Miami")
-//		brazuca = new Aeropuerto("Aeroporto Internacional de São Paulo", "San Pablo")
-//		
-//		repoAeropuerto.saveOrUpdateAeropuerto(ezeiza)
-//		repoAeropuerto.saveOrUpdateAeropuerto(ricafort)
-//		repoAeropuerto.saveOrUpdateAeropuerto(brazuca)
-//		
-//		escala1 = new Escala()
-//		escala1 => [
-//			horaLlegada = new GregorianCalendar(2016, Calendar.MARCH, 7).getTime();
-//			destino = brazuca
-//		]
-//
-//		aeroArgVuelo = new Vuelo()
-//		aeroArgVuelo => [
-//			agregarEscala(escala1)
-//			aerolinea = "Aerolineas Argentinas"
-//			origen = ezeiza
-//			destino = ricafort
-//			fechaSalida = new GregorianCalendar(2016, Calendar.MARCH, 21).getTime();
-//			fechaLlegada = new GregorianCalendar(2016, Calendar.MARCH, 23).getTime();
-//		]
-//		
-//		repoVuelos.saveOrUpdateVuelo(aeroArgVuelo)
-//	}
-
 
 	def initAeropuertos() {
 		ezeiza = new Aeropuerto("Ezeiza", "Buenos Aires")
@@ -299,8 +241,8 @@ class AdmVuelosBootstrap implements Bootstrap {
 			add(new Asiento(5, "Ventanilla", tarifa_3))
 		]
 		asientosAA.forEach[
-			crearAsiento(it)
 			setVuelo(aeroArgVuelo)
+			crearAsiento(it)// agregado Neo4j
 		]
 		aeroArgVuelo.asientos = asientosAA
 
@@ -326,8 +268,8 @@ class AdmVuelosBootstrap implements Bootstrap {
 			add(new Asiento(9, "Centro", tEspecial_2))
 		]
 		asientosLAN.forEach[
-			crearAsiento(it)
 			setVuelo(lanVuelo)
+			crearAsiento(it)// agregado Neo4j
 		]
 		lanVuelo.asientos = asientosLAN
 
@@ -353,8 +295,8 @@ class AdmVuelosBootstrap implements Bootstrap {
 			add(new Asiento(9, "Pasillo", tarifa_1))
 		]
 		asientosEmirates.forEach[
-			crearAsiento(it)
 			setVuelo(emiratesVuelo)
+			crearAsiento(it) // agregado Neo4j
 		]
 		emiratesVuelo.asientos = asientosEmirates
 
@@ -377,8 +319,8 @@ class AdmVuelosBootstrap implements Bootstrap {
 			add(new Asiento(9, "Ventanilla", tarifaComunUnPeso))
 		]
 		asientosMalasya.forEach[
-			crearAsiento(it)
 			setVuelo(malasyaVuelo)
+			crearAsiento(it)// agregado Neo4j
 		]
 		malasyaVuelo.asientos = asientosMalasya
 
@@ -398,8 +340,8 @@ class AdmVuelosBootstrap implements Bootstrap {
 			add(new Asiento(8, "Ventanilla", tarifaComunUnPeso))
 		]
 		asientosPeruv.forEach[
-			crearAsiento(it)
 			setVuelo(peruvianVuelo)
+			crearAsiento(it)// agregado Neo4j
 		]
 		peruvianVuelo.asientos = asientosPeruv
 	}
@@ -448,19 +390,27 @@ class AdmVuelosBootstrap implements Bootstrap {
 	}
 	
 	def crearAeropuerto(Aeropuerto aeropuerto){
-		repoAeropuertos.saveOrUpdateAeropuerto(aeropuerto)
+		if(repoAeropuertos.searchByExample(aeropuerto).isEmpty){
+			repoAeropuertos.saveOrUpdateAeropuerto(aeropuerto)
+		}
 	}
 	
 	def crearVuelo(Vuelo vuelo){
-		repoVuelos.saveOrUpdateVuelo(vuelo)
+		if(repoVuelos.searchByExample(vuelo).isEmpty){
+			repoVuelos.saveOrUpdateVuelo(vuelo)
+		}
 	}
 	
 	def crearUsuario(Usuario usuario){
-		repoUsuarios.saveOrUpdateUsuario(usuario)
+		if(repoUsuarios.searchByExample(usuario).isEmpty){
+			repoUsuarios.saveOrUpdateUsuario(usuario)
+		}
 	}
 	
 	def crearAsiento(Asiento asiento){
-		repoAsientos.saveOrUpdateAsiento(asiento)
+		if(repoAsientos.searchByExample(asiento).isEmpty){
+			repoAsientos.saveOrUpdateAsiento(asiento)
+		}
 	}
 	
 	def crearTarifa(Tarifa tarifa){}

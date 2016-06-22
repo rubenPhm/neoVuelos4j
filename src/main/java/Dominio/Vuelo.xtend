@@ -37,7 +37,7 @@ class Vuelo {
 	Aeropuerto destino
 
 	@Column(length=150)
-	String aerolinea
+	public String aerolinea
 	
 	@Transient
 	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)

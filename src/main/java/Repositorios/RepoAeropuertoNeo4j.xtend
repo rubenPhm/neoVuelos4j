@@ -3,10 +3,10 @@ package Repositorios
 import Dominio.Aeropuerto
 import java.util.Iterator
 import java.util.List
+import java.util.Set
 import org.neo4j.graphdb.Label
 import org.neo4j.graphdb.Node
 import org.neo4j.graphdb.Result
-import org.bson.types.ObjectId
 
 class RepoAeropuertoNeo4j extends AbstractRepoNeo4j {
 	
@@ -30,9 +30,6 @@ class RepoAeropuertoNeo4j extends AbstractRepoNeo4j {
 	}
 	
 	def void saveOrUpdateAeropuerto (Aeropuerto aeropuerto) {
-		
-		// falta validar el usuario para que no se repita
-		 
 		val transaction = graphDb.beginTx
 		try {
 			var Node nodoAeropuerto = null
@@ -70,14 +67,26 @@ class RepoAeropuertoNeo4j extends AbstractRepoNeo4j {
 			nombre = nodoAeropuerto.getProperty("nombre") as String			
 		]
 		
-		
 	}
 	
 	def List<Aeropuerto> allInstances(){
-		//acá no se como usar el basic search sin condicion
 		graphDb.execute("match (a:Aeropuerto) return (a)") 
 			.columnAs("a")
 				.map [ Node node | convertToAeropuerto(node)]
 					.toList
+	}
+	
+	def searchByExample(Aeropuerto aeropuerto){
+		val transaction = graphDb.beginTx
+		var Set<Object> resultadosConsulta = newHashSet
+		try {
+			resultadosConsulta = basicSearch("aeropuerto.nombre = '"+ aeropuerto.nombre + "'").toSet
+		}catch(Exception e){
+			resultadosConsulta = newHashSet
+		}
+		finally {
+			cerrarTransaccion(transaction)
+		}
+		return resultadosConsulta
 	}
 }

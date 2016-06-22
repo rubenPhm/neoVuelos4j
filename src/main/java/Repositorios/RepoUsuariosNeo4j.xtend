@@ -5,6 +5,7 @@ import Dominio.Usuario
 import java.util.Date
 import java.util.Iterator
 import java.util.List
+import java.util.Set
 import org.neo4j.graphdb.Label
 import org.neo4j.graphdb.Node
 import org.neo4j.graphdb.Result
@@ -87,12 +88,11 @@ class RepoUsuariosNeo4j extends AbstractRepoNeo4j {
 		}
 	}
 
-	private def noExiste(Usuario usuario){
-		getNodosUsuarios(usuario.nick,usuario.contrasenia).empty
-	}
+//	private def noExiste(Usuario usuario){
+//		getNodosUsuarios(usuario.nick,usuario.contrasenia).empty
+//	}
 	
 	def void saveOrUpdateUsuario (Usuario usuario) {
-
 		val transaction = graphDb.beginTx
 		try {
 			var Node nodoUsuario = null
@@ -126,8 +126,6 @@ class RepoUsuariosNeo4j extends AbstractRepoNeo4j {
 		return user_column
 	}
 	
-
-
 	private def void actualizarUsuario(Usuario usuario, Node nodeUsuario) {
 		
 		val RepoAsientosNeo4j repoAsientos = RepoAsientosNeo4j.instance
@@ -147,16 +145,22 @@ class RepoUsuariosNeo4j extends AbstractRepoNeo4j {
 			]			  
 		]	
 	}
-	
-//	def Date test(){
-//		new Date((new Date).toString)
-//	}
     
 	public def labelUsuario() {
 		Label.label("Usuario")
 	}
 	
-	
-	
-	
+	def searchByExample(Usuario usr){
+		val transaction = graphDb.beginTx
+		var Set<Object> resultadosConsulta = newHashSet
+		try {
+			resultadosConsulta = basicSearch("u.nick = '"+ usr.nick + "'").toSet
+		}catch(Exception e){
+			resultadosConsulta = newHashSet
+		}
+		finally {
+			cerrarTransaccion(transaction)
+		}
+		return resultadosConsulta
+	}
 }
