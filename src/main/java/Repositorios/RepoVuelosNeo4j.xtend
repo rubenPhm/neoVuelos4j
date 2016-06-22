@@ -10,6 +10,7 @@ import java.util.Set
 import org.neo4j.graphdb.Label
 import org.neo4j.graphdb.Node
 import org.neo4j.graphdb.Result
+import java.text.SimpleDateFormat
 
 class RepoVuelosNeo4j extends AbstractRepoNeo4j {
 
@@ -145,48 +146,67 @@ class RepoVuelosNeo4j extends AbstractRepoNeo4j {
 
 	def searchByBusqueda(Busqueda busqueda) {
 
-		var List <String> condiciones = newArrayList
-		
-		if(busqueda.origen != null){
-			condiciones.add("ID(origen) = "+busqueda.origen.id)	
-		}
-		if(busqueda.destino != null){
-			condiciones.add("ID(destino) = "+busqueda.destino.id)
-		}
-		//ver lo de las tarifas
-//		if(busqueda.maxPrecio != null){
-//			condiciones.add("")
+//		var List <String> condiciones = newArrayList
+//		
+//		if(busqueda.origen != null){
+//			condiciones.add("ID(origen) = "+busqueda.origen.id)	
 //		}
-		//ver como comparar las fechas al ser strings.
+//		if(busqueda.destino != null){
+//			condiciones.add("ID(destino) = "+busqueda.destino.id)
+//		}
+//		//ver lo de las tarifas
+////		if(busqueda.maxPrecio != null){
+////			condiciones.add("")
+////		}
+//		//ver como comparar las fechas al ser strings.
+//		if(busqueda.desdeFecha != null){
+//			//condiciones.add("")
+//		}
+//		if(busqueda.hastaFecha != null){
+//			//condiciones.add("")
+//		}
+//		
+		var String query = "match (vuelo:Vuelo)-[:AEROPUERTO_ORIGEN]-(origen:Aeropuerto), (vuelo)-[:AEROPUERTO_DESTINO]-(destino:Aeropuerto) where 1=1"
+				
+
+		if (busqueda.origen != null) {
+			query += " AND ID(origen) = " + busqueda.origen.id
+		}
+		if (busqueda.destino != null) {
+			query += " AND ID(destino) = " + busqueda.destino.id
+		}
 		if(busqueda.desdeFecha != null){
-			//condiciones.add("")
+			//val fecha = new SimpleDateFormat( "yyyyMMdd HH:mm" ).format(busqueda.desdeFecha)
+			//query += " AND (vuelo.fechaSalida <= '" + fecha + "')"
+			query += " AND (vuelo.fechaSalida >= '" + busqueda.desdeFecha + "')"
 		}
 		if(busqueda.hastaFecha != null){
-			//condiciones.add("")
+			//val fecha = new SimpleDateFormat( "yyyyMMdd HH:mm" ).format(busqueda.hastaFecha)
+			//query += " AND (vuelo.fechaLlegada <= '" + fecha + "')"
+			query += " AND (vuelo.fechaLlegada <= '" + busqueda.hastaFecha + "')"
 		}
 		
-		var String query = ""
-		var String where = ""
-		if(busqueda.origen == null && busqueda.destino == null && busqueda.maxPrecio == null && busqueda.desdeFecha == null && busqueda.hastaFecha == null){
-				query = "match (vuelo:Vuelo)-[:AEROPUERTO_ORIGEN]-(origen:Aeropuerto), (vuelo)-[:AEROPUERTO_DESTINO]-(destino:Aeropuerto) return vuelo"
-		}else{
-			for(var Integer i=0; i<condiciones.size; i++){
-				
-				if(i == 0){
-					where = condiciones.get(i)
-				}else{
-					where = "and " + condiciones.get(i)
-				}	
+		//if(busqueda.origen == null && busqueda.destino == null && busqueda.maxPrecio == null && busqueda.desdeFecha == null && busqueda.hastaFecha == null){
+//		}else{
+//			for(var Integer i=0; i<condiciones.size; i++){
+//				
+//				if(i == 0){
+//					where = condiciones.get(i)
+//				}else{
+//					where = "AND " + condiciones.get(i)
+//				}	
+//
+//			}
+//			
+//			query = "match (vuelo:Vuelo)-[:AEROPUERTO_ORIGEN]-(origen:Aeropuerto), (vuelo)-[:AEROPUERTO_DESTINO]-(destino:Aeropuerto) where"+where+" return vuelo"
 
-			}
-			
-			query = "match (vuelo:Vuelo)-[:AEROPUERTO_ORIGEN]-(origen:Aeropuerto), (vuelo)-[:AEROPUERTO_DESTINO]-(destino:Aeropuerto) where"+where+" return vuelo"
-		}
+				
 		
-		val Result result = graphDb.execute(query)
+		val Result result = graphDb.execute(query + " return(vuelo);")
 
 		val Iterator<Node> vuelos_column = result.columnAs("vuelo")
 		vuelos_column.forEach[vuelo|busqueda.resultados.add(convertToVuelo(vuelo, true))]
+		
 	}
 	
 	def searchByExample(Vuelo vuelo){
