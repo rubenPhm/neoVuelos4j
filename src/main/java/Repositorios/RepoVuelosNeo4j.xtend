@@ -40,16 +40,16 @@ class RepoVuelosNeo4j extends AbstractRepoNeo4j {
 			val Vuelo este = it
 			id = nodeVuelo.id
 			aerolinea = nodeVuelo.getProperty("aerolinea") as String
-			fechaSalida = new SimpleDateFormat( "EEE MMM dd HH:mm:ss zzz yyyy").parse( (nodeVuelo.getProperty("fechaSalida") as String) )
-			fechaLlegada = new Date(nodeVuelo.getProperty("fechaLlegada") as String)
+			//fechaSalida = new SimpleDateFormat( "EEE MMM dd HH:mm:ss zzz yyyy").parse( (nodeVuelo.getProperty("fechaSalida") as String) )
+			//fechaLlegada = new Date(nodeVuelo.getProperty("fechaLlegada") as String)
 			if (deep) {
 
 				val rel_origen = nodeVuelo.getRelationships(RelacionVueloAeropuertoOrigen.AEROPUERTO_ORIGEN)
 				origen = rel_origen.map [ rel |
 					new Aeropuerto => [
 						id = rel.id
-						nombre = rel.getProperty("nombre") as String
-						pais = rel.getProperty("pais") as String
+						//nombre = rel.getProperty("nombre") as String
+						//pais = rel.getProperty("pais") as String
 					]
 				].last
 
@@ -57,8 +57,8 @@ class RepoVuelosNeo4j extends AbstractRepoNeo4j {
 				destino = rel_destino.map [ rel |
 					new Aeropuerto => [
 						id = rel.id
-						nombre = rel.getProperty("nombre") as String
-						pais = rel.getProperty("pais") as String
+						//nombre = rel.getProperty("nombre") as String
+						//pais = rel.getProperty("pais") as String
 					]
 				].last
 
@@ -66,9 +66,9 @@ class RepoVuelosNeo4j extends AbstractRepoNeo4j {
 				asientos = rel_asientos.map [ rel |
 					new Asiento => [
 						id = rel.id
-						fila = rel.getProperty("fila") as Integer
-						ubicacion = rel.getProperty("ubicacion") as String
-						disponible = rel.getProperty("disponible") as Boolean
+						fila = rel.startNode.getProperty("fila") as Integer
+						ubicacion = rel.startNode.getProperty("ubicacion") as String
+						disponible = rel.startNode.getProperty("disponible") as Boolean
 						vuelo = este
 					//						tarifa = rel.getProperty("tarifa") as Tarifa
 					]
@@ -79,8 +79,8 @@ class RepoVuelosNeo4j extends AbstractRepoNeo4j {
 					new Escala => [
 						id = rel.id
 						destino = RepoAeropuertoNeo4j.instance.convertToAeropuerto(rel.endNode)
-						horaLlegada = new Date(rel.getProperty("horaLlegada")as String)
-						horaSalida = new Date(rel.getProperty("horaSalida") as String)
+						//horaLlegada = new Date(rel.getProperty("horaLlegada")as String)
+						//horaSalida = new Date(rel.getProperty("horaSalida") as String)
 					]
 				].toSet
 			}

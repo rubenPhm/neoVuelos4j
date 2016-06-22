@@ -65,9 +65,9 @@ class RepoAeropuertoNeo4j extends AbstractRepoNeo4j {
 	
 	def convertToAeropuerto(Node nodoAeropuerto){
 		new Aeropuerto =>[
-			idNeo = nodoAeropuerto.id
-			idMongo = nodoAeropuerto.getProperty("idMongo") as ObjectId // se necesita?
-			id = nodoAeropuerto.getProperty("id") as Long //no se si se levanta este.
+			//idNeo = nodoAeropuerto.id
+			//idMongo = nodoAeropuerto.getProperty("idMongo") as ObjectId // se necesita?
+			//id = nodoAeropuerto.getProperty("id") as Long //no se si se levanta este.
 			pais = nodoAeropuerto.getProperty("pais") as String
 			nombre = nodoAeropuerto.getProperty("nombre") as String			
 		]

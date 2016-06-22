@@ -68,7 +68,7 @@ class RepoUsuariosNeo4j extends AbstractRepoNeo4j {
 					id = rel.id
 					asiento = RepoAsientosNeo4j.instance.convertToAsiento(rel.endNode, true)
 					vuelo = asiento.vuelo
-					fechaReserva = new Date(rel.getProperty("fechaReserva") as String)
+					//fechaReserva = new Date(rel.getProperty("fechaReserva") as String)
 					//esta deprecated, pero debiera funcionar si es guardado en el mismo formato... ?
 					]
 				].toSet

@@ -38,7 +38,7 @@ class Aeropuerto {
 		nombre
 	}
 	
-	def setIdNeo(Long id){ // tiraba un error
+	/*def setIdNeo(Long id){ // tiraba un error
 		idNeo = id
-	}
+	}*/
 }
