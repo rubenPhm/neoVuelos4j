@@ -12,7 +12,7 @@ class GraphDatabaseProvider {
 	
 	private new() {
 		val GraphDatabaseFactory dbFactory = new GraphDatabaseFactory
-		graphDb = dbFactory.newEmbeddedDatabase(new File("/Users/ruben/Documents/Neo4j/default.graphdb"))
+		graphDb = dbFactory.newEmbeddedDatabase(new File("/Users/Gabo/Documents/Neo4j/default.graphdb"))
 }
 	
 	def static instance() {

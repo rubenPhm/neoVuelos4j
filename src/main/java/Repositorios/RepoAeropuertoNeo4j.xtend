@@ -42,7 +42,7 @@ class RepoAeropuertoNeo4j extends AbstractRepoNeo4j {
 			} else {
 				nodoAeropuerto = getNodoAeropuertoById(aeropuerto.id)
 			}
-			actualizarAsiento(aeropuerto, nodoAeropuerto)
+			actualizarAeropuerto(aeropuerto, nodoAeropuerto)
 			transaction.success
 			aeropuerto.id = nodoAeropuerto.id
 		} finally {
@@ -51,7 +51,7 @@ class RepoAeropuertoNeo4j extends AbstractRepoNeo4j {
 			
 	}
 	
-	private def void actualizarAsiento(Aeropuerto aeropuerto, Node nodeAeropuerto) {
+	private def void actualizarAeropuerto(Aeropuerto aeropuerto, Node nodeAeropuerto) {
 		nodeAeropuerto => [
 			setProperty("nombre", aeropuerto.nombre)
 			setProperty("pais", aeropuerto.pais)
@@ -65,12 +65,12 @@ class RepoAeropuertoNeo4j extends AbstractRepoNeo4j {
 	
 	def convertToAeropuerto(Node nodoAeropuerto){
 		new Aeropuerto =>[
-			//idNeo = nodoAeropuerto.id
-			//idMongo = nodoAeropuerto.getProperty("idMongo") as ObjectId // se necesita?
-			//id = nodoAeropuerto.getProperty("id") as Long //no se si se levanta este.
+			id = nodoAeropuerto.id
 			pais = nodoAeropuerto.getProperty("pais") as String
 			nombre = nodoAeropuerto.getProperty("nombre") as String			
 		]
+		
+		
 	}
 	
 	def List<Aeropuerto> allInstances(){

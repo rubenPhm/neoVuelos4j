@@ -36,51 +36,35 @@ class RepoVuelosNeo4j extends AbstractRepoNeo4j {
 	}
 
 	def convertToVuelo(Node nodeVuelo, boolean deep) {
+		
+		val RepoAeropuertoNeo4j repoAeropuertos = RepoAeropuertoNeo4j.instance
+		val RepoAsientosNeo4j repoAsientos = RepoAsientosNeo4j.instance
+		
 		new Vuelo => [
 			val Vuelo este = it
 			id = nodeVuelo.id
 			aerolinea = nodeVuelo.getProperty("aerolinea") as String
-			//fechaSalida = new SimpleDateFormat( "EEE MMM dd HH:mm:ss zzz yyyy").parse( (nodeVuelo.getProperty("fechaSalida") as String) )
-			//fechaLlegada = new Date(nodeVuelo.getProperty("fechaLlegada") as String)
+			fechaSalida = new Date (nodeVuelo.getProperty("fechaSalida")as Long)
+			fechaLlegada = new Date(nodeVuelo.getProperty("fechaLlegada") as Long)
 			if (deep) {
 
 				val rel_origen = nodeVuelo.getRelationships(RelacionVueloAeropuertoOrigen.AEROPUERTO_ORIGEN)
-				origen = rel_origen.map [ rel |
-					new Aeropuerto => [
-						id = rel.id
-						//nombre = rel.getProperty("nombre") as String
-						//pais = rel.getProperty("pais") as String
-					]
-				].last
-
+				origen = rel_origen.map [repoAeropuertos.convertToAeropuerto(it.endNode)].last
+				
 				val rel_destino = nodeVuelo.getRelationships(RelacionVueloAeropuertoDestino.AEROPUERTO_DESTINO)
-				destino = rel_destino.map [ rel |
-					new Aeropuerto => [
-						id = rel.id
-						//nombre = rel.getProperty("nombre") as String
-						//pais = rel.getProperty("pais") as String
-					]
-				].last
-
+				destino = rel_destino.map[repoAeropuertos.convertToAeropuerto(it.endNode)].last
+				
+				
 				val rel_asientos = nodeVuelo.getRelationships(RelacionVueloAsiento.EN_VUELO)
-				asientos = rel_asientos.map [ rel |
-					new Asiento => [
-						id = rel.id
-						fila = rel.startNode.getProperty("fila") as Integer
-						ubicacion = rel.startNode.getProperty("ubicacion") as String
-						disponible = rel.startNode.getProperty("disponible") as Boolean
-						vuelo = este
-					//						tarifa = rel.getProperty("tarifa") as Tarifa
-					]
-				].toSet
+				asientos = rel_asientos.map [repoAsientos.convertToAsiento(it.startNode, false)].toSet // quiero zafar del loop infinito
+				asientos.forEach[setVuelo(este)]
 
 				val rel_escala = nodeVuelo.getRelationships(RelacionVueloEscala.ESCALA_EN)
 				escalas = rel_escala.map [ rel |
 					new Escala => [
 						id = rel.id
-						destino = RepoAeropuertoNeo4j.instance.convertToAeropuerto(rel.endNode)
-						//horaLlegada = new Date(rel.getProperty("horaLlegada")as String)
-						//horaSalida = new Date(rel.getProperty("horaSalida") as String)
+						destino = repoAeropuertos.convertToAeropuerto(rel.endNode)
+						horaLlegada = new Date(rel.getProperty("horaLlegada")as Long)
 					]
 				].toSet
 			}
@@ -134,8 +118,8 @@ class RepoVuelosNeo4j extends AbstractRepoNeo4j {
 		nodeVuelo => [
 			val este = it
 			setProperty("aerolinea", vuelo.aerolinea)
-			setProperty("fechaSalida", vuelo.fechaSalida.toString)
-			setProperty("fechaLlegada", vuelo.fechaLlegada.toString)
+			setProperty("fechaSalida", vuelo.fechaSalida.getTime)
+			setProperty("fechaLlegada", vuelo.fechaLlegada.getTime)
 			relationships.forEach[it.delete]
 			val nodeOrigen = repoAeropuertos.getNodoAeropuertoById(vuelo.origen.id)
 			createRelationshipTo(nodeOrigen, RelacionVueloAeropuertoOrigen.AEROPUERTO_ORIGEN)
@@ -147,11 +131,9 @@ class RepoVuelosNeo4j extends AbstractRepoNeo4j {
 				if (escala.id != null) {
 					rel_escala.setProperty("id", escala.id)
 				}
-				if (escala.horaSalida != null) {
-					rel_escala.setProperty("horaSalida", escala.horaSalida.toString)
-				}
+
 				if (escala.horaLlegada != null) {
-					rel_escala.setProperty("horaLlegada", escala.horaLlegada.toString)
+					rel_escala.setProperty("horaLlegada", escala.horaLlegada.getTime)
 				}
 			]
 			vuelo.asientos.forEach [ asiento |

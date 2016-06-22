@@ -2,13 +2,12 @@ package AppModel
 
 import Dominio.Reserva
 import Dominio.Usuario
+import Repositorios.RepoAeropuertoNeo4j
+import Repositorios.RepoUsuariosNeo4j
+import Repositorios.RepoVuelosNeo4j
+import Repositorios.VuelosRepositorio
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.uqbar.commons.utils.Observable
-import Repositorios.UsuarioRepositorio
-import Repositorios.VuelosRepositorio
-import Repositorios.RepoUsuariosNeo4j
-import Repositorios.RepoAeropuertoNeo4j
-import Repositorios.RepoVuelosNeo4j
 
 @Observable
 @Accessors

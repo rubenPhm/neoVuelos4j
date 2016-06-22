@@ -1,5 +1,6 @@
 package Dominio
 
+import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.GregorianCalendar
 import javax.persistence.Column
@@ -28,6 +29,8 @@ class Reserva {
 
 	@Column
 	Date fechaReserva
+	
+	transient static SimpleDateFormat dateToString = new SimpleDateFormat("dd/MM/yyyy - hh:mm 'hs'")
 
 	new() {
 	}
@@ -66,4 +69,6 @@ class Reserva {
 	def getFechaLlegada() {
 		vuelo.fechaLlegadaStr
 	}
+	
+	def getFechaReservaStr() { dateToString.format(fechaReserva) }
 }

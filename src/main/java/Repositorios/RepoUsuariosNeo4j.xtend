@@ -55,6 +55,8 @@ class RepoUsuariosNeo4j extends AbstractRepoNeo4j {
 	
 	def convertToUsuario(Node nodeUsuario, boolean deep) {
 		
+		val RepoAsientosNeo4j repoAsientos = RepoAsientosNeo4j.instance
+		
 		new Usuario => [
 			id = nodeUsuario.id
 			nick = nodeUsuario.getProperty("nick") as String
@@ -63,13 +65,12 @@ class RepoUsuariosNeo4j extends AbstractRepoNeo4j {
 			
 			if (deep) { 
 				val rel_reservas = nodeUsuario.getRelationships(RelacionUsuarioReservas.RESERVA_USUARIO)
-				reservas = rel_reservas.map [
-					rel | new Reserva => [
-					id = rel.id
-					asiento = RepoAsientosNeo4j.instance.convertToAsiento(rel.endNode, true)
-					vuelo = asiento.vuelo
-					//fechaReserva = new Date(rel.getProperty("fechaReserva") as String)
-					//esta deprecated, pero debiera funcionar si es guardado en el mismo formato... ?
+				reservas = rel_reservas.map [rel | 
+					new Reserva => [
+						id = rel.id
+						asiento = repoAsientos.convertToAsiento(rel.endNode, true)
+						vuelo = asiento.vuelo
+						fechaReserva = new Date(rel.getProperty("fechaReserva") as Long)
 					]
 				].toSet
 			}			
@@ -142,7 +143,7 @@ class RepoUsuariosNeo4j extends AbstractRepoNeo4j {
 			usuario.reservas.forEach [ reserva |
 				val Node nodoAsiento = repoAsientos.getNodoAsientoById(reserva.asiento.id)
 				val relacion = este.createRelationshipTo(nodoAsiento,RelacionUsuarioReservas.RESERVA_USUARIO)
-				relacion.setProperty("fechaReserva",(reserva.fechaReserva).toString)
+				relacion.setProperty("fechaReserva",(reserva.fechaReserva).getTime)
 			]			  
 		]	
 	}

@@ -62,19 +62,24 @@ class RepoAsientosNeo4j extends AbstractRepoNeo4j {
 	}
 	
 	def Asiento convertToAsiento(Node nodoAsiento, boolean deep) {
+		
+		val RepoVuelosNeo4j repoVuelos = RepoVuelosNeo4j.instance
+		
 		var asiento = new Asiento
 		asiento => [
 			id = nodoAsiento.id
-			fila = nodoAsiento.getProperty("fila") as Integer
 			ubicacion = nodoAsiento.getProperty("ubicacion") as String
+			fila = nodoAsiento.getProperty("fila") as Integer
 			disponible = nodoAsiento.getProperty("disponible") as Boolean
+			
+							
+//				val rel_tarifa = nodoAsiento.getRelationships(RelacionAsientoTarifa.CUESTA)
+//				tarifa = repoTarifasNeo4j.instance.convertToTarifa(rel_tarifa.last.endNode, true)
 			
 			if(deep){
 				val rel_vuelo = nodoAsiento.getRelationships(RelacionVueloAsiento.EN_VUELO)
-				vuelo = RepoVuelosNeo4j.instance.convertToVuelo(rel_vuelo.last.endNode, true)
-				
-//				val rel_tarifa = nodoAsiento.getRelationships(RelacionAsientoTarifa.CUESTA)
-//				tarifa = repoTarifasNeo4j.instance.convertToTarifa(rel_tarifa.last.endNode, true)
+				vuelo = repoVuelos.convertToVuelo(rel_vuelo.last.endNode, true)
+
 			}
 		]
 	}

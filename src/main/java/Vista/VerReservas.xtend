@@ -43,14 +43,14 @@ class VerReservas extends TransactionalDialog<VerReservasAppModel>{
        		new Column<Reserva>(it) => [
 					title = "fecha Reserva" 
 				    fixedSize = 100  
-					bindContentsToProperty("fechaReserva")  
+					bindContentsToProperty("fechaReservaStr")  
 			]
 			new Column<Reserva>(it) => [
 					title = "Id Reserva" 
 				    fixedSize = 100  
 					bindContentsToProperty("id")  
 			]		  				    
-			/*new Column<Reserva>(it) => [
+			new Column<Reserva>(it) => [
 					title = "Origen" 
 				    fixedSize = 100  
 					bindContentsToProperty("origen")  
@@ -83,7 +83,7 @@ class VerReservas extends TransactionalDialog<VerReservasAppModel>{
 					title = "Asiento Reservado"
 				    fixedSize = 50  
 					bindContentsToProperty("asientoDescripcion") 
-			]*/
+			]
 		]
 		
 		val botonera = new Panel(mainPanel).layout = new HorizontalLayout
