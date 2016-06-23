@@ -13,7 +13,6 @@ import org.neo4j.graphdb.Result
 class RepoUsuariosNeo4j extends AbstractRepoNeo4j {
 	
 	private static RepoUsuariosNeo4j instance
-	//public GraphDatabaseService graphDb
 	
 	def static RepoUsuariosNeo4j getInstance() {
 		if (instance == null) {
@@ -88,10 +87,6 @@ class RepoUsuariosNeo4j extends AbstractRepoNeo4j {
 		}
 	}
 
-//	private def noExiste(Usuario usuario){
-//		getNodosUsuarios(usuario.nick,usuario.contrasenia).empty
-//	}
-	
 	def void saveOrUpdateUsuario (Usuario usuario) {
 		val transaction = graphDb.beginTx
 		try {
@@ -118,14 +113,14 @@ class RepoUsuariosNeo4j extends AbstractRepoNeo4j {
 		basicSearch("ID(u) = " + id).head
 	}
 	
-	private def getNodosUsuarios(String nick,String contrasenia) {
-		basicSearch("u.nick =~ '(?i).*" + nick + ".*'" + " and u.contrasenia =~ '(?i).*" + contrasenia + ".*'")
-	}
-	
 	private def basicSearch(String where) {
 		val Result result = graphDb.execute("match (u:Usuario) where " + where   + " return u")
 		val Iterator<Node> user_column = result.columnAs("u")
 		return user_column
+	}
+	
+	private def getNodosUsuarios(String nick,String contrasenia) {
+		basicSearch("u.nick =~ '(?i).*" + nick + ".*'" + " and u.contrasenia =~ '(?i).*" + contrasenia + ".*'")
 	}
 	
 	private def void actualizarUsuario(Usuario usuario, Node nodeUsuario) {

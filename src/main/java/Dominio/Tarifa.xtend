@@ -25,6 +25,8 @@ abstract class Tarifa {
 
 	@Column
 	Double precio
+	
+	String tipo
 
 	new() {
 	}

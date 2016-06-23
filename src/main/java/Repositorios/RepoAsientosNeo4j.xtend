@@ -5,7 +5,6 @@ import java.util.Iterator
 import java.util.Set
 import org.neo4j.graphdb.Label
 import org.neo4j.graphdb.Node
-import org.neo4j.graphdb.QueryExecutionException
 import org.neo4j.graphdb.Result
 
 class RepoAsientosNeo4j extends AbstractRepoNeo4j {
@@ -49,12 +48,15 @@ class RepoAsientosNeo4j extends AbstractRepoNeo4j {
 	}
 	
 	private def void actualizarAsiento(Asiento asiento, Node nodeAsiento) {
+		val RepoTarifasNeo4j repoTarifas = RepoTarifasNeo4j.instance
 		nodeAsiento => [
 			setProperty("fila", asiento.fila)
 			setProperty("ubicacion", asiento.ubicacion)
 			setProperty("disponible",asiento.disponible)
-			// Borro las relaciones que tenga ese nodo
-			
+			// me ocupo de las relaciones
+			relationships.forEach [it.delete ]
+			val Node nodoTarifa = repoTarifas.getNodoTarifaById(asiento.tarifa.id)
+			createRelationshipTo(nodoTarifa, RelacionAsientoTarifa.CUESTA)
 		]
 	}
 	

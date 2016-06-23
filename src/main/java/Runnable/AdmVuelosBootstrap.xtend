@@ -12,6 +12,7 @@ import Dominio.Usuario
 import Dominio.Vuelo
 import Repositorios.RepoAeropuertoNeo4j
 import Repositorios.RepoAsientosNeo4j
+import Repositorios.RepoTarifasNeo4j
 import Repositorios.RepoUsuariosNeo4j
 import Repositorios.RepoVuelosNeo4j
 import java.util.ArrayList
@@ -71,6 +72,7 @@ class AdmVuelosBootstrap implements Bootstrap {
 	RepoUsuariosNeo4j repoUsuarios = RepoUsuariosNeo4j.instance
 	RepoVuelosNeo4j repoVuelos = RepoVuelosNeo4j.instance
 	RepoAsientosNeo4j repoAsientos = RepoAsientosNeo4j.instance
+	RepoTarifasNeo4j repoTarifas = RepoTarifasNeo4j.instance
 	
 	
 	override run() {
@@ -100,7 +102,7 @@ class AdmVuelosBootstrap implements Bootstrap {
 		crearAeropuerto(ponja)
 	}
 
-	def initTarifas() {
+	def initTarifas() { // no crear 2 tarifas con el mismo precio y del mismo tipo
 		tarifa_1 = new TarifaComun(150.0)
 		tarifaComunUnPeso = new TarifaComun(1.0)
 		tarifa_3 = new TarifaComun(532.0)
@@ -413,7 +415,12 @@ class AdmVuelosBootstrap implements Bootstrap {
 		}
 	}
 	
-	def crearTarifa(Tarifa tarifa){}
+	def crearTarifa(Tarifa tarifa){
+		if(repoTarifas.searchByExample(tarifa).isEmpty){
+			repoTarifas.saveOrUpdateTarifa(tarifa)
+		}
+		
+	}
 	
 //	def crearVuelo(Vuelo vuelo) {
 //		val repoVuelos = VuelosRepositorio.instance

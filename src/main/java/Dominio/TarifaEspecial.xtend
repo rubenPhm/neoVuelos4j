@@ -15,10 +15,12 @@ class TarifaEspecial extends Tarifa {
 	
 	new(Double unValor) {
 		super(unValor)
+		tipo ="especial"
 	}
 	
 	new (Double unValor, Double unDescuento){
 		super (unValor, unDescuento)
+		tipo = "especial"
 	}
 	
 	override precioFinal(Date salidaVuelo, Date reservaAsiento){

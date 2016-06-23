@@ -11,11 +11,13 @@ import org.uqbar.commons.utils.Observable
 @Entity
 class TarifaBandaNegativa extends Tarifa {
 	
+	
 	new() {
 	}
 
 	new(Double unValor) {
 		super(unValor)
+		tipo = "banda negativa"
 	}
 
 	override precioFinal(Date fechaReserva, Date fechaVuelo) {

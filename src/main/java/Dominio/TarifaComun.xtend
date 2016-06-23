@@ -15,6 +15,7 @@ class TarifaComun extends Tarifa {
 		
 	new(Double unValor) {
 		super(unValor)
+		tipo = "comun"
 	}
 	
 	override precioFinal(Date salidaVuelo, Date reservaAsiento){
