@@ -143,7 +143,7 @@ class RepoVuelosNeo4j extends AbstractRepoNeo4j {
 	}
 
 	def searchByBusqueda(Busqueda busqueda) {
-		var String query = "match (vuelo:Vuelo)-[:AEROPUERTO_ORIGEN]-(origen:Aeropuerto), (vuelo)-[:AEROPUERTO_DESTINO]-(destino:Aeropuerto) where 1=1"
+		var String query = "match (vuelo:Vuelo)-[:AEROPUERTO_ORIGEN]-(origen:Aeropuerto), (vuelo)-[:AEROPUERTO_DESTINO]-(destino:Aeropuerto) where ID(origen) <> ID(destino)"
 
 		if (busqueda.origen != null) {
 			query += " AND ID(origen) = " + busqueda.origen.id
