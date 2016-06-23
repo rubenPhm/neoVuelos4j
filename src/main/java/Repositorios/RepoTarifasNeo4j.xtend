@@ -29,6 +29,9 @@ class RepoTarifasNeo4j extends AbstractRepoNeo4j {
 		var Tarifa tarifa = null
 
 // 		quiero mantener en memoria las tarifas para que sean unicas.
+
+//		 lo mismo para Aeropuertos habría que hacer
+
 //		hay que ver bien el tema de mantener en memoria y en disco el mismo elemento
 //		para que sean consistentes
 

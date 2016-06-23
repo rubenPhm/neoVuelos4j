@@ -38,6 +38,7 @@ class ReservaAsientoAppModel {
 	def reservarAsiento() {
 		if(asientoSeleccionado.disponible){
 			unUsuario.reservar(new Reserva(asientoSeleccionado))
+			asientoSeleccionado.reservar()
 			alertaReserva = "Se reservo con exito el asiento" + asientoSeleccionado.toString()
 			repoUsuarios.update(unUsuario)
 			repoVuelos.update(unVuelo)

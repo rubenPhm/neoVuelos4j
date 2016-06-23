@@ -52,7 +52,9 @@ class RepoAsientosNeo4j extends AbstractRepoNeo4j {
 		nodeAsiento => [
 			setProperty("fila", asiento.fila)
 			setProperty("ubicacion", asiento.ubicacion)
-			setProperty("disponible",asiento.disponible)
+			var String disponibilidad
+			if(asiento.disponible){disponibilidad = "true"} else{disponibilidad = "false"}
+			setProperty("disponible",disponibilidad)
 			// me ocupo de las relaciones
 			relationships.forEach [it.delete ]
 			val Node nodoTarifa = repoTarifas.getNodoTarifaById(asiento.tarifa.id)
@@ -73,7 +75,8 @@ class RepoAsientosNeo4j extends AbstractRepoNeo4j {
 			id = nodoAsiento.id
 			ubicacion = nodoAsiento.getProperty("ubicacion") as String
 			fila = nodoAsiento.getProperty("fila") as Integer
-			disponible = nodoAsiento.getProperty("disponible") as Boolean
+			val disponibilidad = nodoAsiento.getProperty("disponible") as String
+			if (disponibilidad.equals("true")){	disponible = true} else{ disponible = false}
 			val rel_tarifa = nodoAsiento.getRelationships(RelacionAsientoTarifa.CUESTA)
 			tarifa = repoTarifas.convertToTarifa(rel_tarifa.last.endNode)
 			

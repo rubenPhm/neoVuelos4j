@@ -216,6 +216,9 @@ class AdmVuelosBootstrap implements Bootstrap {
 	}
 
 	def initAsientos() {
+		
+		
+		
 		asiento1 = new Asiento(1, "Pasillo", tarifa_1)
 		asiento2 = new Asiento(1, "Centro", tEspecial_1)
 		asiento3 = new Asiento(1, "Ventanilla", tBNegativa_1)
@@ -223,6 +226,18 @@ class AdmVuelosBootstrap implements Bootstrap {
 		asiento5 = new Asiento(9, "Centro", tarifa_1)
 		asiento6 = new Asiento(9, "Ventanilla", tBNegativa_2)
 		asiento7 = new Asiento(9, "Ventanilla", tEspecial_2)
+
+		var List<Asiento> asientosReservados = newArrayList
+		asientosReservados => [
+			add(asiento1)
+			add(asiento2)
+			add(asiento3)
+			add(asiento4)
+			add(asiento5)
+			add(asiento6)
+			add(asiento7)
+		]
+		asientosReservados.forEach[reservar()]
 
 		var Set<Asiento> asientosAA = new HashSet<Asiento>
 		asientosAA => [
@@ -238,7 +253,7 @@ class AdmVuelosBootstrap implements Bootstrap {
 			add(new Asiento(4, "Pasillo", tEspecial_3))
 			add(new Asiento(4, "Centro", tBNegativa_1))
 			add(new Asiento(4, "Ventanilla", tarifa_3))
-			add(new Asiento(5, "Pasillo", tEspecial_1))
+			add(new Asiento(5, "Pasillo", tEspecial_1))	
 			add(new Asiento(5, "Centro", tarifa_1))
 			add(new Asiento(5, "Ventanilla", tarifa_3))
 		]

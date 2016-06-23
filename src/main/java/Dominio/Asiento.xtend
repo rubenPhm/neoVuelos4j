@@ -46,7 +46,7 @@ class Asiento {
 	new(int fila, String ubicacion, Tarifa unaTarifa) {
 		this.fila = fila
 		this.ubicacion = ubicacion
-		setTarifa(unaTarifa)	
+		setTarifa(unaTarifa)
 	}
 
 	new(int fila, String ubicacion) {
