@@ -143,25 +143,35 @@ class RepoVuelosNeo4j extends AbstractRepoNeo4j {
 	}
 
 	def searchByBusqueda(Busqueda busqueda) {
-		var String query = "match (vuelo:Vuelo)-[:AEROPUERTO_ORIGEN]-(origen:Aeropuerto), (vuelo)-[:AEROPUERTO_DESTINO]-(destino:Aeropuerto) where ID(origen) <> ID(destino)"
-
+			
+		var String matches = " (vuelo:Vuelo), (origen:Aeropuerto), (destino:Aeropuerto)"
+		var String relationships = ", (vuelo)-[:AEROPUERTO_ORIGEN]->(origen), (vuelo)-[:AEROPUERTO_DESTINO]->(destino)"
+//		var String query = "match (vuelo:Vuelo)-[:AEROPUERTO_ORIGEN]->(origen:Aeropuerto), (vuelo)-[:AEROPUERTO_DESTINO]->(destino:Aeropuerto) where ID(origen) <> ID(destino)"
+		var String where = " ID(origen) <> ID(destino)"
+					
+		if(busqueda.maxPrecio != null){ //HAY QUE RETOCARLO
+			matches += ", (a:Asiento), (t:Tarifa)"
+			relationships += ", (a)-[:EN_VUELO]->(vuelo), (a)-[:CUESTA]->(t)"
+			where += " AND t.valor <= " + busqueda.maxPrecio.longValue // para convertir a Long....
+//			query = "match (vuelo:Vuelo), (origen:Aeropuerto), (destino:Aeropuerto), (a:Asiento), (t:Tarifa), (vuelo)-[AEROPUERTO_ORIGEN]->(origen), (vuelo)-[AEROPUERTO_DESTINO]->(destino), (a)-[EN_VUELO]->(vuelo), (a)-[CUESTA]->(t)where t.valor <=" + busqueda.maxPrecio 
+		}
 		if (busqueda.origen != null) {
-			query += " AND ID(origen) = " + busqueda.origen.id
+			where += " AND ID(origen) = " + busqueda.origen.id
 		}
 		if (busqueda.destino != null) {
-			query += " AND ID(destino) = " + busqueda.destino.id
+			where += " AND ID(destino) = " + busqueda.destino.id
 		}
 		if(busqueda.desdeFecha != null){
-			query += " AND (vuelo.fechaSalida >= " + busqueda.desdeFecha.getTime + ")"
+			where += " AND (vuelo.fechaSalida >= " + busqueda.desdeFecha.getTime + ")"
 		}
 		if(busqueda.hastaFecha != null){
-			query += " AND (vuelo.fechaLlegada <= " + busqueda.hastaFecha.getTime + ")"
+			where += " AND (vuelo.fechaLlegada <= " + busqueda.hastaFecha.getTime + ")"
 		}
 		
-		val Result result = graphDb.execute(query + " return(vuelo);")
+//		val Result result = graphDb.execute(query + " return(vuelo);")
+		val Result result = graphDb.execute("MATCH" + matches + relationships + " WHERE" + where + " return(vuelo);")
 		val Iterator<Node> vuelos_column = result.columnAs("vuelo")
 		vuelos_column.forEach[vuelo|busqueda.resultados.add(convertToVuelo(vuelo, true))]
-		
 	}
 	
 	def searchByExample(Vuelo vuelo){
