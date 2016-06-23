@@ -5,12 +5,10 @@ import Dominio.Escala
 import Dominio.Vuelo
 import java.util.Date
 import java.util.Iterator
-import java.util.List
 import java.util.Set
 import org.neo4j.graphdb.Label
 import org.neo4j.graphdb.Node
 import org.neo4j.graphdb.Result
-import java.text.SimpleDateFormat
 
 class RepoVuelosNeo4j extends AbstractRepoNeo4j {
 

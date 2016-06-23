@@ -25,14 +25,17 @@ class RepoTarifasNeo4j extends AbstractRepoNeo4j {
 		instance
 	}
 	
-	def Tarifa convertToTarifa(Node nodoTarifa){
+	def Tarifa convertToTarifa(Node nodoTarifa){ 
 		var Tarifa tarifa = null
-		
-		val tarifasId  = todasLasTarifas.filter[getId.equals(nodoTarifa.id)]
-		if (!tarifasId.empty){
-			
-			tarifa = tarifasId.last
-		}else{
+
+// 		quiero mantener en memoria las tarifas para que sean unicas.
+//		hay que ver bien el tema de mantener en memoria y en disco el mismo elemento
+//		para que sean consistentes
+
+//		val List<Tarifa> tarifasId = todasLasTarifas.filter[id == nodoTarifa.id ].toList
+//		if (!tarifasId.empty){
+//			tarifa = tarifasId.last
+//		}else{
 		
 			val String tipo = nodoTarifa.getProperty("tipo") as String
 			if (tipo.equals("comun")){
@@ -44,8 +47,9 @@ class RepoTarifasNeo4j extends AbstractRepoNeo4j {
 			if (tipo.equals("banda negativa")){
 				tarifa = new TarifaBandaNegativa(nodoTarifa.getProperty("valor") as Double)
 			}
+			tarifa.id = nodoTarifa.id
 			todasLasTarifas.add(tarifa)
-		}
+//		}
 		return tarifa
 	}
 	
